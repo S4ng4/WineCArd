@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbaresco 2021 - Scheda Tecnica</title>
+    <style>
+        body {
+            font-family: 'Garamond', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f7f3;
+            color: #333333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #5e1914;
+            color: #ffffff;
+            padding: 15px;
+            text-align: center;
+        }
+        .content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .wine-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .wine-info h1 {
+            color: #5e1914;
+            margin-top: 0;
+            border-bottom: 2px solid #e6d1a8;
+            padding-bottom: 10px;
+        }
+        .wine-info h2 {
+            font-style: italic;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+        .specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .spec-item {
+            display: flex;
+        }
+        .spec-item strong {
+            min-width: 120px;
+            color: #5e1914;
+        }
+        .chart-container {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .chart-title {
+            color: #5e1914;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .radar-chart {
+            width: 100%;
+            height: 300px;
+        }
+        .aroma-chart {
+            width: 100%;
+            height: 350px;
+        }
+        .heatmap-chart {
+            width: 100%;
+            height: 380px;
+        }
+        .flavor-profile {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+        .flavor-category {
+            padding: 10px;
+        }
+        .flavor-category h3 {
+            color: #5e1914;
+            margin-top: 0;
+        }
+        footer {
+            background-color: #2c1e1d;
+            color: #e6d1a8;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        /* Media queries per versione mobile */
+        @media (max-width: 768px) {
+            .content {
+                padding: 10px;
+            }
+            .wine-card {
+                grid-template-columns: 1fr;
+            }
+            .chart-row {
+                grid-template-columns: 1fr;
+            }
+            .specs {
+                grid-template-columns: 1fr;
+            }
+            .flavor-profile {
+                grid-template-columns: 1fr;
+            }
+            .spec-item {
+                flex-direction: column;
+            }
+            .spec-item strong {
+                min-width: auto;
+                margin-bottom: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Castello di Neive - Barbaresco 2021</h1>
+    </header>
+    
+    <div class="content">
+        <div class="wine-card">
+            <div class="wine-info">
+                <h1>Barbaresco 2021</h1>
+                <h2>DOCG Barbaresco</h2>
+                <div class="specs">
+                    <div class="spec-item">
+                        <strong>Produttore:</strong>
+                        <span>Castello di Neive</span>
+                    </div>
+                    <div class="spec-item">
+                        <strong>Vitigni:</strong>
+                        <span>Nebbiolo 100%</span>
+                    </div>
+                    <div class="spec-item">
+                        <strong>Annata:</strong>
+                        <span>2021</span>
+                    </div>
+                    <div class="spec-item">
+                        <strong>Gradazione:</strong>
+                        <span>0.14</span>
+                    </div>
+                    <div class="spec-item">
+                        <strong>Invecchiamento:</strong>
+                        <span>24 mesi in botti di rovere</span>
+                    </div>
+                    <div class="spec-item">
+                        <strong>Temperatura:</strong>
+                        <span>16-18°C</span>
+                    </div>
+                    <div class="spec-item">
+                        <strong>Potenziale:</strong>
+                        <span>2025-2040</span>
+                    </div>
+                </div>
+            </div>
+            <div class="wine-summary">
+                <h3>Annata 2021</h3>
+                <p>Annata fresca ed elegante, con piogge primaverili e estate ventilata che hanno favorito acidità vivace</p>
+                <h3>Abbinamenti Ideali</h3>
+                <p>Agnolotti al plin, brasato al Barolo, formaggi stagionati</p>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <h2 class="chart-title">Profilo Organolettico</h2>
+            <div class="chart-row">
+                <div class="radar-chart">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+                        <!-- Background -->
+                        <rect width="400" height="300" fill="#ffffff" rx="10" ry="10"/>
+                        
+                        <!-- Title -->
+                        <text x="200" y="30" font-family="Garamond" font-size="18" fill="#5e1914" text-anchor="middle" font-weight="bold">Corpo e Struttura</text>
+                        
+                        <!-- Radar chart background -->
+                       <polygon points="200,70 270,110 270,190 200,230 130,190 130,110" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                        <polygon points="200,90 250,120 250,180 200,210 150,180 150,120" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                        <polygon points="200,110 230,130 230,170 200,190 170,170 170,130" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>    
+                        
+                        <!-- Axis lines -->
+                        <line x1="200" y1="150" x2="200" y2="70" stroke="#888888" stroke-width="1"/>
+                        <line x1="200" y1="150" x2="270" y2="190" stroke="#888888" stroke-width="1"/>
+                        <line x1="200" y1="150" x2="270" y2="110" stroke="#888888" stroke-width="1"/>
+                        <line x1="200" y1="150" x2="200" y2="230" stroke="#888888" stroke-width="1"/>
+                        <line x1="200" y1="150" x2="130" y2="190" stroke="#888888" stroke-width="1"/>
+                        <line x1="200" y1="150" x2="130" y2="110" stroke="#888888" stroke-width="1"/>
+                        
+                        <!-- Labels -->
+                        <text x="200" y="65" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="middle">Corpo</text>
+                        <text x="280" y="110" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="start">Tannini</text>
+                        <text x="280" y="190" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="start">Alcol</text>
+                        <text x="200" y="240" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="middle">Persistenza</text>
+                        <text x="120" y="190" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Acidità</text>
+                        <text x="120" y="110" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Complessità</text>
+                        
+                        <!-- Data polygon -->
+                        <polygon points="200,126 227.712,134 220.784,162 200,182 172.288,166 172.288,134" fill="rgba(94,25,20,0.5)" stroke="#5e1914" stroke-width="2"/>
+                        
+                        <!-- Data points -->
+                        <circle cx="200" cy="126" r="4" fill="#5e1914"/>
+                        <circle cx="227.712" cy="134" r="4" fill="#5e1914"/>
+                        <circle cx="220.784" cy="162" r="4" fill="#5e1914"/>
+                        <circle cx="200" cy="182" r="4" fill="#5e1914"/>
+                        <circle cx="172.288" cy="166" r="4" fill="#5e1914"/>
+                        <circle cx="172.288" cy="134" r="4" fill="#5e1914"/>
+                        
+                        <!-- Legend -->
+                        <rect x="140" y="260" width="120" height="25" rx="5" ry="5" fill="#ffffff" stroke="#e6d1a8"/>
+                        <rect x="150" y="267" width="10" height="10" fill="rgba(94,25,20,0.5)" stroke="#5e1914"/>
+                        <text x="170" y="276" font-family="Garamond" font-size="12" fill="#2c1e1d">Barbaresco 2021</text>
+                    </svg>
+                </div>
+                
+                <div class="aroma-chart">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" width="100%" height="100%">
+                        <!-- Background -->
+                        <rect width="400" height="350" fill="#ffffff" rx="10" ry="10"/>
+                        
+                        <!-- Title -->
+                        <text x="200" y="30" font-family="Garamond" font-size="18" fill="#5e1914" text-anchor="middle" font-weight="bold">Profilo Aromatico</text>
+                        
+                        <!-- Horizontal bars background -->
+                        <rect x="120" y="70" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                        <rect x="120" y="105" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                        <rect x="120" y="140" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                        <rect x="120" y="175" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                        <rect x="120" y="210" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                        <rect x="120" y="245" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                        <rect x="120" y="280" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                        
+                        <!-- Labels -->
+                        <text x="115" y="87" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Frutti rossi</text>
+                        <text x="115" y="122" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Floreale</text>
+                        <text x="115" y="157" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Spezie</text>
+                        <text x="115" y="192" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Agrumi</text>
+                        <text x="115" y="227" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Affumicato</text>
+                        <text x="115" y="262" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Minerale</text>
+                        <text x="115" y="297" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Terra bagnata</text>
+                        
+                        <!-- Data bars -->
+                        <rect x="120" y="70" width="80" height="25" fill="rgba(94,25,20,0.7)"/>
+                        <rect x="120" y="105" width="60" height="25" fill="rgba(94,25,20,0.7)"/>
+                        <rect x="120" y="140" width="60" height="25" fill="rgba(94,25,20,0.7)"/>
+                        <rect x="120" y="175" width="40" height="25" fill="rgba(94,25,20,0.7)"/>
+                        <rect x="120" y="210" width="40" height="25" fill="rgba(94,25,20,0.7)"/>
+                        <rect x="120" y="245" width="40" height="25" fill="rgba(94,25,20,0.7)"/>
+                        <rect x="120" y="280" width="20" height="25" fill="rgba(94,25,20,0.7)"/>
+                        
+                        <!-- Intensity scale -->
+                        <text x="120" y="325" font-family="Garamond" font-size="12" fill="#2c1e1d">Bassa</text>
+                        <text x="220" y="325" font-family="Garamond" font-size="12" fill="#2c1e1d" text-anchor="middle">Media</text>
+                        <text x="320" y="325" font-family="Garamond" font-size="12" fill="#2c1e1d" text-anchor="end">Alta</text>
+                        <line x1="120" y1="330" x2="320" y2="330" stroke="#888888" stroke-width="1"/>
+                        <line x1="120" y1="328" x2="120" y2="332" stroke="#888888" stroke-width="1"/>
+                        <line x1="220" y1="328" x2="220" y2="332" stroke="#888888" stroke-width="1"/>
+                        <line x1="320" y1="328" x2="320" y2="332" stroke="#888888" stroke-width="1"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <h2 class="chart-title">Note di Degustazione</h2>
+            <div class="flavor-profile">
+                <div class="flavor-category">
+                    <h3>Visivo</h3>
+                    <p>Rosso rubino trasparente, riflessi granati</p>
+                </div>
+                <div class="flavor-category">
+                    <h3>Olfattivo</h3>
+                    <p>Rosa appassita, lampone, spezie dolci, lieve affumicato</p>
+                </div>
+                <div class="flavor-category">
+                    <h3>Gustativo</h3>
+                    <p>Elegante, tannini levigati, finale fresco con note agrumate</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy;Andrea Sangalli 2025 - Castello di Neive - Barbaresco. Consumare responsabilmente.</p>
+    </footer>
+</body>
+</html>
