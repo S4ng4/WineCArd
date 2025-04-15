@@ -1,188 +1,262 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wine Card</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --main-bg: #f9f6f2;
-      --dark: #1a1a1a;
-      --red: #7b2e2e;
-      --white: #e8e4d9;
-      --rose: #eec3c3;
-      --sparkling: #f7f1db;
-      --text: #333;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--main-bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    header {
-      background: url('https://images.unsplash.com/photo-1600180758890-1ecb9de92d6b') no-repeat center center/cover;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-    }
-
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
-    }
-
-    header p {
-      font-size: 1.2rem;
-      margin: 1rem 0;
-    }
-
-    .cta-button {
-      padding: 1rem 2rem;
-      background-color: var(--red);
-      color: white;
-      border: none;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background 0.3s ease;
-    }
-
-    .cta-button:hover {
-      background-color: #622424;
-    }
-
-    section {
-      padding: 4rem 2rem;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .category {
-      background-color: white;
-      border-radius: 12px;
-      padding: 2rem;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .category:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
-
-    .category h3 {
-      margin-bottom: 1rem;
-      font-family: 'Playfair Display', serif;
-    }
-
-    .example {
-      text-align: center;
-    }
-
-    .example img {
-      max-width: 250px;
-      margin: 1rem auto;
-    }
-
-    footer {
-      background-color: var(--dark);
-      color: white;
-      text-align: center;
-      padding: 2rem;
-    }
-
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2.5rem;
-      }
-      .cta-button {
-        font-size: 0.9rem;
-        padding: 0.8rem 1.5rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Card - Scopri i Vini con un Tocco</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Serif', serif;
+        }
+        
+        body {
+            background-color: #f5f2ec;
+            color: #222;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero {
+            background-color: #1a1a1a;
+            color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            padding: 40px;
+            position: relative;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .hero-content {
+            flex: 1;
+            max-width: 50%;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: right;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .btn-secondary {
+            background-color: #fff;
+            color: #000;
+        }
+        
+        .section {
+            margin: 60px 0;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 42px;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+        
+        .section-description {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-size: 18px;
+        }
+        
+        .feature-list {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            list-style-type: none;
+        }
+        
+        .feature-item {
+            font-size: 18px;
+            position: relative;
+            padding: 0 15px;
+        }
+        
+        .feature-item:not(:last-child):after {
+            content: "•";
+            position: absolute;
+            right: -15px;
+        }
+        
+        .wine-categories {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .wine-category {
+            background-color: #e9e5dc;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .wine-category h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .wine-category img {
+            height: 200px;
+            margin: 20px 0;
+        }
+        
+        .example-section {
+            margin: 80px 0;
+            text-align: center;
+        }
+        
+        .example-section h2 {
+            font-size: 42px;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                padding: 30px;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 30px;
+            }
+            
+            .wine-categories {
+                flex-wrap: wrap;
+            }
+            
+            .wine-category {
+                flex: 0 0 calc(50% - 10px);
+            }
+            
+            .feature-list {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .feature-item:not(:last-child):after {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div>
-      <h1>Wine Card</h1>
-      <p>Tap. Discover. Savor. The elegant digital profile for every wine bottle.</p>
-      <button class="cta-button">Explore Now</button>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Scopri i Vini con un Tocco</h1>
+                <p class="subtitle">La Wine Card è il modo più elegante e smart per collegare ogni bottiglia a una scheda tecnica digitale.</p>
+                <div class="button-group">
+                    <a href="#" class="btn btn-primary">Prova Ora</a>
+                    <a href="#" class="btn btn-secondary">Guarda un Esempio</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- I'm using a placeholder. In a real site, replace with actual wine card image -->
+                <img src="/api/placeholder/400/320" alt="Wine Card e bottiglia di vino">
+            </div>
+        </div>
+        
+        <!-- What is Wine Card Section -->
+        <div class="section">
+            <h2 class="section-title">Cos'è Wine Card?</h2>
+            <p class="section-description">Wine Card è un cartellino NFC collegato a una pagina web personalizzata con tutte le informazioni del vino.</p>
+            
+            <ul class="feature-list">
+                <li class="feature-item">Facile da usare</li>
+                <li class="feature-item">Personalizzabile</li>
+                <li class="feature-item">Elegante ed ecologico</li>
+                <li class="feature-item">Pensato per venditori e ristoratori</li>
+            </ul>
+        </div>
+        
+        <!-- Categories Section -->
+        <div class="section">
+            <h2 class="section-title">Categorie</h2>
+            
+            <div class="wine-categories">
+                <div class="wine-category">
+                    <h3>Red</h3>
+                    <img src="/api/placeholder/150/300" alt="Bottiglia di vino rosso">
+                </div>
+                
+                <div class="wine-category">
+                    <h3>White</h3>
+                    <img src="/api/placeholder/150/300" alt="Bottiglia di vino bianco">
+                </div>
+                
+                <div class="wine-category">
+                    <h3>Rosé</h3>
+                    <img src="/api/placeholder/150/300" alt="Bottiglia di vino rosé">
+                </div>
+                
+                <div class="wine-category">
+                    <h3>Sparkling</h3>
+                    <img src="/api/placeholder/150/300" alt="Bottiglia di spumante">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Live Example Section -->
+        <div class="example-section">
+            <h2>Esempio Live</h2>
+            <!-- Here you would add your live example content -->
+            <img src="/api/placeholder/600/300" alt="Esempio Live della Wine Card in funzione">
+        </div>
     </div>
-  </header>
-
-  <section>
-    <h2>What is Wine Card?</h2>
-    <p style="text-align:center; max-width:700px; margin:auto;">Wine Card is a smart NFC tag elegantly attached to your wine bottles. A single tap opens a digital sheet with detailed tasting notes, technical data, and pairing suggestions. Perfect for vendors, sommeliers, and wine lovers.</p>
-  </section>
-
-  <section>
-    <h2>Discover by Category</h2>
-    <div class="categories">
-      <div class="category" style="background-color: var(--red); color: white;">
-        <h3>Red Wines</h3>
-        <p>Bold, complex and full-bodied. Tap to explore powerful reds.</p>
-        <button class="cta-button">View Reds</button>
-      </div>
-      <div class="category" style="background-color: var(--white);">
-        <h3>White Wines</h3>
-        <p>Crisp, fresh and mineral. Tap to explore elegant whites.</p>
-        <button class="cta-button">View Whites</button>
-      </div>
-      <div class="category" style="background-color: var(--rose);">
-        <h3>Rosé Wines</h3>
-        <p>Delicate and refreshing. Tap to explore romantic rosés.</p>
-        <button class="cta-button">View Rosés</button>
-      </div>
-      <div class="category" style="background-color: var(--sparkling);">
-        <h3>Sparkling Wines</h3>
-        <p>Celebrate with bubbles. Tap to explore sparkling elegance.</p>
-        <button class="cta-button">View Sparkling</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="example">
-    <h2>Live Example</h2>
-    <p>Scan the code below or tap a real Wine Card to see it in action.</p>
-    <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://winecard.example.com&size=200x200" alt="QR Code Example" />
-  </section>
-
-  <section style="text-align:center">
-    <h2>Ready to Upgrade Your Wine Experience?</h2>
-    <button class="cta-button">Contact Us</button>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Wine Card. All rights reserved.</p>
-  </footer>
 </body>
 </html>
-
