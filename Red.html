@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wine Card – Red Wines</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #f7f5f2;
+      color: #2e2e2e;
+    }
+
+    header {
+      background-color: #5c1a1b;
+      padding: 1.5rem 2rem;
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      padding: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .wine-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0.5rem 0;
+    }
+
+    .wine-description {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Red Wines</h1>
+    <p>Explore the bold and complex flavors of our red wine selection</p>
+  </header>
+
+  <section class="grid">
+    <!-- Example Wine Card -->
+    <div class="card">
+      <h2 class="wine-title">Barolo DOCG 2018</h2>
+      <p class="wine-description">Full-bodied, elegant and rich in tannins. Aged in oak barrels for 24 months. Perfect with braised meats and aged cheeses.</p>
+    </div>
+
+    <div class="card">
+      <h2 class="wine-title">Chianti Classico Riserva</h2>
+      <p class="wine-description">Balanced and persistent. Notes of cherry, leather and tobacco. Ideal with pasta al ragù and roasted lamb.</p>
+    </div>
+
+    <!-- Add more wine cards below -->
+    <!--
+    <div class="card">
+      <h2 class="wine-title">Wine Name</h2>
+      <p class="wine-description">Short description of the wine, aging process, or suggested pairings.</p>
+    </div>
+    -->
+
+  </section>
+
+  <footer>
+    © 2025 Wine Card. All rights reserved.
+  </footer>
+
+</body>
+</html>
