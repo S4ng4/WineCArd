@@ -39,6 +39,8 @@
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      text-decoration: none;
+      color: inherit;
     }
     .card:hover {
       transform: translateY(-5px);
@@ -64,56 +66,6 @@
       font-size: 0.9rem;
       color: #888;
     }
-    .wine-detail {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.8);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-    }
-    .wine-detail-content {
-      background-color: #fff;
-      width: 90%;
-      max-width: 1000px;
-      max-height: 90vh;
-      overflow-y: auto;
-      border-radius: 16px;
-      position: relative;
-    }
-    .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: #5c1a1b;
-      color: white;
-      border: none;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      font-size: 1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
-      }
-      .wine-detail-content {
-        width: 95%;
-      }
-    }
-    @media (max-width: 768px) {
-      .wine-detail-content > div > div {
-        grid-template-columns: 1fr !important;
-      }
-    }
   </style>
 </head>
 <body>
@@ -121,179 +73,22 @@
     <h1>Red Wines</h1>
     <p>Explore the bold and complex flavors of our red wine selection</p>
   </header>
-  <section class="grid">
-    <div class="card" data-wine="barolo">
-      <h2 class="wine-title">Barolo DOCG 2018</h2>
-      <p class="wine-origin">Piedmont, Italy</p>
-      <p class="wine-description">Full-bodied, elegant and rich in tannins. Aged in oak barrels for 24 months. Perfect with braised meats and aged cheeses.</p>
-    </div>
-    <div class="card" data-wine="chianti">
-      <h2 class="wine-title">Chianti Classico Riserva</h2>
-      <p class="wine-origin">Tuscany, Italy</p>
-      <p class="wine-description">Balanced and persistent. Notes of cherry, leather and tobacco. Ideal with pasta al ragù and roasted lamb.</p>
-    </div>
-    <div class="card" data-wine="marcenasco">
-      <h2 class="wine-title">Marcenasco 2021</h2>
-      <p class="wine-origin">DOCG Barolo, Piedmont, Italy</p>
-      <p class="wine-description">Structured yet refined, with vibrant acidity and firm tannins. Notes of rose petal, wild cherry, and mint. Perfect with tajarin pasta and truffles.</p>
-    </div>
-    <div class="card" data-wine="primitivo">
-      <h2 class="wine-title">Primitivo di Manduria 2022</h2>
-      <p class="wine-origin">DOC Primitivo di Manduria, Puglia, Italy</p>
-      <p class="wine-description">Full-bodied and velvety with concentrated dark fruit flavors and pleasant spice notes. Excellent with grilled meats and aged cheeses.</p>
-    </div>
-  </section>
-  
-  <!-- Wine Detail Modals -->
-  <div id="barolo-detail" class="wine-detail">
-    <div class="wine-detail-content">
-      <button class="close-btn" onclick="closeModal()">&times;</button>
-      <div style="padding: 2rem;">
-        <h1 style="color: #5c1a1b; margin-bottom: 1rem;">Barolo DOCG 2018</h1>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-          <div>
-            <h3>Technical Details</h3>
-            <p><strong>Producer:</strong> Traditional Piedmont Winery</p>
-            <p><strong>Region:</strong> Piedmont, Italy</p>
-            <p><strong>Grapes:</strong> Nebbiolo 100%</p>
-            <p><strong>Aging:</strong> 24 months in oak barrels</p>
-            <p><strong>Alcohol:</strong> 14.5%</p>
-            <p><strong>Serving Temperature:</strong> 18°C</p>
-          </div>
-          <div>
-            <h3>Tasting Notes</h3>
-            <p><strong>Appearance:</strong> Deep garnet red with orange highlights</p>
-            <p><strong>Nose:</strong> Intensely aromatic with notes of rose, tar, herbs, spices, and red fruits</p>
-            <p><strong>Palate:</strong> Full-bodied, elegant and rich in tannins with a complex structure and long finish</p>
-            <p><strong>Food Pairing:</strong> Perfect with braised meats, game, truffle dishes, and aged cheeses</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div id="chianti-detail" class="wine-detail">
-    <div class="wine-detail-content">
-      <button class="close-btn" onclick="closeModal()">&times;</button>
-      <div style="padding: 2rem;">
-        <h1 style="color: #5c1a1b; margin-bottom: 1rem;">Chianti Classico Riserva</h1>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-          <div>
-            <h3>Technical Details</h3>
-            <p><strong>Producer:</strong> Traditional Tuscan Estate</p>
-            <p><strong>Region:</strong> Tuscany, Italy</p>
-            <p><strong>Grapes:</strong> Sangiovese 90%, Canaiolo 10%</p>
-            <p><strong>Aging:</strong> 24 months in Slavonian oak casks</p>
-            <p><strong>Alcohol:</strong> 13.5%</p>
-            <p><strong>Serving Temperature:</strong> 16-18°C</p>
-          </div>
-          <div>
-            <h3>Tasting Notes</h3>
-            <p><strong>Appearance:</strong> Ruby red tending to garnet</p>
-            <p><strong>Nose:</strong> Intense aromas of cherry, plum, leather, tobacco and slight hint of violet</p>
-            <p><strong>Palate:</strong> Balanced and persistent with elegant tannins and good acidity</p>
-            <p><strong>Food Pairing:</strong> Ideal with pasta al ragù, roasted lamb, grilled steak, and aged pecorino cheese</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div id="marcenasco-detail" class="wine-detail">
-    <div class="wine-detail-content">
-      <button class="close-btn" onclick="closeModal()">&times;</button>
-      <div style="padding: 2rem;">
-        <h1 style="color: #5c1a1b; margin-bottom: 1rem;">Ratti - Marcenasco 2021</h1>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-          <div>
-            <h3>Technical Details</h3>
-            <p><strong>Producer:</strong> Ratti</p>
-            <p><strong>Region:</strong> DOCG Barolo, Piedmont, Italy</p>
-            <p><strong>Grapes:</strong> Nebbiolo 100%</p>
-            <p><strong>Vintage:</strong> 2021</p>
-            <p><strong>Aging:</strong> 24 months in Slavonian oak</p>
-            <p><strong>Alcohol:</strong> 14.5%</p>
-            <p><strong>Serving Temperature:</strong> 18°C</p>
-            <p><strong>Cellaring Potential:</strong> 2026-2043</p>
-          </div>
-          <div>
-            <h3>Tasting Notes</h3>
-            <p><strong>Visual:</strong> Luminous garnet with orange rim</p>
-            <p><strong>Nose:</strong> Rose petal, wild cherry, licorice, crushed mint</p>
-            <p><strong>Palate:</strong> Structured yet refined, firm tannins, vibrant acidity, saline finish</p>
-            <p><strong>Vintage Notes:</strong> Balanced vintage with warm days and cool nights, ideal for Nebbiolo's aromatic complexity</p>
-            <p><strong>Food Pairing:</strong> Tajarin pasta with truffles, braised venison, aged Castelmagno cheese</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div id="primitivo-detail" class="wine-detail">
-    <div class="wine-detail-content">
-      <button class="close-btn" onclick="closeModal()">&times;</button>
-      <div style="padding: 2rem;">
-        <h1 style="color: #5c1a1b; margin-bottom: 1rem;">Feudo Croce - Primitivo di Manduria 2022</h1>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-          <div>
-            <h3>Technical Details</h3>
-            <p><strong>Producer:</strong> Feudo Croce</p>
-            <p><strong>Region:</strong> DOC Primitivo di Manduria, Puglia, Italy</p>
-            <p><strong>Grapes:</strong> Primitivo 100%</p>
-            <p><strong>Vintage:</strong> 2022</p>
-            <p><strong>Aging:</strong> 6 months in American oak barrels followed by 3 months in bottle</p>
-            <p><strong>Alcohol:</strong> 14.5%</p>
-            <p><strong>Serving Temperature:</strong> 16-18°C</p>
-            <p><strong>Cellaring Potential:</strong> 2023-2028</p>
-          </div>
-          <div>
-            <h3>Tasting Notes</h3>
-            <p><strong>Visual:</strong> Deep ruby red with purple highlights and significant viscosity</p>
-            <p><strong>Nose:</strong> Rich aromatics of ripe black cherries, blackberry jam, plum preserves, vanilla, cinnamon, and chocolate with undertones of Mediterranean herbs and sweet tobacco</p>
-            <p><strong>Palate:</strong> Full-bodied and velvety with well-integrated alcohol, moderate tannins, balanced acidity, concentrated dark fruit flavors, pleasant spice notes, and a warm, lingering finish with hints of licorice</p>
-            <p><strong>Vintage Notes:</strong> Excellent vintage characterized by hot summer days and cool nights yielding perfectly ripened grapes with balanced sugar levels and phenolic maturity</p>
-            <p><strong>Food Pairing:</strong> Grilled red meats, aged cheeses, hearty pasta dishes with meat sauce, spiced lamb</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <footer>
-    © 2025 Wine Card. All rights reserved.
-  </footer>
 
-  <script>
-    // Add click event to all wine cards
-    document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', function() {
-        const wineType = this.getAttribute('data-wine');
-        openModal(wineType);
-      });
-    });
-    
-    // Function to open a specific wine modal
-    function openModal(wine) {
-      document.getElementById(wine + '-detail').style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-    
-    // Function to close any open modal
-    function closeModal() {
-      document.querySelectorAll('.wine-detail').forEach(modal => {
-        modal.style.display = 'none';
-      });
-      document.body.style.overflow = 'auto';
-    }
-    
-    // Close modal when clicking outside the content
-    document.querySelectorAll('.wine-detail').forEach(modal => {
-      modal.addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeModal();
-        }
-      });
-    });
-  </script>
+  <section class="grid">
+    <a class="card" href="Barbaresco 2021.html">
+      <h2 class="wine-title">Barbaresco 2021</h2>
+      <p class="wine-origin">Piedmont, Italy</p>
+      <p class="wine-description">Elegant, floral, and structured. A quintessential Nebbiolo with long aging potential.</p>
+    </a>
+    <a class="card" href="Primitivo di Manduria 2022.html">
+      <h2 class="wine-title">Primitivo di Manduria 2022</h2>
+      <p class="wine-origin">Puglia, Italy</p>
+      <p class="wine-description">Rich and bold with ripe fruit notes and a velvety finish. A southern Italian treasure.</p>
+    </a>
+  </section>
+
+  <footer>
+    &copy; 2025 Wine Card. All rights reserved.
+  </footer>
 </body>
 </html>
