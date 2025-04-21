@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,6 +105,14 @@
       h1 {
         font-size: 2rem;
       }
+      .wine-detail-content {
+        width: 95%;
+      }
+    }
+    @media (max-width: 768px) {
+      .wine-detail-content > div > div {
+        grid-template-columns: 1fr !important;
+      }
     }
   </style>
 </head>
@@ -115,23 +122,22 @@
     <p>Explore the bold and complex flavors of our red wine selection</p>
   </header>
   <section class="grid">
-    <div class="card" onclick="showWineDetail('barolo')">
-      <h2 class="wine-title">frascati-principe-pallavicini.html
-</h2>
+    <div class="card" data-wine="barolo">
+      <h2 class="wine-title">Barolo DOCG 2018</h2>
       <p class="wine-origin">Piedmont, Italy</p>
       <p class="wine-description">Full-bodied, elegant and rich in tannins. Aged in oak barrels for 24 months. Perfect with braised meats and aged cheeses.</p>
     </div>
-    <div class="card" onclick="showWineDetail('chianti')">
+    <div class="card" data-wine="chianti">
       <h2 class="wine-title">Chianti Classico Riserva</h2>
       <p class="wine-origin">Tuscany, Italy</p>
       <p class="wine-description">Balanced and persistent. Notes of cherry, leather and tobacco. Ideal with pasta al ragù and roasted lamb.</p>
     </div>
-    <div class="card" onclick="showWineDetail('marcenasco')">
+    <div class="card" data-wine="marcenasco">
       <h2 class="wine-title">Marcenasco 2021</h2>
       <p class="wine-origin">DOCG Barolo, Piedmont, Italy</p>
       <p class="wine-description">Structured yet refined, with vibrant acidity and firm tannins. Notes of rose petal, wild cherry, and mint. Perfect with tajarin pasta and truffles.</p>
     </div>
-    <div class="card" onclick="showWineDetail('primitivo')">
+    <div class="card" data-wine="primitivo">
       <h2 class="wine-title">Primitivo di Manduria 2022</h2>
       <p class="wine-origin">DOC Primitivo di Manduria, Puglia, Italy</p>
       <p class="wine-description">Full-bodied and velvety with concentrated dark fruit flavors and pleasant spice notes. Excellent with grilled meats and aged cheeses.</p>
@@ -141,7 +147,7 @@
   <!-- Wine Detail Modals -->
   <div id="barolo-detail" class="wine-detail">
     <div class="wine-detail-content">
-      <button class="close-btn" onclick="hideWineDetail('barolo')">&times;</button>
+      <button class="close-btn" onclick="closeModal()">&times;</button>
       <div style="padding: 2rem;">
         <h1 style="color: #5c1a1b; margin-bottom: 1rem;">Barolo DOCG 2018</h1>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
@@ -168,7 +174,7 @@
   
   <div id="chianti-detail" class="wine-detail">
     <div class="wine-detail-content">
-      <button class="close-btn" onclick="hideWineDetail('chianti')">&times;</button>
+      <button class="close-btn" onclick="closeModal()">&times;</button>
       <div style="padding: 2rem;">
         <h1 style="color: #5c1a1b; margin-bottom: 1rem;">Chianti Classico Riserva</h1>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
@@ -195,7 +201,7 @@
   
   <div id="marcenasco-detail" class="wine-detail">
     <div class="wine-detail-content">
-      <button class="close-btn" onclick="hideWineDetail('marcenasco')">&times;</button>
+      <button class="close-btn" onclick="closeModal()">&times;</button>
       <div style="padding: 2rem;">
         <h1 style="color: #5c1a1b; margin-bottom: 1rem;">Ratti - Marcenasco 2021</h1>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
@@ -225,7 +231,7 @@
   
   <div id="primitivo-detail" class="wine-detail">
     <div class="wine-detail-content">
-      <button class="close-btn" onclick="hideWineDetail('primitivo')">&times;</button>
+      <button class="close-btn" onclick="closeModal()">&times;</button>
       <div style="padding: 2rem;">
         <h1 style="color: #5c1a1b; margin-bottom: 1rem;">Feudo Croce - Primitivo di Manduria 2022</h1>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
@@ -256,3 +262,38 @@
   <footer>
     © 2025 Wine Card. All rights reserved.
   </footer>
+
+  <script>
+    // Add click event to all wine cards
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', function() {
+        const wineType = this.getAttribute('data-wine');
+        openModal(wineType);
+      });
+    });
+    
+    // Function to open a specific wine modal
+    function openModal(wine) {
+      document.getElementById(wine + '-detail').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    
+    // Function to close any open modal
+    function closeModal() {
+      document.querySelectorAll('.wine-detail').forEach(modal => {
+        modal.style.display = 'none';
+      });
+      document.body.style.overflow = 'auto';
+    }
+    
+    // Close modal when clicking outside the content
+    document.querySelectorAll('.wine-detail').forEach(modal => {
+      modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeModal();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
