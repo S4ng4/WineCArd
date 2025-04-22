@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wine Card – Sparkling Wines</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #f9f9fb;
+      color: #4e5057;
+    }
+    header {
+      background-color: #7d7f89;
+      padding: 1.5rem 2rem;
+      color: white;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(125,127,137,0.1);
+      padding: 1.5rem;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid #d0d0d8;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .wine-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0.5rem 0;
+      color: #4e5057;
+    }
+    .wine-description {
+      font-size: 0.95rem;
+      color: #7d7f89;
+    }
+    .wine-origin {
+      font-size: 0.85rem;
+      color: #7d7f89;
+      margin-bottom: 0.5rem;
+      font-style: italic;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      color: #7d7f89;
+      border-top: 1px solid #d0d0d8;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sparkling Wines</h1>
+    <p>Discover the effervescent joy of our sparkling wine collection</p>
+  </header>
+  <section class="grid">
+    <a class="card" href="Champagne Brut.html">
+      <h2 class="wine-title">Champagne Brut</h2>
+      <p class="wine-origin">Champagne, France</p>
+      <p class="wine-description">Crisp and elegant with fine bubbles. Notes of green apple, brioche, and a refreshing mineral finish.</p>
+    </a>
+    <a class="card" href="Prosecco Superiore DOCG.html">
+      <h2 class="wine-title">Prosecco Superiore DOCG</h2>
+      <p class="wine-origin">Veneto, Italy</p>
+      <p class="wine-description">Lively and aromatic with white peach, honeysuckle, and a gentle effervescence.</p>
+    </a>
+    <a class="card" href="Franciacorta Satèn 2019.html">
+      <h2 class="wine-title">Franciacorta Satèn 2019</h2>
+      <p class="wine-origin">Lombardy, Italy</p>
+      <p class="wine-description">Silky and creamy with persistent bubbles. Delicate notes of citrus, white flowers, and almond.</p>
+    </a>
+  </section>
+  <footer>
+    &copy; 2025 Wine Card. All rights reserved.
+  </footer>
+</body>
+</html>
