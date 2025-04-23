@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea Sangalli Tuo Nome - Business Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .card-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .profile-section {
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .company-logo {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        h1 {
+            margin-top: 15px;
+            font-size: 24px;
+            color: #333;
+        }
+        
+        h2 {
+            font-size: 16px;
+            color: #666;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+        
+        .company-name {
+            font-size: 14px;
+            color: #999;
+            margin-top: 5px;
+        }
+        
+        .action-button {
+            background-color: #f8f8f8;
+            color: #333;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 0;
+            width: 90%;
+            margin: 15px auto;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .contact-buttons {
+            padding: 10px 20px 30px;
+        }
+        
+        .contact-option {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .contact-option span {
+            margin-left: 15px;
+            font-size: 16px;
+        }
+        
+        .contact-option small {
+            margin-left: auto;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .email {
+            background-color: #2196F3;
+        }
+        
+        .linkedin {
+            background-color: #0077B5;
+        }
+        
+        .phone {
+            background-color: #4CAF50;
+        }
+        
+        .icon {
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="profile-section">
+            <img src="tua-foto.jpg" alt="La tua foto" class="profile-img">
+            <div class="company-logo">
+                <!-- Inserisci qui il logo della tua azienda -->
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <!-- Sostituisci con il tuo logo SVG o utilizza un'immagine -->
+                    <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2l8 4-8 4-8-4 8-4zm-8 6.5l8 4 8-4V15l-8 4-8-4v-6.5z"/>
+                </svg>
+            </div>
+            <h1>Il Tuo Nome</h1>
+            <h2>La Tua Posizione</h2>
+            <p class="company-name">Nome Azienda</p>
+            <button id="saveContact" class="action-button">Salva Contatto</button>
+        </div>
+        
+        <div class="contact-buttons">
+            <a href="mailto:tua.email@esempio.com" class="contact-option email">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                <span>Email</span>
+                <small>Inviami un messaggio!</small>
+            </a>
+            
+            <a href="https://www.linkedin.com/in/tuo-profilo/" class="contact-option linkedin">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                </svg>
+                <span>LinkedIn</span>
+                <small>Connettiamoci!</small>
+            </a>
+            
+            <a href="tel:+39123456789" class="contact-option phone">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                <span>Telefono</span>
+                <small>Chiamami</small>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('saveContact').addEventListener('click', function() {
+            // Crea un vCard per il contatto
+            const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:Il Tuo Nome
+TITLE:La Tua Posizione
+ORG:Nome Azienda
+TEL;TYPE=CELL:+39123456789
+EMAIL:tua.email@esempio.com
+URL:https://www.tuosito.com
+END:VCARD`;
+            
+            // Crea un blob e un URL per il download
+            const blob = new Blob([vcard], { type: 'text/vcard' });
+            const url = URL.createObjectURL(blob);
+            
+            // Crea un link per il download e attiva il click
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'contatto.vcf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+</html>
