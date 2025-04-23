@@ -1,283 +1,481 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wine Card - Scopri i Vini con un Tocco</title>
+    <title>Wine Card - Discover Wines with a Touch</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Serif', serif;
         }
         
         body {
-            background-color: #f5f2ec;
-            color: #222;
+            background-color: #f9f7f3;
+            color: #2c2c2c;
             line-height: 1.6;
-            padding: 20px;
+            font-family: 'Poppins', sans-serif;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
         }
         
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Hero Section */
         .hero {
-            background-color: #1a1a1a;
+            background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%);
             color: white;
             border-radius: 16px;
             overflow: hidden;
-            padding: 40px;
+            padding: 60px 40px;
             position: relative;
-            margin-bottom: 40px;
+            margin: 40px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
         
         .hero-content {
             flex: 1;
-            max-width: 50%;
+            max-width: 55%;
         }
         
         .hero-image {
             flex: 1;
             text-align: right;
+            position: relative;
         }
         
         .hero-image img {
             max-width: 100%;
+            position: relative;
+            z-index: 1;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            background-color: rgba(255,255,255,0.1);
+            top: -20px;
+            right: -20px;
+            border-radius: 16px;
+            z-index: 0;
         }
         
         h1 {
-            font-size: 48px;
-            font-weight: 300;
-            margin-bottom: 20px;
-            line-height: 1.2;
+            font-size: 52px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            line-height: 1.1;
         }
         
         .subtitle {
             font-size: 18px;
-            margin-bottom: 30px;
+            margin-bottom: 36px;
             font-weight: 300;
+            opacity: 0.9;
         }
         
         .button-group {
             display: flex;
-            gap: 15px;
+            gap: 18px;
         }
         
         .btn {
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 14px 28px;
+            border-radius: 50px;
             text-decoration: none;
             font-size: 16px;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
             display: inline-block;
             border: none;
+            text-align: center;
         }
         
         .btn-primary {
-            background-color: #000;
+            background-color: #b91c1c;
             color: #fff;
+            box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: #991b1b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(185, 28, 28, 0.4);
         }
         
         .btn-secondary {
-            background-color: #fff;
-            color: #000;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        
+        /* Section Styles */
         .section {
-            margin: 60px 0;
+            margin: 100px 0;
             text-align: center;
         }
         
         .section-title {
-            font-size: 42px;
-            margin-bottom: 30px;
-            font-weight: 400;
+            font-size: 44px;
+            margin-bottom: 24px;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #b91c1c;
         }
         
         .section-description {
             max-width: 800px;
-            margin: 0 auto 40px;
+            margin: 30px auto 50px;
             font-size: 18px;
+            color: #4b5563;
         }
         
+        /* Features List */
         .feature-list {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin: 30px 0;
+            gap: 40px;
+            margin: 50px 0;
             list-style-type: none;
         }
         
         .feature-item {
             font-size: 18px;
             position: relative;
-            padding: 0 15px;
+            padding: 0 20px;
+            font-weight: 500;
         }
         
         .feature-item:not(:last-child):after {
             content: "•";
             position: absolute;
-            right: -15px;
+            right: -22px;
+            color: #b91c1c;
+            font-size: 24px;
         }
         
+        /* Wine Categories */
         .wine-categories {
             display: flex;
             justify-content: space-between;
             gap: 20px;
-            margin-top: 30px;
+            margin-top: 50px;
         }
         
         .wine-category {
-            background-color: #e9e5dc;
-            border-radius: 12px;
+            background-color: #fff;
+            border-radius: 16px;
             padding: 30px;
             text-align: center;
             flex: 1;
             text-decoration: none;
-            color: #222;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: #2c2c2c;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .wine-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #b91c1c, #dc2626);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
         }
         
         .wine-category:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+        }
+        
+        .wine-category:hover::before {
+            transform: scaleX(1);
         }
         
         .wine-category h3 {
             font-size: 28px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            font-weight: 600;
         }
         
         .wine-category img {
-            height: 200px;
-            margin: 20px 0;
+            height: 220px;
+            margin: 24px 0;
+            transition: transform 0.5s ease;
         }
         
-        .example-section {
-            margin: 80px 0;
-            text-align: center;
+        .wine-category:hover img {
+            transform: scale(1.05);
         }
         
-        .example-section h2 {
-            font-size: 42px;
-            margin-bottom: 40px;
-            font-weight: 400;
+        /* About Me Section */
+        .about-me-section {
+            margin: 120px 0;
+            padding: 0;
         }
         
-        /* Business Card Section Styles */
-        .business-card-section {
-            background-color: #1a1a1a;
-            color: white;
-            border-radius: 16px;
+        .about-me-container {
+            background: #fff;
+            border-radius: 24px;
             overflow: hidden;
-            padding: 40px;
-            position: relative;
-            margin: 80px 0;
-            text-align: center;
-        }
-        
-        .business-card-section h2 {
-            font-size: 42px;
-            margin-bottom: 30px;
-            font-weight: 300;
-        }
-        
-        .business-card-section p {
-            max-width: 800px;
-            margin: 0 auto 40px;
-            font-size: 18px;
-        }
-        
-        .business-card-preview {
-            background-color: white;
-            border-radius: 16px;
-            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
             display: flex;
-            max-width: 800px;
-            margin: 0 auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
         }
         
-        .business-card-image {
+        .about-me-image {
             flex: 1;
-            margin-right: 30px;
+            position: relative;
+            min-height: 400px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
         }
         
-        .business-card-image img {
-            width: 150px;
-            height: 150px;
+        .profile-frame {
+            width: 320px;
+            height: 320px;
             border-radius: 50%;
+            overflow: hidden;
+            border: 8px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        .profile-img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border: 3px solid #f5f2ec;
         }
         
-        .business-card-info {
-            flex: 2;
-            text-align: left;
-            color: #222;
+        .about-me-content {
+            flex: 1.2;
+            padding: 60px;
+            position: relative;
         }
         
-        .business-card-info h3 {
-            font-size: 32px;
-            margin-bottom: 10px;
+        .about-me-title {
+            font-size: 38px;
+            margin-bottom: 12px;
+            font-weight: 600;
             color: #1a1a1a;
         }
         
-        .business-card-info h4 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #555;
-            font-weight: normal;
+        .about-me-subtitle {
+            font-size: 18px;
+            color: #b91c1c;
+            margin-bottom: 30px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
         
-        .contact-buttons {
+        .about-me-text {
+            font-size: 16px;
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+        
+        .about-me-stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-item {
+            flex: 1;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: 600;
+            color: #b91c1c;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .social-links {
             display: flex;
             gap: 15px;
-            margin-top: 25px;
         }
         
-        .contact-option {
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 16px;
+        .social-link {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background-color: #f3f4f6;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            text-decoration: none;
+            color: #4b5563;
             transition: all 0.3s ease;
         }
         
-        .contact-email {
-            background-color: #2196F3;
+        .social-link:hover {
+            background-color: #b91c1c;
             color: white;
+            transform: translateY(-3px);
         }
         
-        .contact-linkedin {
-            background-color: #0077B5;
-            color: white;
+        .social-icon {
+            width: 20px;
+            height: 20px;
         }
         
-        .contact-phone {
-            background-color: #4CAF50;
+        .contact-btn {
+            position: absolute;
+            bottom: -22px;
+            right: 60px;
+            padding: 14px 30px;
+            background: #b91c1c;
             color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 10px 20px rgba(185, 28, 28, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        @media (max-width: 768px) {
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(185, 28, 28, 0.4);
+        }
+        
+        /* Example Section */
+        .example-section {
+            margin: 120px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .example-section h2 {
+            font-size: 44px;
+            margin-bottom: 50px;
+            font-weight: 600;
+        }
+        
+        .example-image {
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 991px) {
             .hero {
                 flex-direction: column;
-                padding: 30px;
+                padding: 40px 30px;
             }
             
             .hero-content {
                 max-width: 100%;
-                margin-bottom: 30px;
+                margin-bottom: 40px;
+                text-align: center;
+            }
+            
+            .button-group {
+                justify-content: center;
+            }
+            
+            .hero-image::before {
+                display: none;
+            }
+            
+            .about-me-container {
+                flex-direction: column;
+            }
+            
+            .about-me-image {
+                min-height: 320px;
+            }
+            
+            .profile-frame {
+                width: 240px;
+                height: 240px;
+            }
+            
+            .about-me-content {
+                padding: 40px 30px 60px;
+            }
+            
+            .contact-btn {
+                right: 50%;
+                transform: translateX(50%);
+            }
+            
+            .contact-btn:hover {
+                transform: translateX(50%) translateY(-3px);
+            }
+            
+            .about-me-stats {
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                flex: 0 0 calc(50% - 15px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 42px;
+            }
+            
+            .section-title {
+                font-size: 36px;
             }
             
             .wine-categories {
@@ -286,35 +484,44 @@
             
             .wine-category {
                 flex: 0 0 calc(50% - 10px);
+                margin-bottom: 20px;
             }
             
             .feature-list {
                 flex-direction: column;
                 gap: 15px;
+                align-items: center;
             }
             
             .feature-item:not(:last-child):after {
                 display: none;
             }
             
-            .business-card-preview {
+            .about-me-title {
+                font-size: 32px;
+            }
+            
+            .about-me-subtitle {
+                font-size: 16px;
+            }
+            
+            .stat-item {
+                flex: 0 0 100%;
+                margin-bottom: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .wine-category {
+                flex: 0 0 100%;
+            }
+            
+            .button-group {
                 flex-direction: column;
-                align-items: center;
-                padding: 30px 20px;
             }
             
-            .business-card-image {
-                margin-right: 0;
-                margin-bottom: 20px;
-            }
-            
-            .business-card-info {
-                text-align: center;
-            }
-            
-            .contact-buttons {
-                flex-direction: column;
-                width: 100%;
+            .social-links {
+                justify-content: center;
             }
         }
     </style>
@@ -324,120 +531,180 @@
         <!-- Hero Section -->
         <div class="hero">
             <div class="hero-content">
-                <h1>Scopri i Vini con un Tocco</h1>
-                <p class="subtitle">La Wine Card è il modo più elegante e smart per collegare ogni bottiglia a una scheda tecnica digitale.</p>
+                <h1>Discover Wines with a Touch</h1>
+                <p class="subtitle">Wine Card is the most elegant and smart way to connect each bottle to a digital technical sheet.</p>
                 <div class="button-group">
-                    <a href="#" class="btn btn-primary">Prova Ora</a>
-                    <a href="#" class="btn btn-secondary">Guarda un Esempio</a>
+                    <a href="#" class="btn btn-primary">Try Now</a>
+                    <a href="#" class="btn btn-secondary">See Example</a>
                 </div>
             </div>
             <div class="hero-image">
-                <!-- I'm using a placeholder. In a real site, replace with actual wine card image -->
-                <img src="/api/placeholder/400/320" alt="Wine Card e bottiglia di vino">
+                <img src="/api/placeholder/400/320" alt="Wine Card and bottle of wine">
             </div>
         </div>
         
         <!-- What is Wine Card Section -->
         <div class="section">
-            <h2 class="section-title">Cos'è Wine Card?</h2>
-            <p class="section-description">Wine Card è un cartellino NFC collegato a una pagina web personalizzata con tutte le informazioni del vino.</p>
+            <h2 class="section-title">What is Wine Card?</h2>
+            <p class="section-description">Wine Card is an NFC tag connected to a customized web page with all the information about the wine. Perfect for wineries, restaurants, and wine shops.</p>
             
             <ul class="feature-list">
-                <li class="feature-item">Facile da usare</li>
-                <li class="feature-item">Personalizzabile</li>
-                <li class="feature-item">Elegante ed ecologico</li>
-                <li class="feature-item">Pensato per venditori e ristoratori</li>
+                <li class="feature-item">Easy to use</li>
+                <li class="feature-item">Customizable</li>
+                <li class="feature-item">Elegant & eco-friendly</li>
+                <li class="feature-item">Perfect for businesses</li>
             </ul>
         </div>
         
         <!-- Categories Section -->
         <div class="section">
-            <h2 class="section-title">Categorie</h2>
+            <h2 class="section-title">Categories</h2>
             
             <div class="wine-categories">
                 <a href="Red.html" class="wine-category">
                     <h3>Red</h3>
-                    <img src="/api/placeholder/150/300" alt="Bottiglia di vino rosso">
+                    <img src="/api/placeholder/150/300" alt="Red wine bottle">
                 </a>
                 
                 <a href="White.html" class="wine-category">
                     <h3>White</h3>
-                    <img src="/api/placeholder/150/300" alt="Bottiglia di vino bianco">
+                    <img src="/api/placeholder/150/300" alt="White wine bottle">
                 </a>
                 
                 <a href="Rose.html" class="wine-category">
                     <h3>Rosé</h3>
-                    <img src="/api/placeholder/150/300" alt="Bottiglia di vino rosé">
+                    <img src="/api/placeholder/150/300" alt="Rosé wine bottle">
                 </a>
                 
                 <a href="Sparkling.html" class="wine-category">
                     <h3>Sparkling</h3>
-                    <img src="/api/placeholder/150/300" alt="Bottiglia di spumante">
+                    <img src="/api/placeholder/150/300" alt="Sparkling wine bottle">
                 </a>
             </div>
         </div>
         
-        <!-- Business Card Section -->
-        <div class="business-card-section">
-            <h2>Il Nostro Esperto</h2>
-            <p>Incontra il nostro esperto di vini e sommelier che ha curato la selezione e le descrizioni per Wine Card.</p>
-            
-            <div class="business-card-preview">
-                <div class="business-card-image">
-                    <img src="/api/placeholder/150/150" alt="Profile Photo">
-                </div>
-                <div class="business-card-info">
-                    <h3>Your Name</h3>
-                    <h4>Wine Expert & Sommelier</h4>
-                    <p>Con oltre 10 anni di esperienza nel settore vinicolo, offro consulenza per la selezione e la valorizzazione dei vini nella tua attività.</p>
-                    
-                    <div class="contact-buttons">
-                        <a href="mailto:your.email@example.com" class="contact-option contact-email">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                            </svg>
-                            Email
-                        </a>
-                        <a href="https://www.linkedin.com/in/your-profile/" class="contact-option contact-linkedin">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
-                            </svg>
-                            LinkedIn
-                        </a>
-                        <a href="tel:+1234567890" class="contact-option contact-phone">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            Phone
-                        </a>
+        <!-- About Me Section -->
+        <div class="section about-me-section">
+            <div class="about-me-container">
+                <div class="about-me-image">
+                    <div class="profile-frame">
+                        <img src="/api/placeholder/400/400" alt="Your Photo" class="profile-img">
                     </div>
                 </div>
-            </div>
-            
-            <div style="margin-top: 30px;">
-                <a href="business-card.html" class="btn btn-primary">Scopri di Più</a>
+                <div class="about-me-content">
+                    <h2 class="about-me-title">Your Name</h2>
+                    <h3 class="about-me-subtitle">Digital Wine Solutions Expert</h3>
+                    
+                    <p class="about-me-text">
+                        I'm passionate about combining technology and wine culture to create innovative digital solutions for the wine industry. With a background in tech and a love for fine wines, I've developed Wine Card to bridge the gap between traditional wine appreciation and modern digital experiences.
+                    </p>
+                    
+                    <div class="about-me-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100+</div>
+                            <div class="stat-label">Projects Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Happy Clients</div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="mailto:your.email@example.com" class="social-link">
+                            <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/your-profile/" class="social-link">
+                            <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                            </svg>
+                        </a>
+                        <a href="tel:+1234567890" class="social-link">
+                            <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/your-handle" class="social-link">
+                            <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z" />
+                            </svg>
+                        </a>
+                        <a href="https://instagram.com/your-handle" class="social-link">
+                            <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <a href="business-card.html" class="contact-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,18H4V6H20V18M4,0H20V2H4M4,22H20V24H4M12,12A2.5,2.5 0 0,0 14.5,9.5A2.5,2.5 0 0,0 12,7A2.5,2.5 0 0,0 9.5,9.5A2.5,2.5 0 0,0 12,12M12,8.5A1,1 0 0,1 13,9.5A1,1 0 0,1 12,10.5A1,1 0 0,1 11,9.5A1,1 0 0,1 12,8.5M17,14.5C17,12 14.33,10.75 12,10.75C9.67,10.75 7,12 7,14.5V16H17V14.5M8.9,14.5C9.2,13.9 10.47,12.75 12,12.75C13.53,12.75 14.8,13.9 15.1,14.5H8.9Z" />
+                        </svg>
+                        My Digital Card
+                    </a>
+                </div>
             </div>
         </div>
         
         <!-- Live Example Section -->
         <div class="example-section">
-            <h2>Esempio Live</h2>
-            <!-- Here you would add your live example content -->
-            <img src="/api/placeholder/600/300" alt="Esempio Live della Wine Card in funzione">
+            <h2>Live Example</h2>
+            <img src="/api/placeholder/800/400" alt="Live Example of Wine Card in action" class="example-image">
         </div>
     </div>
 
     <script>
         // You can add JavaScript for NFC functionality or other interactions here
         document.addEventListener('DOMContentLoaded', function() {
-            // Example: Add click tracking or other functionality
-            const businessCardLink = document.querySelector('a[href="business-card.html"]');
-            if (businessCardLink) {
-                businessCardLink.addEventListener('click', function(e) {
-                    // Optional: Add analytics or other functionality
-                    console.log('Business card link clicked');
+            // Animation for stats counting up
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            const animateValue = (obj, start, end, duration) => {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const value = Math.floor(progress * (end - start) + start);
+                    
+                    if (end > 99) {
+                        obj.innerHTML = value + '+';
+                    } else {
+                        obj.innerHTML = value;
+                    }
+                    
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    } else {
+                        obj.innerHTML = end + '+';
+                    }
+                };
+                window.requestAnimationFrame(step);
+            };
+            
+            // Intersection Observer for animation trigger
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Get the target value from the text content
+                        const target = parseInt(entry.target.textContent);
+                        // Animate from 0 to target
+                        animateValue(entry.target, 0, target, 1500);
+                        // Unobserve after animation is triggered
+                        observer.unobserve(entry.target);
+                    }
                 });
-            }
+            }, { threshold: 0.5 });
+            
+            // Observe all stat numbers
+            statNumbers.forEach(stat => {
+                observer.observe(stat);
+            });
         });
     </script>
 </body>
