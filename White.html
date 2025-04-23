@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   <title>Wine Card – White Wines</title>
+   <style>
+     body {
+       margin: 0;
+       font-family: 'Helvetica Neue', sans-serif;
+       background-color: #fcfbf7;
+       color: #5f5527;
+     }
+     header {
+       background-color: #83742a;
+       padding: 1.5rem 2rem;
+       color: white;
+       text-align: center;
+     }
+     h1 {
+       margin: 0;
+       font-size: 2.5rem;
+       font-weight: 600;
+     }
+     .grid {
+       display: grid;
+       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+       gap: 2rem;
+       padding: 2rem;
+       max-width: 1200px;
+       margin: 0 auto;
+     }
+     .card {
+       background-color: white;
+       border-radius: 16px;
+       box-shadow: 0 8px 24px rgba(131,116,42,0.1);
+       padding: 1.5rem;
+       transition: transform 0.3s ease;
+       cursor: pointer;
+       position: relative;
+       overflow: hidden;
+       text-decoration: none;
+       color: inherit;
+       border: 1px solid #f0e68c;
+     }
+     .card:hover {
+       transform: translateY(-5px);
+     }
+     .wine-title {
+       font-size: 1.25rem;
+       font-weight: 600;
+       margin: 0.5rem 0;
+       color: #5f5527;
+     }
+     .wine-description {
+       font-size: 0.95rem;
+       color: #83742a;
+     }
+     .wine-origin {
+       font-size: 0.85rem;
+       color: #83742a;
+       margin-bottom: 0.5rem;
+       font-style: italic;
+     }
+     footer {
+       text-align: center;
+       padding: 2rem 1rem;
+       font-size: 0.9rem;
+       color: #83742a;
+       border-top: 1px solid #f0e68c;
+     }
+   </style>
+ </head>
+ <body>
+   <header>
+     <h1>White Wines</h1>
+     <p>Experience the crisp, refreshing flavors of our white wine selection</p>
+   </header>
+   <section class="grid">
+     <a class="card" href="Chardonnay Grand Cru.html">
+       <h2 class="wine-title">Chardonnay Grand Cru</h2>
+       <p class="wine-origin">Burgundy, France</p>
+       <p class="wine-description">Rich and complex with notes of apple, hazelnut, and subtle oak. Perfectly balanced acidity.</p>
+     </a>
+     <a class="card" href="Riesling Kabinett.html">
+       <h2 class="wine-title">Riesling Kabinett</h2>
+       <p class="wine-origin">Mosel, Germany</p>
+       <p class="wine-description">Vibrant and aromatic with delicate sweetness. Flavors of green apple, lime, and mineral undertones.</p>
+     </a>
+     <a class="card" href="Sauvignon Blanc.html">
+       <h2 class="wine-title">Sauvignon Blanc</h2>
+       <p class="wine-origin">Marlborough, New Zealand</p>
+       <p class="wine-description">Bright and zesty with intense flavors of gooseberry, passionfruit, and grassy notes. Refreshing finish.</p>
+     </a>
+   </section>
+   <footer>
+     &copy; 2025 Wine Card. All rights reserved.
+   </footer>
+ </body>
+ </html>
