@@ -140,6 +140,14 @@
             padding: 30px;
             text-align: center;
             flex: 1;
+            text-decoration: none;
+            color: #222;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .wine-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         
         .wine-category h3 {
@@ -161,6 +169,104 @@
             font-size: 42px;
             margin-bottom: 40px;
             font-weight: 400;
+        }
+        
+        /* Business Card Section Styles */
+        .business-card-section {
+            background-color: #1a1a1a;
+            color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            padding: 40px;
+            position: relative;
+            margin: 80px 0;
+            text-align: center;
+        }
+        
+        .business-card-section h2 {
+            font-size: 42px;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .business-card-section p {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-size: 18px;
+        }
+        
+        .business-card-preview {
+            background-color: white;
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .business-card-image {
+            flex: 1;
+            margin-right: 30px;
+        }
+        
+        .business-card-image img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #f5f2ec;
+        }
+        
+        .business-card-info {
+            flex: 2;
+            text-align: left;
+            color: #222;
+        }
+        
+        .business-card-info h3 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        
+        .business-card-info h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #555;
+            font-weight: normal;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .contact-option {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-email {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .contact-linkedin {
+            background-color: #0077B5;
+            color: white;
+        }
+        
+        .contact-phone {
+            background-color: #4CAF50;
+            color: white;
         }
         
         @media (max-width: 768px) {
@@ -189,6 +295,26 @@
             
             .feature-item:not(:last-child):after {
                 display: none;
+            }
+            
+            .business-card-preview {
+                flex-direction: column;
+                align-items: center;
+                padding: 30px 20px;
+            }
+            
+            .business-card-image {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .business-card-info {
+                text-align: center;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                width: 100%;
             }
         }
     </style>
@@ -229,30 +355,67 @@
             <h2 class="section-title">Categorie</h2>
             
             <div class="wine-categories">
-                <div class="wine-category">
-                    <a href="Red.html" class="wine-category">
+                <a href="Red.html" class="wine-category">
                     <h3>Red</h3>
                     <img src="/api/placeholder/150/300" alt="Bottiglia di vino rosso">
-                        </a>
-                </div>
+                </a>
                 
-                <div class="wine-category">
-                  <h3>White</h3>
-                    <a href="White.html" class="wine-category">
-                    <img src="/api/placeholder/150/300" alt="Bottiglia di spumante">
-                        </a>
+                <a href="White.html" class="wine-category">
+                    <h3>White</h3>
+                    <img src="/api/placeholder/150/300" alt="Bottiglia di vino bianco">
+                </a>
                 
-                <div class="wine-category">
+                <a href="Rose.html" class="wine-category">
                     <h3>Rosé</h3>
                     <img src="/api/placeholder/150/300" alt="Bottiglia di vino rosé">
-                </div>
+                </a>
                 
-                <div class="wine-category">
+                <a href="Sparkling.html" class="wine-category">
                     <h3>Sparkling</h3>
-                    <a href="Sparkling.html" class="wine-category">
                     <img src="/api/placeholder/150/300" alt="Bottiglia di spumante">
-                        </a>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Business Card Section -->
+        <div class="business-card-section">
+            <h2>Il Nostro Esperto</h2>
+            <p>Incontra il nostro esperto di vini e sommelier che ha curato la selezione e le descrizioni per Wine Card.</p>
+            
+            <div class="business-card-preview">
+                <div class="business-card-image">
+                    <img src="/api/placeholder/150/150" alt="Profile Photo">
                 </div>
+                <div class="business-card-info">
+                    <h3>Your Name</h3>
+                    <h4>Wine Expert & Sommelier</h4>
+                    <p>Con oltre 10 anni di esperienza nel settore vinicolo, offro consulenza per la selezione e la valorizzazione dei vini nella tua attività.</p>
+                    
+                    <div class="contact-buttons">
+                        <a href="mailto:your.email@example.com" class="contact-option contact-email">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                            Email
+                        </a>
+                        <a href="https://www.linkedin.com/in/your-profile/" class="contact-option contact-linkedin">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                            </svg>
+                            LinkedIn
+                        </a>
+                        <a href="tel:+1234567890" class="contact-option contact-phone">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                            </svg>
+                            Phone
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <a href="business-card.html" class="btn btn-primary">Scopri di Più</a>
             </div>
         </div>
         
@@ -263,5 +426,19 @@
             <img src="/api/placeholder/600/300" alt="Esempio Live della Wine Card in funzione">
         </div>
     </div>
+
+    <script>
+        // You can add JavaScript for NFC functionality or other interactions here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Example: Add click tracking or other functionality
+            const businessCardLink = document.querySelector('a[href="business-card.html"]');
+            if (businessCardLink) {
+                businessCardLink.addEventListener('click', function(e) {
+                    // Optional: Add analytics or other functionality
+                    console.log('Business card link clicked');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
