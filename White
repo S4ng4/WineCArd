@@ -63,11 +63,11 @@
       font-style: italic;
     }
     footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      font-size: 0.9rem;
-      color: #83742a;
-      border-top: 1px solid #f0e68c;
+        text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+    color: #888;
+    background-color: #5f5527;
     }
   </style>
 </head>
