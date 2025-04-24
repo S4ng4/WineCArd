@@ -292,6 +292,7 @@
         
         .about-me-content {
             padding: 60px 60px 80px; /* Increase the bottom padding from 60px to 80px */
+            position: relative;
         }
         
         .about-me-title {
@@ -370,7 +371,7 @@
         
         .contact-btn {
             position: absolute;
-            bottom:12;
+            bottom: 20px;
             right: 60px;
             padding: 14px 30px;
             background: #b91c1c;
@@ -409,6 +410,39 @@
             border-radius: 16px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             max-width: 100%;
+        }
+        
+        /* Cork Pop Button */
+        .pop-btn {
+            display: block;
+            background: #b91c1c;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 36px;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 50px auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(185, 28, 28, 0.3);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .pop-btn:hover {
+            background: #991b1b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(185, 28, 28, 0.4);
+        }
+        
+        .popped {
+            animation: cork-pop 0.3s ease;
+        }
+        
+        @keyframes cork-pop {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
         }
         
         /* Responsive Design */
@@ -521,15 +555,6 @@
             .social-links {
                 justify-content: center;
             }
-            .popped {
-      animation: cork-pop 0.3s ease;
-    }
-
-    @keyframes cork-pop {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
-      100% { transform: translateY(0); }
-    }
         }
     </style>
 </head>
@@ -546,7 +571,7 @@
                 </div>
             </div>
             <div class="hero-image">
-                <img src="All Simbles.jpg" alt="Wine Card and bottle of wine">
+                <img src="/api/placeholder/400/320" alt="Wine Card and bottle of wine">
             </div>
         </div>
         
@@ -568,24 +593,24 @@
             <h2 class="section-title">Categories</h2>
             
             <div class="wine-categories">
-                <a href="RedLogo.png" class="wine-category">
+                <a href="#" class="wine-category">
                     <h3>Red</h3>
-                    <img src="RedLogo.html" alt="Red wine bottle">
+                    <img src="/api/placeholder/180/220" alt="Red wine bottle">
                 </a>
                 
-                <a href="White.html" class="wine-category">
+                <a href="#" class="wine-category">
                     <h3>White</h3>
-                    <img src="WhiteLogo.png" alt="White wine bottle">
+                    <img src="/api/placeholder/180/220" alt="White wine bottle">
                 </a>
                 
-                <a href="Rose.html" class="wine-category">
+                <a href="#" class="wine-category">
                     <h3>Rosé</h3>
-                    <img src="RoseLogo.png" alt="Rosé wine bottle">
+                    <img src="/api/placeholder/180/220" alt="Rosé wine bottle">
                 </a>
                 
-                <a href="Sparkling.html" class="wine-category">
+                <a href="#" class="wine-category">
                     <h3>Sparkling</h3>
-                    <img src="SparklingLogo.png" alt="Sparkling wine bottle">
+                    <img src="/api/placeholder/180/220" alt="Sparkling wine bottle">
                 </a>
             </div>
         </div>
@@ -595,7 +620,7 @@
             <div class="about-me-container">
                 <div class="about-me-image">
                     <div class="profile-frame">
-                        <img src="https://media.licdn.com/dms/image/v2/D4D03AQEsL7sx5X9y1g/profile-displayphoto-shrink_200_200/B4DZT7ntC9HwAc-/0/1739388277250?e=1750896000&v=beta&t=5QzpW3c6qf-nluoGuf_2LjRcIqmsYgxti8JeX9BuVAs" alt="Your Photo" class="profile-img">
+                        <img src="/api/placeholder/320/320" alt="Profile Photo" class="profile-img">
                     </div>
                 </div>
                 <div class="about-me-content">
@@ -608,15 +633,15 @@
                     
                     <div class="about-me-stats">
                         <div class="stat-item">
-                            <div class="stat-number">5+</div>
+                            <div class="stat-number">5</div>
                             <div class="stat-label">Years Experience</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">100+</div>
+                            <div class="stat-number">100</div>
                             <div class="stat-label">Projects Completed</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">50+</div>
+                            <div class="stat-number">50</div>
                             <div class="stat-label">Happy Clients</div>
                         </div>
                     </div>
@@ -649,7 +674,7 @@
                         </a>
                     </div>
                     
-                    <a href="business-card.html" class="contact-btn">
+                    <a href="#" class="contact-btn">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,18H4V6H20V18M4,0H20V2H4M4,22H20V24H4M12,12A2.5,2.5 0 0,0 14.5,9.5A2.5,2.5 0 0,0 12,7A2.5,2.5 0 0,0 9.5,9.5A2.5,2.5 0 0,0 12,12M12,8.5A1,1 0 0,1 13,9.5A1,1 0 0,1 12,10.5A1,1 0 0,1 11,9.5A1,1 0 0,1 12,8.5M17,14.5C17,12 14.33,10.75 12,10.75C9.67,10.75 7,12 7,14.5V16H17V14.5M8.9,14.5C9.2,13.9 10.47,12.75 12,12.75C13.53,12.75 14.8,13.9 15.1,14.5H8.9Z" />
                         </svg>
@@ -664,12 +689,13 @@
             <h2>Live Example</h2>
             <img src="/api/placeholder/800/400" alt="Live Example of Wine Card in action" class="example-image">
         </div>
-        <button class="pop-btn" onclick="popSound()">Stappa!</button>
-  <audio id="pop-audio" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+        
+        <!-- Cork Pop Button -->
+        <button class="pop-btn" id="pop-button">Pop the Cork!</button>
+        <audio id="pop-audio" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
     </div>
 
     <script>
-        // You can add JavaScript for NFC functionality or other interactions here
         document.addEventListener('DOMContentLoaded', function() {
             // Animation for stats counting up
             const statNumbers = document.querySelectorAll('.stat-number');
@@ -681,16 +707,12 @@
                     const progress = Math.min((timestamp - startTimestamp) / duration, 1);
                     const value = Math.floor(progress * (end - start) + start);
                     
-                    if (end > 99) {
-                        obj.innerHTML = value + '+';
-                    } else {
-                        obj.innerHTML = value;
-                    }
+                    obj.innerHTML = value;
                     
                     if (progress < 1) {
                         window.requestAnimationFrame(step);
                     } else {
-                        obj.innerHTML = end + '+';
+                        obj.innerHTML = end;
                     }
                 };
                 window.requestAnimationFrame(step);
@@ -700,32 +722,4 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Get the target value from the text content
-                        const target = parseInt(entry.target.textContent);
-                        // Animate from 0 to target
-                        animateValue(entry.target, 0, target, 1500);
-                        // Unobserve after animation is triggered
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-            
-            // Observe all stat numbers
-            statNumbers.forEach(stat => {
-                observer.observe(stat);
-            });
-        });
-        <script>
-    function popSound() {
-      const audio = document.getElementById('pop-audio');
-      audio.currentTime = 0;
-      audio.play();
-
-      const btn = document.querySelector('.pop-btn');
-      btn.classList.add('popped');
-      setTimeout(() => btn.classList.remove('popped'), 300);
-    }
-  </script>
-    </script>
-</body>
-</html>
+                        // Get the target value from the
