@@ -521,6 +521,15 @@
             .social-links {
                 justify-content: center;
             }
+            .popped {
+      animation: cork-pop 0.3s ease;
+    }
+
+    @keyframes cork-pop {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
         }
     </style>
 </head>
@@ -655,6 +664,8 @@
             <h2>Live Example</h2>
             <img src="/api/placeholder/800/400" alt="Live Example of Wine Card in action" class="example-image">
         </div>
+        <button class="pop-btn" onclick="popSound()">Stappa!</button>
+  <audio id="pop-audio" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
     </div>
 
     <script>
@@ -704,6 +715,17 @@
                 observer.observe(stat);
             });
         });
+        <script>
+    function popSound() {
+      const audio = document.getElementById('pop-audio');
+      audio.currentTime = 0;
+      audio.play();
+
+      const btn = document.querySelector('.pop-btn');
+      btn.classList.add('popped');
+      setTimeout(() => btn.classList.remove('popped'), 300);
+    }
+  </script>
     </script>
 </body>
 </html>
