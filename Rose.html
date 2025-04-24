@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wine Card – Rosé Wines</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #fdf5f7; /* lightBg */
+      color: #2e2e2e;
+    }
+    header {
+      background-color: #c06377; /* primary */
+      padding: 1.5rem 2rem;
+      color: white;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(192,99,119,0.08); /* rgbPrimary with opacity */
+      padding: 1.5rem;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .wine-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0.5rem 0;
+      color: #904756; /* dark */
+    }
+    .wine-description {
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .wine-origin {
+      font-size: 0.85rem;
+      color: #777;
+      margin-bottom: 0.5rem;
+      font-style: italic;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      color: #888;
+      background-color: #f7cad0; /* accent */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Rosé Wines</h1>
+    <p>Discover the refreshing and delicate flavors of our rosé wine selection</p>
+  </header>
+  <section class="grid">
+    <a class="card" href="Whispering Angel 2023.html">
+      <h2 class="wine-title">Whispering Angel 2023</h2>
+      <p class="wine-origin">Provence, France</p>
+      <p class="wine-description">Crisp and refreshing with notes of strawberry, peach, and rose petals. A Provence classic.</p>
+    </a>
+    <a class="card" href="Tavel Rosé 2022.html">
+      <h2 class="wine-title">Tavel Rosé 2022</h2>
+      <p class="wine-origin">Rhône Valley, France</p>
+      <p class="wine-description">Fuller-bodied with vibrant red fruit flavors and a dry, mineral finish. The king of rosé wines.</p>
+    </a>
+    <a class="card" href="Bandol Rosé 2023.html">
+      <h2 class="wine-title">Bandol Rosé 2023</h2>
+      <p class="wine-origin">Provence, France</p>
+      <p class="wine-description">Complex and elegant with wild herbs, red berries, and subtle salinity. Made primarily from Mourvèdre.</p>
+    </a>
+  </section>
+  <footer>
+    &copy; 2025 Wine Card. All rights reserved.
+  </footer>
+</body>
+</html>
