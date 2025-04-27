@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Discover SipTag</title>
   <style>
     body {
@@ -11,9 +11,8 @@
       font-family: 'Helvetica Neue', sans-serif;
       margin: 0;
       padding: 0;
-      line-height: 1.6;
-      overflow-x: hidden;
       position: relative;
+      overflow-x: hidden;
     }
 
     .hero {
@@ -21,61 +20,19 @@
       color: #FFFFFF;
       padding: 100px 20px;
       text-align: center;
-      transition: background 0.4s ease;
       position: relative;
-      overflow: hidden;
-    }
-    .hero:hover {
-      background-color: #7D272D;
-    }
-
-    .droplet {
-      position: fixed;
-      top: 50px;
-      right: 5%;
-      width: 18px;
-      height: 28px;
-      background-color: #6C1E24;
-      border-radius: 50% 50% 70% 70% / 60% 60% 40% 40%;
-      z-index: 9999;
-      box-shadow: 0 4px 12px rgba(108, 30, 36, 0.5);
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      pointer-events: none;
     }
 
     .content {
       max-width: 900px;
       margin: 40px auto;
-      padding: 40px 20px;
+      padding: 20px;
       background: #FFFFFF;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .content:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      position: relative;
+      z-index: 1;
     }
 
-    h1, h2, h3 {
-      margin-bottom: 20px;
-      transition: color 0.3s ease;
-    }
-    h2, h3 {
-      color: #6C1E24;
-      font-size: 28px;
-    }
-    h3:hover {
-      color: #D6B370;
-    }
-    p {
-      margin-bottom: 20px;
-      font-size: 18px;
-      transition: color 0.3s ease;
-    }
-    p:hover {
-      color: #555555;
-    }
     .btn {
       display: inline-block;
       background-color: #6C1E24;
@@ -84,34 +41,47 @@
       margin-top: 20px;
       text-decoration: none;
       border-radius: 4px;
-      transition: background 0.3s, color 0.3s, transform 0.3s;
+      transition: background 0.3s, transform 0.3s;
     }
+
     .btn:hover {
       background-color: #D6B370;
       color: #1C1C1C;
       transform: scale(1.05);
     }
 
-    @media (max-width: 768px) {
-      .droplet {
-        width: 14px;
-        height: 22px;
-        right: 4%;
-      }
+    /* DROP STYLES */
+    .drop {
+      position: fixed;
+      top: 120px;
+      right: 5%;
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle at 30% 30%, #D6B370, #6C1E24);
+      border-radius: 50% 50% 50% 50%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 1s;
     }
 
-    @media (max-width: 480px) {
-      .droplet {
-        width: 12px;
-        height: 20px;
-        right: 3%;
-      }
+    /* second smaller drop */
+    .drop-small {
+      position: fixed;
+      top: 160px;
+      right: 8%;
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle at 30% 30%, #E0C28F, #6C1E24);
+      border-radius: 50% 50% 50% 50%;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 1s;
     }
   </style>
 </head>
 <body>
-
-<div class="droplet"></div> <!-- Goccia -->
 
 <div class="hero">
   <h1>Discover SipTag</h1>
@@ -121,44 +91,33 @@
 
 <div id="content" class="content">
   <h2>The Story of SipTag</h2>
-  <h3>When Selling a Bottle of Wine Isn't That Simple</h3>
-  <p>Working in the restaurant industry, I realized how challenging it can be to sell a bottle of wine. Even with passion and preparation, telling the story of a wine in a simple, engaging, and personalized way for each customer is a daily challenge. I often felt the frustration of knowing the value inside a bottle without being able to fully convey it to those in front of me.</p>
-  <p>From this real experience, a question was born: "What if the wine could tell its own story?"</p>
-
-  <h3>The Idea That Sparked SipTag</h3>
-  <p>That's how SipTag was born: a simple yet powerful idea. A system capable of connecting every bottle to a living story, offering an immediate and professional narrative that bridges the gap between sellers and buyers. SipTag is not just a sales tool, but also a means of education and personal enjoyment: perfect for restaurant staff seeking to enhance their wine knowledge, and for customers and enthusiasts wanting to discover wines in a free and natural way.</p>
-
-  <h3>A Concrete Opportunity to Stand Out</h3>
-  <p>For wine shops and restaurants, SipTag is a real opportunity to differentiate from competitors, offering customers a richer, more immersive experience. It’s a genuine tool to increase sales, boost engagement, and highlight the hard work behind selecting and promoting great wines.</p>
-
-  <h3>A Technology Designed for the Future</h3>
-  <p>To launch SipTag and bring it quickly to the market, I chose to use NFC technology. This choice was no coincidence: I strongly believe that NFC and RFID represent the future of ultra-fast traceability, intelligent supply chain management, and may eventually replace traditional barcodes.</p>
-  <p>With a simple gesture, the customer can enjoy a fast, elegant, and captivating experience: just bring the phone close to the bottle and instantly dive into its world, discovering a new emotion with every interaction.</p>
-
-  <h3>Just the Beginning of a Bigger Journey</h3>
-  <p>SipTag is only the first step of a much bigger vision. The goal is to evolve toward a full integration with RFID and SentinelTag technologies, developing smarter, more connected solutions that transform every interaction into a moment of discovery and inspiration.</p>
-  <p>Imagine a future where every bottle, every product, and every experience can tell its own story, breaking down cultural barriers and enriching the buying experience for everyone.</p>
-
-  <h3>SipTag: Where Wine Finds Its Voice</h3>
-  <p>SipTag is not just a smart label. It's the spark of a larger vision: building a bridge between wine and people, turning every bottle into an opportunity for discovery, every tasting into a journey, and every sale into a story worth telling.</p>
+  <p>[Your storytelling text here]</p>
 </div>
 
+<div class="drop" id="drop"></div>
+<div class="drop-small" id="dropSmall"></div>
+
 <script>
-  const droplet = document.querySelector('.droplet');
+  const drop = document.getElementById('drop');
+  const dropSmall = document.getElementById('dropSmall');
 
   window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    droplet.style.top = `${50 + scrollY * 0.5}px`;
+    let scrollY = window.scrollY;
 
-    // Effetto allungamento durante lo scroll
-    const stretch = Math.min(scrollY / 500, 1); // massimo 1
-    droplet.style.transform = `translateX(0) scale(1, ${1 + stretch * 0.5})`;
+    // Only show the drops after scrolling down 100px
+    if (scrollY > 100) {
+      drop.style.opacity = 1;
+      dropSmall.style.opacity = 1;
+      
+      // Make them move down with scroll
+      drop.style.top = (120 + scrollY * 0.5) + 'px';
+      dropSmall.style.top = (160 + scrollY * 0.55) + 'px';
+    } else {
+      drop.style.opacity = 0;
+      dropSmall.style.opacity = 0;
+    }
   });
 </script>
 
 </body>
 </html>
-
-</body>
-</html>
-
