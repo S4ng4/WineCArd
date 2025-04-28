@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea Sangalli - Digital Business Card</title>
+    <style>
+        :root {
+            --primary: #5c1a1b;
+            --secondary: #556B2F;
+            --light: #F7E7CE;
+            --dark: #3B2F2F;
+            --accent:#8A7332;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f7f3;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #592020 100%);
+            color: white;
+            padding: 3rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::after {
+            content: "";
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary);
+        }
+        
+        .profile-info h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .profile-info h2 {
+            margin: 0.5rem 0 1rem;
+            font-weight: 500;
+            opacity: 0.9;
+            font-size: 1.5rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+        
+        .contact-item i {
+            font-size: 1.2rem;
+        }
+        
+        .section {
+            padding: 2rem;
+        }
+        
+        .section-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        
+        .skill {
+            background-color: #e2e8f0;
+            color: var(--secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .experience-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .experience-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+        
+        .experience-company {
+            font-weight: 500;
+            color: var(--primary);
+            margin: 0.25rem 0;
+        }
+        
+        .experience-date {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .education-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .education-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .education-degree {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+        
+        .education-school {
+            font-weight: 500;
+            color: var(--primary);
+            margin: 0.25rem 0;
+        }
+        
+        .education-date {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            .profile {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .contact-info {
+                justify-content: center;
+            }
+            
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="profile">
+                    <div class="profile-img">
+                        AS
+                    </div>
+                    <div class="profile-info">
+                        <h1>Andrea Sangalli</h1>
+                        <h2>Restaurant Manager & Industrial Technician</h2>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>andrea.sangalli@example.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Philadelphia, PA / Milan, Italy</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-linkedin"></i>
+                                <span>linkedin.com/in/andrea-sangalli-1a1577274</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3 class="section-title">About Me</h3>
+                <p>Dedicated restaurant professional with extensive expertise in fine dining operations, Italian cuisine, and hospitality management. Committed to delivering exceptional guest experiences through seamless service execution, staff leadership, and a deep understanding of restaurant operations and wine culture. Previously worked as an Instrumentation Technician and Electrician in industrial settings with major utility providers and specialized sectors including chemical manufacturing, pharmaceutical facilities, and aviation infrastructure.</p>
+            </div>
+            
+            <div class="section">
+                <h3 class="section-title">Skills</h3>
+                <div class="skills">
+                    <div class="skill">Team Leadership</div>
+                    <div class="skill">Food & Beverage Operations</div>
+                    <div class="skill">Hospitality Industry</div>
+                    <div class="skill">Wine & Beverage Service</div>
+                    <div class="skill">Italian Cuisine Knowledge</div>
+                    <div class="skill">Guest Experience & VIP Relations</div>
+                    <div class="skill">Inventory & Cost Control</div>
+                    <div class="skill">Event Planning</div>
+                    <div class="skill">Menu Development</div>
+                    <div class="skill">Process Improvement</div>
+                    <div class="skill">Instrumentation Calibration</div>
+                    <div class="skill">Electrical Systems</div>
+                    <div class="skill">Industrial Control Systems</div>
+                    <div class="skill">Technical Troubleshooting</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3 class="section-title">Work Experience</h3>
+                
+                <div class="experience-item">
+                    <h4 class="experience-title">Restaurant Manager</h4>
+                    <p class="experience-company">Fine Dining Restaurant</p>
+                    <p class="experience-date">May 2020 - Present</p>
+                    <p>Lead restaurant operations and team management for a high-end dining establishment, specializing in Italian cuisine and exceptional hospitality. Oversee guest experience, wine program management, staff training, inventory control, and event coordination. Focus on optimizing service flow, enhancing guest satisfaction, and ensuring operational efficiency while maintaining the highest industry standards.</p>
+                </div>
+                
+                <div class="experience-item">
+                    <h4 class="experience-title">Food Server</h4>
+                    <p class="experience-company">Fine Dining Restaurant</p>
+                    <p class="experience-date">April 2016 - May 2020</p>
+                    <p>Delivered exceptional guest experiences through personalized service and comprehensive knowledge of Italian cuisine and wines. Provided expert wine pairing recommendations, sophisticated tableside presentation, and maintained strong sales performance through personalized guest interactions in a high-volume, high-end service environment.</p>
+                </div>
+                
+                <div class="experience-item">
+                    <h4 class="experience-title">Instrumentation Technician</h4>
+                    <p class="experience-company">Boffetti S.P.A</p>
+                    <p class="experience-date">June 2012 - August 2015</p>
+                    <p>Specialized in installing, calibrating, maintaining, and troubleshooting sophisticated measurement and control instruments for process control, safety, and quality assurance in Oil & Gas and Pharmaceutical industries. Maintained fire & gas detection systems, calibrated safety instrumented systems, and validated critical process parameters.</p>
+                </div>
+                
+                <div class="experience-item">
+                    <h4 class="experience-title">Electrician</h4>
+                    <p class="experience-company">Boffetti S.P.A</p>
+                    <p class="experience-date">August 2008 - June 2013</p>
+                    <p>Worked on power plant operations, industrial facilities, and critical infrastructure with major utility providers (Terna, A2A, Enel). Specialized in high and medium voltage systems, industrial control systems, emergency power systems, and electrical installations in chemical plants, pharmaceutical facilities, and airport systems (Linate and Malpensa).</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3 class="section-title">Education & Training</h3>
+                
+                <div class="education-item">
+                    <h4 class="education-degree">Intensive English Language Program</h4>
+                    <p class="education-school">Temple University</p>
+                    <p class="education-date">2015 - 2016</p>
+                </div>
+                
+                <div class="education-item">
+                    <h4 class="education-degree">Technical Training - Electrical & Instrumentation</h4>
+                    <p class="education-school">Professional Technical Education</p>
+                    <p class="education-date">2007 - 2008</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3 class="section-title">Core Expertise</h3>
+                <div class="experience-item">
+                    <h4 class="experience-title">Hospitality Management</h4>
+                    <p>Restaurant operations & team leadership, guest experience & VIP relations, Italian cuisine knowledge, wine pairing & beverage program management, staff training & performance optimization, high-volume service execution, problem-solving & crisis management.</p>
+                </div>
+                
+                <div class="experience-item">
+                    <h4 class="experience-title">Technical Expertise</h4>
+                    <p>Instrumentation calibration, high and medium voltage systems, industrial control systems, PLC systems, explosion-proof electrical systems, safety instrumented systems, fire & gas detection systems, process monitoring equipment.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p>&copy; 2025 Andrea Sangalli. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
