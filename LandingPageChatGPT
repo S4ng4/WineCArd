@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SipTap — The Future of Wine Tasting</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fdfdfd;
+      color: #222;
+      line-height: 1.6;
+    }
+    header {
+      background: #fff;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .cta-button {
+      padding: 0.75rem 1.5rem;
+      background-color: #7b2d26;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    section {
+      padding: 3rem 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .benefits, .features, .future {
+      background-color: #fafafa;
+      margin: 2rem 0;
+      padding: 2rem;
+      border-radius: 8px;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      section h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SipTap</h1>
+    <p>The future of wine tasting is just a tap away.<br />
+    Discover wine like never before — smart, elegant, and made for everyone.</p>
+    <a href="#explore" class="cta-button">Explore Now</a>
+  </header>
+
+  <section id="explore">
+    <h2>Welcome to SipTap</h2>
+    <p>SipTap is the digital revolution in wine tasting. Born from a simple idea — to make wine more accessible, engaging, and understandable — it combines elegant design and smart technology.</p>
+  </section>
+
+  <section class="benefits">
+    <h2>🍷 What is SipTap?</h2>
+    <p>SipTap is a smart tool for wine lovers, restaurant owners, shops, and producers. Our SipCards — stylish NFC cards — give instant access to immersive content. No apps. No QR codes. Just one tap.</p>
+  </section>
+
+  <section class="features">
+    <h2>💡 Why NFC? Why now?</h2>
+    <p>NFC offers a premium, seamless experience that aligns with the elegance of wine. SipCards are customizable, reflecting your brand and story while delivering smart, interactive experiences.</p>
+  </section>
+
+  <section class="future">
+    <h2>🚀 What’s next?</h2>
+    <p>SipTap is just the beginning. Coming soon: RFID and HUD integrations for inventory control, cellar management, and next-gen wine logistics.</p>
+  </section>
+
+  <section style="text-align: center;">
+    <h2>📍 Ready to transform the way you experience wine?</h2>
+    <a href="#demo" class="cta-button">Request a Demo</a>
+    <a href="#order" class="cta-button" style="margin-left: 1rem; background-color: #4a4a4a;">Order SipCards</a>
+  </section>
+
+  <footer>
+    <p>SipTap — Where wine meets innovation.<br/>&copy; 2025 SipTap. All rights reserved.</p>
+  </footer>
+</body>
+</html>
