@@ -327,7 +327,7 @@
         <a href="#demo" class="cta-button secondary">Request a demo</a>
       </div>
     </div>
-    <img src="/api/placeholder/800/400" alt="SipTap Card elegantly placed next to a wine glass" class="hero-image" />
+    <img src="all Simbles.jpg" alt="SipTap Card elegantly placed next to a wine glass" class="hero-image" />
   </section>
 
   <!-- What is SipTap -->
@@ -335,7 +335,7 @@
     <div class="section-content">
       <h2>What is SipTap</h2>
       <p>A smart tool designed for wine lovers, restaurant owners, shops, and producers. Elegant. Intuitive. Revolutionary.</p>
-      <img src="/api/placeholder/1000/600" alt="SipTap cards showcasing elegant design" class="section-image" />
+      <img src="SipTag4Steps.png" alt="SipTap cards showcasing elegant design" class="section-image" />
     </div>
   </section>
 
@@ -344,7 +344,7 @@
     <div class="section-content">
       <h2>One tap. Endless possibilities.</h2>
       <p>SipCards — stylish NFC cards — give instant access to immersive wine content. No apps. No QR codes. Just pure experience.</p>
-      <img src="/api/placeholder/1000/600" alt="Person tapping phone on SipCard" class="section-image" />
+      <img src="SipTag4Steps" alt="Person tapping phone on SipCard" class="section-image" />
     </div>
   </section>
 
