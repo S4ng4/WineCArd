@@ -101,10 +101,11 @@
     }
 
     .hero-image {
-      width: 60%;
-      max-width: 800px;
+      width: 40%;
+      max-width: 400px;
       margin-top: 30px;
-      animation: float 3s ease-in-out infinite;
+      animation: float 2s ease-in-out infinite;
+      border-radius: 60px;
     }
 
     @keyframes float {
@@ -143,7 +144,7 @@
 
     /* Feature Sections */
     .section {
-      padding: 100px 0;
+      padding: 10px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -171,7 +172,7 @@
     }
 
     .section-dark {
-      background-color: #1d1d1f;
+      background-color: ;
       color: #f5f5f7;
     }
 
@@ -191,7 +192,7 @@
     .features-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 50px;
+      gap: 1px;
       max-width: 980px;
       margin: 60px auto;
       padding: 0 20px;
@@ -342,8 +343,6 @@
   <!-- How it works - Dark section -->
   <section class="section section-dark">
     <div class="section-content">
-      <h2>One tap. Endless possibilities.</h2>
-      <p>SipCards — stylish NFC cards — give instant access to immersive wine content. No apps. No QR codes. Just pure experience.</p>
       <img src="SipTag4Steps" alt="Person tapping phone on SipCard" class="section-image" />
     </div>
   </section>
@@ -378,7 +377,7 @@
     </div>
   </section>
 
-  <!-- Video Section -->
+ <!-- Video Section -->
   <section class="video-section">
     <div class="video-container">
       <!-- Insert video placeholder -->
