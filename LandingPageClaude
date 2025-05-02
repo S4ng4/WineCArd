@@ -172,8 +172,8 @@
     }
 
     .section-dark {
-      background-color: ;
-      color: #f5f5f7;
+      background-color:"" ;
+      color: "";
     }
 
     .section-dark p {
