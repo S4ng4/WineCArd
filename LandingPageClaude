@@ -172,8 +172,8 @@
     }
 
     .section-dark {
-      background-color:"" ;
-      color: "";
+      background-color: white ;
+      color: white ;
     }
 
     .section-dark p {
@@ -181,7 +181,7 @@
     }
 
     .section-image {
-      width: 80%;
+      width: 100%;
       max-width: 1000px;
       margin: 40px 0;
       border-radius: 12px;
