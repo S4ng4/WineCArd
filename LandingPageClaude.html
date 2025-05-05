@@ -143,7 +143,7 @@
 
     /* Feature Sections */
     .section {
-      padding: 10px 0;
+      padding: 80px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -159,15 +159,29 @@
     .section h2 {
       font-size: 48px;
       font-weight: 600;
-      margin-bottom: 15px;
+      margin-bottom: 25px;
       letter-spacing: -0.5px;
     }
 
     .section p {
       font-size: 21px;
       color: #86868b;
-      max-width: 600px;
+      max-width: 800px;
       margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    .section-dark {
+      background-color: #1d1d1f;
+      color: white;
+    }
+
+    .section-dark h2 {
+      color: white;
+    }
+
+    .section-dark p {
+      color: #f5f5f7;
     }
 
     .section-image {
@@ -182,19 +196,34 @@
     .features-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      gap: 40px;
       max-width: 980px;
       margin: 60px auto;
       padding: 0 20px;
     }
 
     .feature-card {
-      text-align: left;
-      padding: 20px;
+      text-align: center;
+      padding: 30px;
+      border-radius: 12px;
+      background-color: #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.6s ease;
+    }
+
+    .feature-card:nth-child(odd) {
+      transform: translateX(-50px);
+    }
+
+    .feature-card.visible {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     .feature-icon {
-      font-size: 40px;
+      font-size: 48px;
       margin-bottom: 20px;
     }
 
@@ -202,11 +231,14 @@
       font-size: 24px;
       font-weight: 600;
       margin-bottom: 15px;
+      color: #1d1d1f;
     }
 
     .feature-card p {
       font-size: 17px;
       color: #86868b;
+      line-height: 1.6;
+      margin-bottom: 15px;
     }
 
     /* Video Section */
@@ -240,11 +272,23 @@
       padding: 0 20px;
     }
 
+    .video-content h2 {
+      font-size: 48px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .video-content p {
+      font-size: 24px;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+
     /* Footer */
     footer {
       background-color: #f5f5f7;
-      padding: 40px 0;
-      font-size: 12px;
+      padding: 60px 0;
+      font-size: 14px;
       color: #86868b;
     }
 
@@ -260,12 +304,24 @@
       justify-content: center;
       flex-wrap: wrap;
       margin: 20px 0;
-      gap: 20px;
+      gap: 30px;
     }
 
     .footer-links a {
       color: #515154;
-      font-size: 12px;
+      font-size: 14px;
+    }
+
+    /* Animation for sections */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Responsive */
@@ -293,6 +349,14 @@
       .hero-image {
         width: 85%;
       }
+
+      .cta-container {
+        flex-direction: column;
+      }
+      
+      .section {
+        padding: 60px 0;
+      }
     }
   </style>
 </head>
@@ -315,97 +379,108 @@
       <h2>The future of wine tasting is just a tap away.</h2>
       <div class="cta-container">
         <a href="#what" class="cta-button">Learn more</a>
-        <a href="#demo" class="cta-button secondary">Request a demo</a>
+        <a href="#demo" class="cta-button secondary">Explore the SipCard</a>
       </div>
     </div>
     <img src="All Simbles.jpg" alt="SipTap Card elegantly placed next to a wine glass" class="hero-image" />
   </section>
 
   <!-- What is SipTap -->
-  <section class="section" id="what">
+  <section class="section fade-in" id="what">
     <div class="section-content">
       <h2>What is SipTap</h2>
-      <p>A smart tool designed for wine lovers, restaurant owners, shops, and producers. Elegant. Intuitive. Revolutionary.
+      <p>
+        A smart tool designed for wine lovers, restaurant owners, shops, and producers. Elegant. Intuitive. Revolutionary.
         <br><br>
-        SipTap isn’t just a Wine Card — it’s the future of wine communication.
-       Powered by cutting-edge AI, SipTap transforms every bottle into a story worth sharing. With just one tap, your customers access rich, immersive content: tasting notes, aging details, pairings, and the soul of your wine — all in seconds.
-
-It’s elegant. It’s instant. It’s unforgettable.
-No apps. No QR codes. No friction.
-
-This isn’t a trend — it’s the new standard.
-Don’t get left behind. Tap into the future.
-
-</p>
+        SipTap isn't just a Wine Card — it's the future of wine communication.
+        Powered by cutting-edge AI, SipTap transforms every bottle into a story worth sharing. With just one tap, your customers access rich, immersive content: tasting notes, aging details, pairings, and the soul of your wine — all in seconds.
+        <br><br>
+        It's elegant. It's instant. It's unforgettable.
+        No apps. No QR codes. No friction.
+        <br><br>
+        This isn't a trend — it's the new standard.
+        Don't get left behind. Tap into the future.
+      </p>
       <img src="SipTag4Steps.png" alt="SipTap cards showcasing elegant design" class="section-image" />
     </div>
   </section>
 
   <!-- How it works - Dark section -->
-  <section class="section section-dark">
+  <section class="section section-dark fade-in">
     <div class="section-content">
       <h2>Total Customization, No Compromises</h2>
-      <p>Not a fan of having an AI describe your wine? Perfect.
-    <br><br>
-    With SipTap, <strong>you’re in full control</strong>.
-    Rewrite any text. Tweak every detail. Change the feeling, the soul, the voice of your bottle. 
-    And yes — you can upload your logo, your emotions, your vision.
-    <br><br>
-    It all starts from a simple Google Sheet, but what you create is anything but simple.
-    It's true customization. It's communication, by you.
-    <br><br>
-    No limits. Just possibilities.
-    <br>
-    Update. Experiment. Perfect.
-    </p>
+      <p>
+        Not a fan of having an AI describe your wine? Perfect.
+        <br><br>
+        With SipTap, <strong>you're in full control</strong>.
+        Rewrite any text. Tweak every detail. Change the feeling, the soul, the voice of your bottle. 
+        And yes — you can upload your logo, your emotions, your vision.
+        <br><br>
+        It all starts from a simple Google Sheet, but what you create is anything but simple.
+        It's true customization. It's communication, by you.
+        <br><br>
+        No limits. Just possibilities.
+        <br>
+        Update. Experiment. Perfect.
+      </p>
       <img src="ChatGPT Image Apr 30, 2025, 10_23_30 PM.png" alt="Person tapping phone on SipCard" class="section-image" />
     </div>
   </section>
 
   <!-- Features Grid -->
-  <section class="section" id="why">
+  <section class="section fade-in" id="why">
     <div class="section-content">
       <h2>Why NFC? Why now?</h2>
-      <p>Experience premium, seamless interactions — perfectly paired with the elegance of fine wine.
-With SipTap, every bottle becomes a digital gateway. Surprise, engage, and inspire your audience with a simple gesture. No barriers, just pure connection.
-The tradition of wine meets the innovation of today.<br>
-<strong>Refined. Effortless. Unforgettable.</strong>
-</p>
+      <p>
+        Experience premium, seamless interactions — perfectly paired with the elegance of fine wine.
+        With SipTap, every bottle becomes a digital gateway. Surprise, engage, and inspire your audience with a simple gesture. No barriers, just pure connection.
+        The tradition of wine meets the innovation of today.
+        <br><br>
+        <strong>Refined. Effortless. Unforgettable.</strong>
+      </p>
     </div>
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon">🍷</div>
         <h3>Premium experience</h3>
-        <p>Elevate your wine experience with technology as refined as the wine itself.
-            SipTap doesn’t just enhance wine tasting — it redefines it.
-            Seamless.<br>
+        <p>
+          Elevate your wine experience with technology as refined as the wine itself.
+          SipTap doesn't just enhance wine tasting — it redefines it.
+          Seamless.
+          <br><br>
           <strong>Elegant. Unexpectedly simple.</strong>
         </p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">✨</div>
         <h3>Brand-forward design</h3>
-        <p>Each card is tailored to reflect your brand's essence, telling your story with precision, style, and emotion. 
+        <p>
+          Each card is tailored to reflect your brand's essence, telling your story with precision, style, and emotion. 
           From logo to language, from visuals to voice, every detail can be personalized to resonate with your audience. 
-          Whether you're introducing a new label or reinforcing a heritage vintage, SipTap cards elevate your wine into a full-sensory experience</p><br>
-       <strong>Custom SipCards are more than just a tool — they're a canvas for your identity.</strong>
+          Whether you're introducing a new label or reinforcing a heritage vintage, SipTap cards elevate your wine into a full-sensory experience.
+          <br><br>
+          <strong>Custom SipCards are more than just a tool — they're a canvas for your identity.</strong>
+        </p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📱</div>
         <h3>Universal compatibility</h3>
-        <p>SipTap works seamlessly with any modern smartphone — iPhone or Android — thanks to built-in NFC technology.
-Whether you're serving tech-savvy sommeliers or casual wine lovers, everyone gets the same smooth, intuitive experience.
-Because innovation should feel natural.
-And simplicity should be powerful.<br>
-        <strong>No apps to download. No setup required. Just tap and go.</strong>
+        <p>
+          SipTap works seamlessly with any modern smartphone — iPhone or Android — thanks to built-in NFC technology.
+          Whether you're serving tech-savvy sommeliers or casual wine lovers, everyone gets the same smooth, intuitive experience.
+          Because innovation should feel natural.
+          And simplicity should be powerful.
+          <br><br>
+          <strong>No apps to download. No setup required. Just tap and go.</strong>
         </p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🔄</div>
         <h3>Dynamic content</h3>
-        <p>With SipTap, you're not locked into static information. Update tasting notes, change pairings, add new vintages — all from a simple spreadsheet!<br>
-        <strong> No need to reprint. No waste. Infinite updates.</strong>
-      </div>
+        <p>
+          With SipTap, you're not locked into static information. Update tasting notes, change pairings, add new vintages — all from a simple spreadsheet!
+          <br><br>
+          <strong>No need to reprint. No waste. Infinite updates.</strong>
         </p>
       </div>
     </div>
@@ -425,21 +500,21 @@ And simplicity should be powerful.<br>
   </section>
 
   <!-- Future Section -->
-  <section class="section" id="future">
+  <section class="section fade-in" id="future">
     <div class="section-content">
       <h2>The future is here</h2>
-      <p>SipTap is just the beginning!!! RFID and HUD integrations for inventory control, cellar management, and next-gen wine logistics.</p>
+      <p>SipTap is just the beginning! RFID and HUD integrations for inventory control, cellar management, and next-gen wine logistics.</p>
       <img src="Logo.png" alt="Future technology visualization" class="section-image" />
     </div>
   </section>
 
   <!-- Final CTA -->
-  <section class="section section-dark" id="demo">
+  <section class="section section-dark fade-in" id="demo">
     <div class="section-content">
       <h2>Ready to transform your wine experience?</h2>
       <p>Join the SipTap revolution today.</p>
       <div class="cta-container">
-        <a href="DemoRequest.html" class="cta-button">Request a Demo</a>
+        <a href="DemoRequest.html" class="cta-button">Explore the SipCard</a>
         <a href="#" class="cta-button secondary" style="background-color: rgba(255, 255, 255, 0.1); color: white;">Order SipCards</a>
       </div>
     </div>
@@ -457,5 +532,49 @@ And simplicity should be powerful.<br>
       <p>SipTap — Where wine meets innovation.<br />Copyright © 2025 SipTap. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- JavaScript for animations -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Intersection Observer for fade-in sections
+      const fadeElements = document.querySelectorAll('.fade-in');
+      const featureCards = document.querySelectorAll('.feature-card');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+      
+      fadeElements.forEach(element => {
+        observer.observe(element);
+      });
+      
+      // Sequential animation for feature cards
+      const featuresObserver = new IntersectionObserver((entries, observer) => {
+        if (entries[0].isIntersecting) {
+          // Apply staggered animation to feature cards
+          featureCards.forEach((card, index) => {
+            setTimeout(() => {
+              card.classList.add('visible');
+            }, index * 200); // 200ms delay between each card
+          });
+          observer.unobserve(entries[0].target);
+        }
+      }, {
+        threshold: 0.2
+      });
+      
+      // Observe the features grid section
+      const featuresGrid = document.querySelector('.features-grid');
+      if (featuresGrid) {
+        featuresObserver.observe(featuresGrid);
+      }
+    });
+  </script>
 </body>
 </html>
