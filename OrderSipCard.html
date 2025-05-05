@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SipTap — Choose Your Package</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1d1d1f;
+      background-color: #fbfbfd;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: #0066cc;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      opacity: 0.8;
+    }
+
+    /* Navigation */
+    nav {
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #7b2d26;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin: 0 15px;
+    }
+
+    .nav-links a {
+      color: #1d1d1f;
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+
+    /* Header Section */
+    .header {
+      background: linear-gradient(to right, #7b2d26, #a23e33);
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .header h1 {
+      font-size: 48px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .header p {
+      font-size: 24px;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+
+    /* Pricing Section */
+    .pricing-section {
+      padding: 100px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .pricing-intro {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .pricing-intro h2 {
+      font-size: 40px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #1d1d1f;
+    }
+
+    .pricing-intro p {
+      font-size: 20px;
+      color: #86868b;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .pricing-card {
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      padding: 40px 30px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(40px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .pricing-card.popular {
+      border: 2px solid #7b2d26;
+    }
+
+    .popular-tag {
+      position: absolute;
+      top: 20px;
+      right: -35px;
+      background-color: #7b2d26;
+      color: white;
+      padding: 8px 40px;
+      font-size: 14px;
+      font-weight: 500;
+      transform: rotate(45deg);
+    }
+
+    .card-header {
+      margin-bottom: 30px;
+    }
+
+    .card-header h3 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #1d1d1f;
+    }
+
+    .card-header p {
+      color: #86868b;
+      font-size: 16px;
+    }
+
+    .card-price {
+      margin-bottom: 30px;
+    }
+
+    .price {
+      font-size: 60px;
+      font-weight: 700;
+      color: #1d1d1f;
+      line-height: 1;
+    }
+
+    .price-currency {
+      font-size: 24px;
+      vertical-align: super;
+      font-weight: 500;
+      margin-right: 5px;
+    }
+
+    .price-period {
+      font-size: 16px;
+      color: #86868b;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .card-features {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .feature-item {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .feature-icon {
+      margin-right: 10px;
+      color: #7b2d26;
+      font-weight: bold;
+    }
+
+    .card-button {
+      display: inline-block;
+      background-color: #7b2d26;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 980px;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .card-button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    .card-button.secondary {
+      background-color: transparent;
+      border: 2px solid #7b2d26;
+      color: #7b2d26;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      background-color: #f5f5f7;
+      padding: 100px 20px;
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .faq-header h2 {
+      font-size: 40px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #1d1d1f;
+    }
+
+    .faq-header p {
+      font-size: 20px;
+      color: #86868b;
+    }
+
+    .faq-item {
+      background-color: white;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      padding: 25px 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+
+    .faq-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .faq-question {
+      font-size: 20px;
+      font-weight: 500;
+      color: #1d1d1f;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-question::after {
+      content: '+';
+      font-size: 24px;
+      color: #7b2d26;
+    }
+
+    .faq-item.active .faq-question::after {
+      content: '−';
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      font-size: 16px;
+      color: #86868b;
+      padding-top: 0;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      padding-top: 15px;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(to right, #1d1d1f, #353538);
+      color: white;
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    .cta-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta-container h2 {
+      font-size: 40px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .cta-container p {
+      font-size: 20px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .cta-button {
+      background-color: #7b2d26;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 980px;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button.secondary {
+      background-color: transparent;
+      border: 2px solid white;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #f5f5f7;
+      padding: 60px 0;
+      font-size: 14px;
+      color: #86868b;
+    }
+
+    .footer-content {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px 0;
+      gap: 30px;
+    }
+
+    .footer-links a {
+      color: #515154;
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .pricing-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 36px;
+      }
+
+      .header p {
+        font-size: 18px;
+      }
+
+      .pricing-intro h2 {
+        font-size: 32px;
+      }
+
+      .pricing-intro p {
+        font-size: 16px;
+      }
+
+      .pricing-cards {
+        grid-template-columns: 1fr;
+        max-width: 450px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html" class="nav-logo">SipTap</a>
+    <ul class="nav-links">
+      <li><a href="index.html#what">What is SipTap</a></li>
+      <li><a href="index.html#why">Why NFC</a></li>
+      <li><a href="index.html#future">Future</a></li>
+      <li><a href="DemoRequest.html">Demo</a></li>
+    </ul>
+  </nav>
+
+  <!-- Header Section -->
+  <section class="header">
+    <h1>Choose Your Perfect SipCard Package</h1>
+    <p>Unlock the full potential of your wine with our range of SipCard packages, tailored to fit your needs.</p>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="pricing-section">
+    <div class="pricing-intro">
+      <h2>Simple, Transparent Pricing</h2>
+      <p>Find the perfect package for your wine collection or business. No hidden fees, just pure value.</p>
+    </div>
+
+    <div class="pricing-cards">
+      <!-- Light Package -->
+      <div class="pricing-card">
+        <div class="card-header">
+          <h3>Light</h3>
+          <p>Perfect for small collections or beginners</p>
+        </div>
+        <div class="card-price">
+          <span class="price"><span class="price-currency">$</span>3.99</span>
+          <span class="price-period">10 SipCards</span>
+        </div>
+        <div class="card-features">
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>10 Premium NFC SipCards</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Basic AI-powered wine descriptions</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Standard customization options</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>3 months of updates</span>
+          </div>
+        </div>
+        <button class="card-button secondary">Get Started</button>
+      </div>
+
+      <!-- Medium Package -->
+      <div class="pricing-card popular">
+        <div class="popular-tag">POPULAR</div>
+        <div class="card-header">
+          <h3>Medium</h3>
+          <p>Ideal for enthusiasts and small businesses</p>
+        </div>
+        <div class="card-price">
+          <span class="price"><span class="price-currency">$</span>9.99</span>
+          <span class="price-period">30 SipCards</span>
+        </div>
+        <div class="card-features">
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>30 Premium NFC SipCards</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Enhanced AI wine descriptions</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Advanced customization options</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>6 months of unlimited updates</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Basic analytics dashboard</span>
+          </div>
+        </div>
+        <button class="card-button">Choose Plan</button>
+      </div>
+
+      <!-- Full Package -->
+      <div class="pricing-card">
+        <div class="card-header">
+          <h3>Full</h3>
+          <p>For professionals and serious collectors</p>
+        </div>
+        <div class="card-price">
+          <span class="price"><span class="price-currency">$</span>24.99</span>
+          <span class="price-period">100 SipCards</span>
+        </div>
+        <div class="card-features">
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>100 Premium NFC SipCards</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Premium AI wine descriptions</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Full customization suite</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>12 months of unlimited updates</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Advanced analytics & insights</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">✓</span>
+            <span>Dedicated support specialist</span>
+          </div>
+        </div>
+        <button class="card-button secondary">Contact Sales</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="faq-container">
+      <div class="faq-header">
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know about SipCard packages</p>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">How do SipCards work?</div>
+        <div class="faq-answer">
+          SipCards use NFC (Near Field Communication) technology that works with any modern smartphone. Simply tap your phone on the card to instantly access detailed information about the wine, including tasting notes, pairings, and more.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Can I customize what appears when someone taps a SipCard?</div>
+        <div class="faq-answer">
+          Absolutely! All packages allow you to customize the content displayed. You can edit the AI-generated descriptions, upload your own images, and personalize the experience to match your brand or preferences.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">How long do SipCards last?</div>
+        <div class="faq-answer">
+          SipCards are made with premium, durable materials and will last for years. The NFC technology inside is passive and doesn't require any power source, so there's no battery to replace or wear out.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">What if I need more than 100 SipCards?</div>
+        <div class="faq-answer">
+          We offer custom enterprise solutions for larger quantities. Please contact our sales team for custom pricing and features tailored to your specific needs.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">How often can I update the information?</div>
+        <div class="faq-answer">
+          You can update the information as often as you'd like during your subscription period. Updates are instant and don't require replacing the physical cards.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-container">
+      <h2>Ready to revolutionize your wine experience?</h2>
+      <p>Join thousands of wine enthusiasts and professionals who have already discovered the power of SipTap.</p>
+      <div class="cta-buttons">
+        <a href="#" class="cta-button">Choose Your Package</a>
+        <a href="DemoRequest.html" class="cta-button secondary">Request a Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Support</a>
+      </div>
+      <p>SipTap — Where wine meets innovation.<br />Copyright © 2025 SipTap. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript for animations and interactions -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animation for pricing cards
+      const pricingCards = document.querySelectorAll('.pricing-card');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            // Staggered animation
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, index * 200);
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+      
+      pricingCards.forEach(card => {
+        observer.observe(card);
+      });
+
+      // FAQ accordion functionality
+      const faqItems = document.querySelectorAll('.faq-item');
+      
+      faqItems.forEach(item => {
+        // Animation for FAQ items
+        observer.observe(item);
+        
+        // Accordion functionality
+        item.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+          
+          // Close all FAQ items
+          faqItems.forEach(faq => {
+            faq.classList.remove('active');
+          });
+          
+          // Open clicked item if it wasn't open
+          if (!isActive) {
+            item.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
