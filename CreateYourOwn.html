@@ -790,4 +790,298 @@
             z-index: 3;
         }
         .radar-chart {
-            width
+            width: 100%;
+            height: 300px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .radar-axis {
+            stroke: rgba(${colorTheme.rgbPrimary}, 0.3);
+            stroke-width: 1;
+        }
+        .radar-labels text {
+            fill: ${colorTheme.dark};
+            font-size: 12px;
+        }
+        .radar-polygon {
+            fill: rgba(${colorTheme.rgbPrimary}, 0.2);
+            stroke: ${colorTheme.primary};
+            stroke-width: 2;
+        }
+        .radar-circles circle {
+            fill: rgba(${colorTheme.rgbPrimary}, 0.5);
+            stroke: ${colorTheme.primary};
+            stroke-width: 1;
+        }
+        .aroma-chart {
+            width: 100%;
+        }
+        .aroma-bar {
+            height: 20px;
+            margin-bottom: 10px;
+            background-color: rgba(${colorTheme.rgbPrimary}, 0.7);
+            border-radius: 3px;
+            position: relative;
+        }
+        .aroma-label {
+            position: absolute;
+            left: 5px;
+            top: 0;
+            color: #ffffff;
+            font-size: 12px;
+            line-height: 20px;
+        }
+        .aroma-value {
+            position: absolute;
+            right: 5px;
+            top: 0;
+            color: #ffffff;
+            font-size: 12px;
+            line-height: 20px;
+        }
+        .notes-section {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+        }
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .note-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .note-card h3 {
+            color: ${colorTheme.primary};
+            margin-top: 0;
+            border-bottom: 2px solid ${colorTheme.accent};
+            padding-bottom: 5px;
+        }
+        .details-section {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+        }
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .detail-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .detail-card h3 {
+            color: ${colorTheme.primary};
+            margin-top: 0;
+            border-bottom: 2px solid ${colorTheme.accent};
+            padding-bottom: 5px;
+        }
+        footer {
+            background-color: ${colorTheme.dark};
+            color: ${colorTheme.accent};
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        /* For small screens */
+        @media (max-width: 768px) {
+            .wine-card {
+                grid-template-columns: 1fr;
+            }
+            .chart-row {
+                grid-template-columns: 1fr;
+            }
+            .notes-grid {
+                grid-template-columns: 1fr;
+            }
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+            .specs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>${wineData.name} ${wineData.vintage} - Technical Sheet</h1>
+    </header>
+    
+    <div class="content">
+        <div class="card-container">
+            <div class="logo-background">
+                <img src="${logoUrl}" alt="Wine Logo">
+            </div>
+            
+            <div class="wine-card">
+                <div class="wine-info">
+                    <h1>${wineData.name} ${wineData.vintage}</h1>
+                    <h2>${wineData.denomination}</h2>
+                    
+                    <div class="specs">
+                        <div class="spec-item">
+                            <strong>Producer:</strong>
+                            <span>${wineData.producer}</span>
+                        </div>
+                        
+                        <div class="spec-item">
+                            <strong>Grapes:</strong>
+                            <span>${wineData.grapes}</span>
+                        </div>
+                        
+                        <div class="spec-item">
+                            <strong>Alcohol:</strong>
+                            <span>${wineData.alcoholContent}%</span>
+                        </div>
+                        
+                        <div class="spec-item">
+                            <strong>Aging:</strong>
+                            <span>${wineData.aging}</span>
+                        </div>
+                        
+                        <div class="spec-item">
+                            <strong>Serving Temp:</strong>
+                            <span>${wineData.temperature}</span>
+                        </div>
+                        
+                        <div class="spec-item">
+                            <strong>Potential:</strong>
+                            <span>${wineData.potential}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="spec-item">
+                        <strong>Vintage:</strong>
+                        <span>${wineData.vintageDescription}</span>
+                    </div>
+                    
+                    <div class="spec-item" style="margin-top: 10px;">
+                        <strong>Food Pairings:</strong>
+                        <span>${wineData.foodPairings}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tasting Notes -->
+        <div class="card-container notes-section">
+            <h2 class="chart-title">Tasting Notes</h2>
+            
+            <div class="notes-grid">
+                <div class="note-card">
+                    <h3>Visual</h3>
+                    <p>${wineData.visualNotes}</p>
+                </div>
+                
+                <div class="note-card">
+                    <h3>Olfactory</h3>
+                    <p>${wineData.olfactoryNotes}</p>
+                </div>
+                
+                <div class="note-card">
+                    <h3>Gustatory</h3>
+                    <p>${wineData.gustatoryNotes}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Charts -->
+        <div class="card-container chart-container">
+            <h2 class="chart-title">Wine Profile Analysis</h2>
+            
+            <div class="chart-row">
+                <!-- Radar Chart -->
+                <div>
+                    <h3 class="chart-title">Taste Profile</h3>
+                    <div class="radar-chart">
+                        <svg width="100%" height="100%" viewBox="0 0 400 300">
+                            <!-- Radar Background -->
+                            <g class="radar-background">
+                                <!-- Reference circles -->
+                                <circle cx="200" cy="150" r="80" fill="none" stroke="rgba(${colorTheme.rgbPrimary}, 0.1)" />
+                                <circle cx="200" cy="150" r="64" fill="none" stroke="rgba(${colorTheme.rgbPrimary}, 0.1)" />
+                                <circle cx="200" cy="150" r="48" fill="none" stroke="rgba(${colorTheme.rgbPrimary}, 0.1)" />
+                                <circle cx="200" cy="150" r="32" fill="none" stroke="rgba(${colorTheme.rgbPrimary}, 0.1)" />
+                                <circle cx="200" cy="150" r="16" fill="none" stroke="rgba(${colorTheme.rgbPrimary}, 0.1)" />
+                                
+                                <!-- Axes -->
+                                <line class="radar-axis" x1="200" y1="150" x2="200" y2="70" />
+                                <line class="radar-axis" x1="200" y1="150" x2="269.28" y2="110" />
+                                <line class="radar-axis" x1="200" y1="150" x2="269.28" y2="190" />
+                                <line class="radar-axis" x1="200" y1="150" x2="200" y2="230" />
+                                <line class="radar-axis" x1="200" y1="150" x2="130.72" y2="190" />
+                                <line class="radar-axis" x1="200" y1="150" x2="130.72" y2="110" />
+                            </g>
+                            
+                            <!-- Labels -->
+                            <g class="radar-labels">
+                                <text x="200" y="60" text-anchor="middle">Body</text>
+                                <text x="285" y="105" text-anchor="start">Tannins</text>
+                                <text x="285" y="195" text-anchor="start">Alcohol</text>
+                                <text x="200" y="250" text-anchor="middle">Persistence</text>
+                                <text x="115" y="195" text-anchor="end">Acidity</text>
+                                <text x="115" y="105" text-anchor="end">Complexity</text>
+                            </g>
+                            
+                            <!-- Data polygon -->
+                            <polygon class="radar-polygon" points="${polygonPoints}" />
+                            
+                            <!-- Data points -->
+                            <g class="radar-circles">
+                                <circle cx="${radarCoords.body.x}" cy="${radarCoords.body.y}" r="4" />
+                                <circle cx="${radarCoords.tannins.x}" cy="${radarCoords.tannins.y}" r="4" />
+                                <circle cx="${radarCoords.alcohol.x}" cy="${radarCoords.alcohol.y}" r="4" />
+                                <circle cx="${radarCoords.persistence.x}" cy="${radarCoords.persistence.y}" r="4" />
+                                <circle cx="${radarCoords.acidity.x}" cy="${radarCoords.acidity.y}" r="4" />
+                                <circle cx="${radarCoords.complexity.x}" cy="${radarCoords.complexity.y}" r="4" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Aroma Chart -->
+                <div>
+                    <h3 class="chart-title">Aromatic Profile</h3>
+                    <div class="aroma-chart">
+                        ${aromaData.map(aroma => `
+                            <div class="aroma-bar" style="width: ${aroma.value * 10}%">
+                                <span class="aroma-label">${aroma.name}</span>
+                                <span class="aroma-value">${aroma.value}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Generated with Wine Card Generator &copy; 2025. Based on Andrea Sangalli's design.</p>
+    </footer>
+</body>
+</html>`;
+            
+            return html;
+        }
+
+        function showLoading() {
+            loadingIndicator.classList.remove('hide');
+        }
+        
+        function hideLoading() {
+            loadingIndicator.classList.add('hide');
+        }
+    </script>
+</body>
+</html>
