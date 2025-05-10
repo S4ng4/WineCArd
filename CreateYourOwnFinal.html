@@ -108,6 +108,8 @@
         .value-slider .value-display {
             width: 40px;
             text-align: center;
+            font-weight: bold;
+            color: var(--primary);
         }
 
         .aroma-pair {
@@ -489,48 +491,28 @@
             { input: document.getElementById('radar-complexity'), display: document.getElementById('complexity-value') }
         ];
 
-        // Connect value sliders to displays
+        // Connect value sliders to displays - MODIFIED TO SHOW VALUES PERMANENTLY
         radarInputs.forEach(item => {
+            // Update immediately
+            item.display.textContent = item.input.value;
+            
+            // Update on change
             item.input.addEventListener('input', () => {
                 item.display.textContent = item.input.value;
-                // Hide display after 2 seconds
-                setTimeout(() => {
-                    if (document.activeElement !== item.input) {
-                        item.display.textContent = '';
-                    }
-                }, 2000);
-            });
-            
-            item.input.addEventListener('focus', () => {
-                item.display.textContent = item.input.value;
-            });
-            
-            item.input.addEventListener('blur', () => {
-                item.display.textContent = '';
             });
         });
 
-        // Connect aroma value sliders to displays
+        // Connect aroma value sliders to displays - MODIFIED TO SHOW VALUES PERMANENTLY
         const aromaValues = document.querySelectorAll('.aroma-value');
         aromaValues.forEach(input => {
             const display = document.querySelector(`.aroma-display[data-index="${input.dataset.index}"]`);
             
+            // Update immediately
+            display.textContent = input.value;
+            
+            // Update on change
             input.addEventListener('input', () => {
                 display.textContent = input.value;
-                // Hide display after 2 seconds
-                setTimeout(() => {
-                    if (document.activeElement !== input) {
-                        display.textContent = '';
-                    }
-                }, 2000);
-            });
-            
-            input.addEventListener('focus', () => {
-                display.textContent = input.value;
-            });
-            
-            input.addEventListener('blur', () => {
-                display.textContent = '';
             });
         });
 
@@ -778,7 +760,7 @@
         }
         .chart-title {
             color: ${colorTheme.primary};
-      text-align: center;
+            text-align: center;
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 15px;
@@ -963,7 +945,7 @@
                     <div class="chart-title">Aromatic Profile</div>
                     <div class="aroma-chart">
                         <svg viewBox="0 0 400 300">
-                            ${generateAromaChart(aromaData)}
+                            ${generateAromaChartSvg(aromaData)}
                         </svg>
                     </div>
                 </div>
@@ -977,16 +959,10 @@
             </div>
         </div>
     </div>
-    
-    <script>
-        function generateAromaChart(data) {
-            // This function will generate the SVG for the aroma chart
-        }
-    </script>
 </body>
 </html>`;
             
-            return html.replace('${generateAromaChart(aromaData)}', generateAromaChartSvg(aromaData));
+            return html;
         }
 
         function generateAromaChartSvg(aromaData) {
