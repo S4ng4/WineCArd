@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SipTap | Tap. Taste. Transcend.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+  <style>
+    :root {
+      --primary-gold: #D4B456;
+      --primary-gold-hover: #E0C472;
+      --primary-wine: #8E1C38;
+      --accent-red: #E27285;
+      --spiral-cream: #E6D7B9;
+      --text-color: #333;
+      --bg-white: #ffffff;
+      --bg-light: #f8f8f8;
+      --accent-light: #f0f0f0;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      background-color: var(--bg-white);
+      color: var(--text-color);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    
+    .geometric-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4b456' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238e1c38' fill-opacity='0.03'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z' fill='%23e27285' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+      opacity: 0.7;
+      z-index: -1;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 2rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    
+    /* Floating logo background that moves with scroll */
+    .floating-logo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 300px;
+      z-index: -1;
+      opacity: 0.1;
+      transition: transform 0.5s ease-out;
+      pointer-events: none;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 3rem;
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      flex-wrap: wrap;
+      z-index: 2;
+    }
+    
+    .logo-text {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 5rem;
+      color: var(--text-color);
+      text-align: center;
+      width: 100%;
+      letter-spacing: 0.5rem;
+      margin: 1.5rem 0;
+      font-weight: 700;
+      text-shadow: 2px 2px 0 rgba(212, 180, 86, 0.3);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .logo-text::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--primary-gold), transparent);
+    }
+    
+    .logo-element {
+      width: 80px;
+      height: 80px;
+      margin: 1rem;
+      position: relative;
+    }
+    
+    .red-circle {
+      border-radius: 50%;
+      background-color: var(--primary-wine);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .red-circle::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.05),
+        rgba(255, 255, 255, 0.05) 5px,
+        transparent 5px,
+        transparent 10px
+      );
+    }
+    
+    .gold-hook {
+      background-color: transparent;
+      position: relative;
+    }
+    
+    .gold-hook::before {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 70px;
+      border-radius: 50% 50% 0 50%;
+      border: 8px solid var(--primary-gold);
+      border-left: 0;
+      transform: rotate(-15deg);
+      top: 0;
+      right: 20px;
+    }
+    
+    .pink-flower {
+      position: relative;
+    }
+    
+    .pink-flower::before,
+    .pink-flower::after {
+      content: '';
+      position: absolute;
+      background-color: var(--accent-red);
+      border-radius: 50% 50% 0 50%;
+      width: 30px;
+      height: 30px;
+      top: 25px;
+      left: 25px;
+    }
+    
+    .pink-flower::before {
+      transform: rotate(0deg);
+    }
+    
+    .pink-flower::after {
+      transform: rotate(120deg);
+    }
+    
+    .pink-flower span {
+      position: absolute;
+      background-color: var(--accent-red);
+      border-radius: 50% 50% 0 50%;
+      width: 30px;
+      height: 30px;
+      top: 25px;
+      left: 25px;
+      transform: rotate(240deg);
+    }
+    
+    .cream-spiral {
+      position: relative;
+    }
+    
+    .cream-spiral::before {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border: 8px solid var(--spiral-cream);
+      border-top-color: transparent;
+      border-radius: 50%;
+      top: 15px;
+      left: 15px;
+      transform: rotate(45deg);
+    }
+    
+    .cream-spiral::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 5px solid var(--spiral-cream);
+      border-top-color: transparent;
+      border-radius: 50%;
+      top: 25px;
+      left: 25px;
+      transform: rotate(45deg);
+    }
+    
+    h1 {
+      font-family: 'Cinzel Decorative', cursive;
+      color: var(--primary-gold);
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      margin-bottom: 0;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+    
+    h1:hover {
+      color: var(--primary-gold-hover);
+    }
+    
+    h2 {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--primary-wine);
+      margin-bottom: 2rem;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+    
+    h2:hover {
+      color: var(--primary-gold);
+    }
+    
+    .tagline {
+      font-style: normal;
+      font-size: 1.1rem;
+      margin-bottom: 3rem;
+      max-width: 800px;
+      font-weight: 300;
+    }
+    
+    p {
+      max-width: 800px;
+      text-align: center;
+      line-height: 1.8;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .section {
+      padding: 6rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .benefits-section {
+      background-color: var(--bg-light);
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .benefits-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(142, 28, 56, 0.03) 0%, rgba(212, 180, 86, 0.03) 100%);
+      z-index: -1;
+    }
+    
+    .benefits-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .benefits-carousel {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    /* Enhanced benefit cards with background images */
+    .benefit-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 0;
+      padding: 2.5rem;
+      margin: 1rem;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      border-top: 4px solid transparent;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .benefit-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 30px var(--primary-gold);
+      border-top-color: var(--primary-gold);
+    }
+    
+    .benefit-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary-wine), var(--accent-red));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    
+    .benefit-card:hover::after {
+      transform: scaleX(1);
+    }
+    
+    .benefit-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      z-index: 0;
+      transition: background-color 0.3s ease;
+    }
+    
+    .benefit-card:hover::before {
+      background: rgba(255, 255, 255, 0.75);
+    }
+    
+    .benefit-card-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .benefit-card h3 {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 1.4rem;
+      color: var(--primary-wine);
+      margin-bottom: 1rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+      transition: color 0.3s ease;
+    }
+    
+    .benefit-card:hover h3 {
+      color: var(--primary-gold);
+    }
+    
+    .benefit-card p {
+      font-size: 1rem;
+      color: var(--text-color);
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+      text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+    }
+    
+    .benefit-icon {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+    
+    .benefit-card:hover .benefit-icon {
+      transform: scale(1.1);
+    }
+    
+    .benefit-icon img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+      transition: filter 0.3s ease;
+    }
+    
+    .benefit-card:hover .benefit-icon img {
+      filter: drop-shadow(0 0 10px var(--primary-gold));
+    }
+    
+    .benefit-icon::after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: rgba(142, 28, 56, 0.05);
+      z-index: -1;
+    }
+    
+    .cta-section {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 248, 248, 0.9) 100%);
+      text-align: center;
+      padding: 5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(142, 28, 56, 0.02) 0%, rgba(212, 180, 86, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
+      z-index: -1;
+    }
+    
+    .cta-section h2 {
+      margin-bottom: 3rem;
+    }
+    
+    .buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    
+    /* Enhanced buttons with gold hover effect */
+    .button {
+      background-color: var(--primary-wine);
+      color: white;
+      font-family: 'Cinzel', serif;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 180, 86, 0.3), transparent);
+      transition: left 0.7s ease;
+    }
+    
+    .button:hover {
+      background-color: #7a2433;
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(0, 0, 0, 0.15), 0 0 15px var(--primary-gold);
+      color: white;
+    }
+    
+    .button:hover::before {
+      left: 100%;
+    }
+    
+    .footer {
+      background-color: #f8f4ef;
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--primary-wine);
+    }
+    
+    .footer-note {
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      text-align: center;
+      color: var(--accent-red);
+      transition: color 0.3s ease;
+    }
+    
+    .footer-note:hover {
+      color: var(--primary-gold);
+    }
+    
+    .footer-note strong {
+      color: var(--primary-wine);
+      transition: color 0.3s ease;
+    }
+    
+    .footer-note:hover strong {
+      color: var(--primary-gold);
+    }
+    
+    .description-section {
+      padding: 5rem 2rem;
+      background-color: rgba(255, 255, 255, 0.5);
+      text-align: center;
+    }
+    
+    .description-section p {
+      margin: 0 auto 2rem;
+    }
+    
+    .highlight {
+      color: var(--primary-wine);
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    
+    .highlight:hover {
+      color: var(--primary-gold);
+    }
+    
+    /* Fixed bottle background effect */
+    .bottle-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("/api/placeholder/400/800");
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.03;
+      z-index: -2;
+      filter: blur(1px);
+    }
+    
+    /* Added mobile responsiveness */
+    @media (max-width: 768px) {
+      .hero {
+        height: auto;
+        min-height: 500px;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+      }
+      
+      .floating-logo {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .benefits-section {
+        padding: 3rem 0;
+      }
+      
+      .benefit-card {
+        height: auto;
+        min-height: 380px;
+        padding: 2rem 1.5rem;
+      }
+      
+      .buttons-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .button {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+    
+    /* Hover glow effect for all interactive elements */
+    a:not(.button), .interactive-element {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    a:not(.button):hover, .interactive-element:hover {
+      color: var(--primary-gold);
+    }
+    
+    a:not(.button)::after, .interactive-element::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: var(--primary-gold);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+    
+    a:not(.button):hover::after, .interactive-element:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="geometric-bg"></div>
+  <div class="bottle-bg"></div>
+  <div class="floating-logo">
+    <img src="SipTapLogo.png" alt="SipTap Logo Background">
+  </div>
+  
+  <section class="hero">
+    <div class="logo-container">
+      <img src="SipTapLogo.png" alt="SipTap Logo">
+    </div>
+    <div class="container">
+      <h2>Tap. Taste. Transcend.</h2>
+      <p class="tagline">
+        SipTap empowers wine stores to present their products through refined, digital wine cards — called SipCards. An elegant way to express wine identity, share product stories, and connect with customers through a single tap.
+      </p>
+    </div>
+  </section>
+  
+  <section class="benefits-section">
+    <div class="container benefits-header">
+      <h2>Elevate Your Wine Experience</h2>
+    </div>
+    
+    <div class="benefits-carousel">
+      <div class="benefit-card" style="background-image: url('/api/placeholder/600/400');">
+        <div class="benefit-card-content">
+          <div class="benefit-icon">
+            <img src="RedLogo.png" alt="Customer Engagement Icon">
+          </div>
+          <h3>Increase Customer Engagement</h3>
+          <p>Interactive wine cards invite customers to explore, learn, and connect. By transforming each bottle into a story worth discovering, you turn a simple purchase into a memorable, immersive experience.</p>
+        </div>
+      </div>
+      
+      <div class="benefit-card" style="background-image: url('/api/placeholder/600/400');">
+        <div class="benefit-card-content">
+          <div class="benefit-icon">
+            <img src="WhiteLogo.png" alt="Stand Out Icon">
+          </div>
+          <h3>Makes Your Bottles Stand Out</h3>
+          <p>With a digital identity linked to each bottle, your wine becomes instantly recognizable. It's not just another label on a shelf—it's a unique presence that captures attention and leaves a lasting impression.</p>
+        </div>
+      </div>
+      
+      <div class="benefit-card" style="background-image: url('/api/placeholder/600/400');">
+        <div class="benefit-card-content">
+          <div class="benefit-icon">
+            <img src="RoseLogo.png" alt="Sales Boost Icon">
+          </div>
+          <h3>Boosts Sales</h3>
+          <p>When wine is presented clearly and professionally, customers feel more confident and curious. Detailed cards increase trust and drive purchasing decisions, especially for premium selections.</p>
+        </div>
+      </div>
+      
+      <div class="benefit-card" style="background-image: url('/api/placeholder/600/400');">
+        <div class="benefit-card-content">
+          <div class="benefit-icon">
+            <img src="SparklingLogo.png" alt="Competitive Edge Icon">
+          </div>
+          <h3>Sets Your Venue Apart</h3>
+          <p>Offering digital wine cards shows innovation and care for the customer experience. It becomes a signature touch that distinguishes your venue, creating value and memorability beyond the wine.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="description-section">
+    <div class="container">
+      <h2>Don't get left behind. Tap into the future.</h2>
+      <p>
+        SipTap is a smart tool designed for wine lovers, restaurant owners, shops, and producers. <span class="highlight">Elegant. Intuitive. Revolutionary.</span>
+      </p>
+      <p>
+        SipTap isn't just a Wine Card — it's the future of wine communication.
+        With just one tap, your customers access rich, immersive content: tasting notes, aging details, pairings, and the soul of your wine — all in seconds.
+      </p>
+      <p>
+        It's elegant. It's instant. It's unforgettable.
+        <span class="highlight">No apps. No QR codes. No friction.</span>
+      </p>
+      <p>
+        This isn't a trend — it's the new standard.
+        Don't get left behind. Tap into the future.
+      </p>
+    </div>
+  </section>
+  
+  <section class="cta-section">
+    <div class="container">
+      <h2>Begin Your SipTap Journey</h2>
+      <div class="buttons-container">
+        <a href="DOWNLOAD_TEMPLATE_LINK" class="button">Download SipCard Template</a>
+        <a href="VIEW_EXAMPLES_LINK" class="button">View SipCard Examples</a>
+        <a href="About_Me" class="button">About Us</a>
+      </div>
+    </div>
+  </section>
+  
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-note">
+        Send your completed SipCard to: <strong>siptap@example.com</strong>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    $(document).ready(function(){
+      // Slick carousel initialization
+      $('.benefits-carousel').slick({
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 4000,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: true
+            }
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      });
+      
+      // Parallax scrolling effect for logo
+      $(window).scroll(function() {
+        var scrollTop = $(window).scrollTop();
+        var windowHeight = $(window).height();
+        
+        // Move logo based on scroll position
+        $('.floating-logo').css({
+          'transform': 'translate(-50%, calc(-50% + ' + scrollTop/5 + 'px))',
+          'opacity': Math.max(0.1, 0.3 - scrollTop / 1000)
+        });
+      });
+      
+      // Add gold hover effect to all interactive elements
+      $('.benefit-card, .button, a, h1, h2, h3, .highlight').addClass('interactive-element');
+    });
+  </script>
+</body>
+</html>
