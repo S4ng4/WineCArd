@@ -78,7 +78,7 @@
       height: 300px;
       z-index: -1;
       opacity: 0.1;
-      transition: transform 0.5s ease-out;
+      transition: opacity 0.5s ease-out;
       pointer-events: none;
     }
     
@@ -563,7 +563,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url("/api/placeholder/400/800");
+      background-image: url("LogoFinal.png");
       background-size: contain;
       background-position: center;
       background-repeat: no-repeat;
@@ -640,12 +640,12 @@
   <div class="geometric-bg"></div>
   <div class="bottle-bg"></div>
   <div class="floating-logo">
-    <img src="SipTapLogo.png" alt="SipTap Logo Background">
+    <img src="" alt="">
   </div>
   
   <section class="hero">
     <div class="logo-container">
-      <img src="SipTapLogo.png" alt="SipTap Logo">
+      <img src="LogoFinal.png" alt="SipTap Logo">
     </div>
     <div class="container">
       <h2>Tap. Taste. Transcend.</h2>
@@ -729,8 +729,8 @@
       <h2>Begin Your SipTap Journey</h2>
       <div class="buttons-container">
         <a href="DOWNLOAD_TEMPLATE_LINK" class="button">Download SipCard Template</a>
-        <a href="VIEW_EXAMPLES_LINK" class="button">View SipCard Examples</a>
-        <a href="About_Me" class="button">About Us</a>
+        <a href="DemoRequest.html" class="button">View SipCard Examples</a>
+        <a href="MyDigitalCard.html" class="button">About Me</a>
       </div>
     </div>
   </section>
@@ -745,15 +745,15 @@
 
   <script>
     $(document).ready(function(){
-      // Slick carousel initialization
+      // Slick carousel initialization - VELOCITÀ AUMENTATA
       $('.benefits-carousel').slick({
         dots: true,
         infinite: true,
-        speed: 500,
+        speed: 300, // Velocità di transizione ridotta da 500 a 300ms
         slidesToShow: 3,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 4000,
+        autoplaySpeed: 2000, // Tempo tra le slide ridotto da 4000 a 2000ms
         responsive: [
           {
             breakpoint: 1024,
@@ -774,21 +774,16 @@
         ]
       });
       
-      // Parallax scrolling effect for logo
+      // CORREZIONE: Logo fisso durante lo scrolling
+      // Il logo ora rimane sempre nella posizione centrale senza spostarsi con lo scroll
       $(window).scroll(function() {
         var scrollTop = $(window).scrollTop();
-        var windowHeight = $(window).height();
         
-        // Move logo based on scroll position
+        // Modifica solo l'opacità del logo in base allo scroll, ma mantiene la posizione fissa
         $('.floating-logo').css({
-          'transform': 'translate(-50%, calc(-50% + ' + scrollTop/5 + 'px))',
           'opacity': Math.max(0.1, 0.3 - scrollTop / 1000)
         });
+        
+        // Rimuove completamente la traslazione basata sullo scroll
+        // Il logo rimane centrato con transform: translate(-50%, -50%)
       });
-      
-      // Add gold hover effect to all interactive elements
-      $('.benefit-card, .button, a, h1, h2, h3, .highlight').addClass('interactive-element');
-    });
-  </script>
-</body>
-</html>
