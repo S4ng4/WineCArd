@@ -787,3 +787,32 @@
         // Rimuove completamente la traslazione basata sullo scroll
         // Il logo rimane centrato con transform: translate(-50%, -50%)
       });
+// Function to download the Google Sheets document
+function downloadGoogleSheet() {
+  // The Google Sheets ID extracted from the URL
+  // ID completo: https://docs.google.com/spreadsheets/d/1N-3N3jmVooKD7wTYbc7TEsltxva3XUDM_15ImLDBMIw/edit?gid=0#gid=0
+  const sheetId = "1N-3N3jmVooKD7wTYbc7TEsltxva3XUDM_15ImLDBMIw";
+  
+  // Create the export URL (format=xlsx for Excel file)
+  const exportUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=xlsx`;
+  
+  console.log("Starting download from:", exportUrl);
+  
+  // Create a temporary link element to trigger the download
+  const downloadLink = document.createElement('a');
+  downloadLink.href = exportUrl;
+  downloadLink.setAttribute('download', 'downloaded_spreadsheet.xlsx');
+  downloadLink.setAttribute('target', '_blank');
+  
+  // Append to body, click to download, then remove
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+  
+  console.log("Download initiated. If you're not seeing the download, please check if your browser is blocking pop-ups.");
+  
+  return "Download process completed. Check your downloads folder for 'downloaded_spreadsheet.xlsx'";
+}
+
+// Execute the download function
+downloadGoogleSheet();
