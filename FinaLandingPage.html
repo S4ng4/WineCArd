@@ -70,16 +70,17 @@
     
     /* Floating logo background that moves with scroll */
     .floating-logo {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 300px;
-      height: 300px;
-      z-index: -1;
-      opacity: 0.1;
-      transition: opacity 0.5s ease-out;
-      pointer-events: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40vw;
+        max-width: 300px;
+        height: auto;
+        z-index: -1;
+        opacity: 0.1;
+        transition: opacity 0.5s ease-out;
+        pointer-events: none;
     }
     
     .logo-container {
@@ -120,8 +121,9 @@
     }
     
     .logo-element {
-      width: 80px;
-      height: 80px;
+      width: 15vw;
+      max-width: 80px;
+      height: auto;
       margin: 1rem;
       position: relative;
     }
@@ -584,8 +586,7 @@
       }
       
       .floating-logo {
-        width: 50%;
-        height: 50%;
+        width: 60vw;
       }
       
       .benefits-section {
