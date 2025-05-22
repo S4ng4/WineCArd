@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SipTap - Professional Sales Sheet</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    @page {
+      size: letter;
+      margin: 0.5in;
+    }
+    
+    :root {
+      --primary-gold: #D4B456;
+      --primary-wine: #8E1C38;
+      --accent-red: #E27285;
+      --text-primary: #1a1a1a;
+      --text-secondary: #555;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #ddd;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      color: var(--text-primary);
+      line-height: 1.4;
+      background-color: var(--bg-white);
+      font-size: 11pt;
+      width: 8.5in;
+      min-height: 11in;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .page-container {
+      width: 100%;
+      height: 100vh;
+      padding: 0.5in;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 3px solid var(--primary-gold);
+    }
+    
+    .logo-section {
+      margin-bottom: 15px;
+    }
+    
+    .company-name {
+      font-size: 32pt;
+      font-weight: 700;
+      color: var(--primary-wine);
+      letter-spacing: -1px;
+      margin-bottom: 5px;
+    }
+    
+    .tagline {
+      font-size: 14pt;
+      color: var(--primary-gold);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    
+    .hero-subtitle {
+      font-size: 12pt;
+      color: var(--text-secondary);
+      font-style: italic;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    /* Two Column Layout */
+    .main-content {
+      display: flex;
+      gap: 30px;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+    
+    .left-column {
+      flex: 1.2;
+    }
+    
+    .right-column {
+      flex: 0.8;
+    }
+    
+    /* Section Styling */
+    .section {
+      margin-bottom: 25px;
+      page-break-inside: avoid;
+    }
+    
+    .section-title {
+      font-size: 16pt;
+      font-weight: 700;
+      color: var(--primary-wine);
+      margin-bottom: 10px;
+      border-left: 4px solid var(--primary-gold);
+      padding-left: 12px;
+    }
+    
+    .section-subtitle {
+      font-size: 10pt;
+      color: var(--text-secondary);
+      margin-bottom: 15px;
+      font-style: italic;
+    }
+    
+    /* Problem/Solution Box */
+    .problem-solution {
+      background: var(--bg-light);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+    
+    .problem-title {
+      font-size: 14pt;
+      font-weight: 600;
+      color: var(--primary-wine);
+      margin-bottom: 8px;
+    }
+    
+    .problem-text {
+      font-size: 10pt;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    
+    /* Features Grid */
+    .features-compact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin: 15px 0;
+    }
+    
+    .feature-item {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 15px 12px;
+    }
+    
+    .feature-title {
+      font-size: 11pt;
+      font-weight: 600;
+      color: var(--primary-wine);
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .feature-icon {
+      color: var(--primary-gold);
+      font-weight: bold;
+    }
+    
+    .feature-desc {
+      font-size: 9pt;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    
+    /* How It Works */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 15px 0;
+    }
+    
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px;
+    }
+    
+    .step-number {
+      width: 24px;
+      height: 24px;
+      background: var(--primary-wine);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10pt;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    
+    .step-content h4 {
+      font-size: 10pt;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+    
+    .step-content p {
+      font-size: 9pt;
+      color: var(--text-secondary);
+      line-height: 1.3;
+    }
+    
+    /* Benefits List */
+    .benefits-list {
+      margin: 15px 0;
+    }
+    
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 5px 0;
+    }
+    
+    .check-icon {
+      color: var(--primary-gold);
+      font-weight: bold;
+      font-size: 12pt;
+      margin-top: 1px;
+    }
+    
+    .benefit-text {
+      font-size: 10pt;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+    
+    .benefit-text strong {
+      color: var(--primary-wine);
+      font-weight: 600;
+    }
+    
+    /* ROI Stats */
+    .roi-stats {
+      background: var(--primary-wine);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .roi-title {
+      font-size: 13pt;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 20pt;
+      font-weight: 700;
+      color: var(--primary-gold);
+      display: block;
+      line-height: 1;
+    }
+    
+    .stat-label {
+      font-size: 8pt;
+      opacity: 0.9;
+      margin-top: 5px;
+      line-height: 1.2;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      background: var(--bg-light);
+      border: 2px solid var(--primary-gold);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .cta-title {
+      font-size: 14pt;
+      font-weight: 700;
+      color: var(--primary-wine);
+      margin-bottom: 8px;
+    }
+    
+    .cta-text {
+      font-size: 10pt;
+      color: var(--text-secondary);
+      margin-bottom: 15px;
+    }
+    
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .cta-button {
+      background: var(--primary-wine);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-size: 10pt;
+      font-weight: 600;
+      border: none;
+      display: inline-block;
+    }
+    
+    .cta-secondary {
+      background: transparent;
+      color: var(--primary-wine);
+      border: 2px solid var(--primary-wine);
+    }
+    
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 15px 0;
+      border-top: 1px solid var(--border-light);
+      margin-top: auto;
+    }
+    
+    .contact-info {
+      font-size: 10pt;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+    }
+    
+    .contact-email {
+      color: var(--primary-wine);
+      font-weight: 600;
+    }
+    
+    .copyright {
+      font-size: 8pt;
+      color: var(--text-secondary);
+      opacity: 0.7;
+    }
+    
+    /* Print Optimizations */
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .page-container {
+        height: auto;
+      }
+      
+      .section {
+        page-break-inside: avoid;
+      }
+      
+      .roi-stats {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-section">
+        <h1 class="company-name">SipTap</h1>
+        <div class="tagline">TAP • TASTE • TRANSCEND</div>
+      </div>
+      <p class="hero-subtitle">Transform every bottle into an immersive wine discovery experience</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Left Column -->
+      <div class="left-column">
+        <!-- Problem/Solution -->
+        <div class="problem-solution">
+          <div class="problem-title">The Wine Discovery Challenge</div>
+          <p class="problem-text">Traditional wine retail relies on static labels and overwhelming choice. Customers struggle to discover wines that match their taste, while businesses miss opportunities to tell compelling stories and drive premium sales.</p>
+        </div>
+
+        <!-- What is SipTap -->
+        <div class="section">
+          <h2 class="section-title">What is SipTap?</h2>
+          <p style="font-size: 10pt; line-height: 1.5; margin-bottom: 15px;">The world's first frictionless wine discovery platform. <strong>No apps, no QR codes, no complexity.</strong> Just tap your phone to any SipTap-enabled bottle and unlock its complete story.</p>
+          
+          <div class="features-compact">
+            <div class="feature-item">
+              <div class="feature-title">
+                <span class="feature-icon">📱</span>
+                Zero-Friction Tech
+              </div>
+              <p class="feature-desc">NFC works instantly with any modern smartphone</p>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-title">
+                <span class="feature-icon">🍷</span>
+                Rich Wine Profiles
+              </div>
+              <p class="feature-desc">Complete tasting notes, pairings & stories</p>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-title">
+                <span class="feature-icon">📈</span>
+                Drive Premium Sales
+              </div>
+              <p class="feature-desc">Build confidence for high-margin wines</p>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-title">
+                <span class="feature-icon">⚡</span>
+                Instant Training
+              </div>
+              <p class="feature-desc">Always-updated product information</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="section">
+          <h2 class="section-title">How It Works</h2>
+          <p class="section-subtitle">Get started in minutes, not months</p>
+          
+          <div class="steps-grid">
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>Download Template</h4>
+                <p>Get our SipCard template & customize with your wines</p>
+              </div>
+            </div>
+            
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>Submit Content</h4>
+                <p>Send completed file for digital card production</p>
+              </div>
+            </div>
+            
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>Apply SipTags</h4>
+                <p>Attach elegant NFC tags to bottles or displays</p>
+              </div>
+            </div>
+            
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h4>Watch Sales Grow</h4>
+                <p>Customers tap to discover & fall in love</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="right-column">
+        <!-- Key Benefits -->
+        <div class="section">
+          <h2 class="section-title">Key Benefits</h2>
+          <p class="section-subtitle">For retailers, restaurants & producers</p>
+          
+          <div class="benefits-list">
+            <div class="benefit-item">
+              <span class="check-icon">✓</span>
+              <div class="benefit-text">
+                <strong>Enhanced Customer Experience:</strong> Transform browsing into discovery with instant wine knowledge
+              </div>
+            </div>
+            
+            <div class="benefit-item">
+              <span class="check-icon">✓</span>
+              <div class="benefit-text">
+                <strong>Reduced Costs:</strong> Eliminate printing for menus, spec sheets & training materials
+              </div>
+            </div>
+            
+            <div class="benefit-item">
+              <span class="check-icon">✓</span>
+              <div class="benefit-text">
+                <strong>Premium Positioning:</strong> Differentiate with cutting-edge technology that signals quality
+              </div>
+            </div>
+            
+            <div class="benefit-item">
+              <span class="check-icon">✓</span>
+              <div class="benefit-text">
+                <strong>Staff Efficiency:</strong> Instant access to product knowledge reduces training time
+              </div>
+            </div>
+            
+            <div class="benefit-item">
+              <span class="check-icon">✓</span>
+              <div class="benefit-text">
+                <strong>Always Updated:</strong> Digital content stays current without reprinting costs
+              </div>
+            </div>
+            
+            <div class="benefit-item">
+              <span class="check-icon">✓</span>
+              <div class="benefit-text">
+                <strong>Works Everywhere:</strong> Compatible with all modern smartphones, no special hardware
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROI Section -->
+        <div class="roi-stats">
+          <div class="roi-title">Measurable Business Impact</div>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-number">35%</span>
+              <p class="stat-label">Increase in premium wine sales</p>
+            </div>
+            
+            <div class="stat-item">
+              <span class="stat-number">60%</span>
+              <p class="stat-label">Reduction in staff training time</p>
+            </div>
+            
+            <div class="stat-item">
+              <span class="stat-number">90%</span>
+              <p class="stat-label">Customer satisfaction rate</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perfect For -->
+        <div class="section">
+          <h2 class="section-title">Perfect For</h2>
+          <div style="font-size: 10pt; line-height: 1.5;">
+            <p style="margin-bottom: 8px;"><strong>Wine Retailers:</strong> Differentiate selection & drive premium sales</p>
+            <p style="margin-bottom: 8px;"><strong>Restaurants:</strong> Enhance wine program & reduce staff training</p>
+            <p style="margin-bottom: 8px;"><strong>Wine Producers:</strong> Tell your story directly to consumers</p>
+            <p style="margin-bottom: 8px;"><strong>Wine Bars:</strong> Create memorable tasting experiences</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+      <div class="cta-title">Ready to Transform Your Wine Business?</div>
+      <p class="cta-text">Join the wine technology revolution. Start creating unforgettable customer experiences today.</p>
+      
+      <div class="cta-actions">
+        <div class="cta-button">Download SipCard Template</div>
+        <div class="cta-button cta-secondary">Request Demo</div>
+      </div>
+      
+      <p style="margin-top: 12px; font-size: 9pt; color: var(--text-secondary);">
+        📧 Submit files to: <span class="contact-email">Asangalli01@gmail.com</span>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="contact-info">
+        📧 <span class="contact-email">Asangalli01@gmail.com</span> | 
+        🌐 <strong>SipTap</strong> - The Future of Wine Discovery
+      </div>
+      <div class="copyright">© 2024 SipTap. All rights reserved.</div>
+    </div>
+  </div>
+</body>
+</html>
