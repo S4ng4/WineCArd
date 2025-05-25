@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SipTap Wine Entry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #8B2635;
+      --secondary: #2E3532;
+      --light: #F8F7F7;
+      --accent: #D3D4D9;
+      --text: #333333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      color: var(--primary);
+      font-weight: 500;
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      font-size: 1.5rem;
+    }
+
+    /* Default desktop view */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .form-section {
+      background-color: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(139, 38, 53, 0.2);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .radar-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .aroma-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .aroma-header {
+      grid-column: span 2;
+      font-weight: 600;
+      color: var(--primary);
+      margin-top: 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0.5rem;
+      width: calc(50% - 1rem);
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #6a1e2a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+    }
+
+    .btn-secondary:hover {
+      background-color: #1a1f1c;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* Mobile view */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .radar-grid, .aroma-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .aroma-header {
+        grid-column: span 1;
+      }
+
+      .btn {
+        width: 100%;
+        margin: 0.25rem 0;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      /* Chatbot-style mobile interface */
+      body.mobile-view {
+        background-color: white;
+      }
+
+      body.mobile-view .container {
+        padding: 0;
+        max-width: 100%;
+      }
+
+      body.mobile-view .form-section {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 1rem;
+        border-bottom: 1px solid var(--accent);
+      }
+
+      body.mobile-view h1 {
+        font-size: 1.8rem;
+        padding: 1rem;
+        background-color: var(--primary);
+        color: white;
+        margin-bottom: 0;
+      }
+
+      body.mobile-view h2 {
+        font-size: 1.2rem;
+        margin: 1rem 0;
+      }
+
+      body.mobile-view .form-group {
+        margin-bottom: 1rem;
+      }
+
+      body.mobile-view input, 
+      body.mobile-view textarea, 
+      body.mobile-view select {
+        padding: 0.7rem;
+        font-size: 1rem;
+      }
+
+      body.mobile-view .button-group {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 1rem;
+        border-top: 1px solid var(--accent);
+        z-index: 100;
+      }
+    }
+
+    /* Tasting mode */
+    body.tasting-mode .form-section {
+      display: none;
+    }
+
+    body.tasting-mode .tasting-section {
+      display: block !important;
+    }
+
+    .tasting-section {
+      display: none;
+    }
+
+    /* Showroom mode */
+    body.showroom-mode .form-section {
+      display: none;
+    }
+
+    body.showroom-mode .showroom-section {
+      display: block !important;
+    }
+
+    .showroom-section {
+      display: none;
+    }
+
+    /* Success message */
+    .success-message {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      border: 1px solid #c3e6cb;
+      display: none;
+    }
+
+    /* Loading state */
+    .btn.loading {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .btn.loading::after {
+      content: "...";
+      animation: loading 1s infinite;
+    }
+
+    @keyframes loading {
+      0% { content: ""; }
+      33% { content: "."; }
+      66% { content: ".."; }
+      100% { content: "..."; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SipTap Wine Entry</h1>
+    
+    <div class="success-message" id="successMessage">
+      Wine card generated successfully! Click below to download.
+    </div>
+    
+    <form id="wineForm">
+      <!-- Tasting Mode (Quick Entry) -->
+      <div class="form-section tasting-section">
+        <h2>Quick Tasting Notes</h2>
+        <div class="form-group">
+          <label for="Producer">Producer</label>
+          <input type="text" id="Producer">
+        </div>
+        <div class="form-group">
+          <label for="Name">Name</label>
+          <input type="text" id="Name">
+        </div>
+        <div class="form-group">
+          <label for="Vintage">Vintage</label>
+          <input type="text" id="Vintage">
+        </div>
+        <div class="form-group">
+          <label for="ColorTheme">Wine Type</label>
+          <select id="ColorTheme">
+            <option value="Red">Red</option>
+            <option value="White">White</option>
+            <option value="Rosé">Rosé</option>
+            <option value="Sparkling">Sparkling</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="OlfactoryNotes">Olfactory Notes</label>
+          <textarea id="OlfactoryNotes"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="GustatoryNotes">Gustatory Notes</label>
+          <textarea id="GustatoryNotes"></textarea>
+        </div>
+      </div>
+
+      <!-- Showroom Mode (Focus on Description) -->
+      <div class="form-section showroom-section">
+        <h2>Wine Presentation</h2>
+        <div class="form-group">
+          <label for="Producer">Producer</label>
+          <input type="text" id="Producer">
+        </div>
+        <div class="form-group">
+          <label for="Name">Name</label>
+          <input type="text" id="Name">
+        </div>
+        <div class="form-group">
+          <label for="ColorTheme">Wine Type</label>
+          <select id="ColorTheme">
+            <option value="Red">Red</option>
+            <option value="White">White</option>
+            <option value="Rosé">Rosé</option>
+            <option value="Sparkling">Sparkling</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="VintageDescription">Vintage Description</label>
+          <textarea id="VintageDescription"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="FoodPairings">Food Pairings</label>
+          <textarea id="FoodPairings"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="VisualNotes">Visual Notes</label>
+          <textarea id="VisualNotes"></textarea>
+        </div>
+      </div>
+
+      <!-- Full Form (Default Desktop View) -->
+      <div class="form-grid">
+        <!-- Wine Identity Section -->
+        <div class="form-section">
+          <h2>Wine Identity</h2>
+          <div class="form-group">
+            <label for="Producer">Producer</label>
+            <input type="text" id="Producer" placeholder="e.g., Château Margaux">
+          </div>
+          <div class="form-group">
+            <label for="Name">Name</label>
+            <input type="text" id="Name" placeholder="e.g., Grand Vin">
+          </div>
+          <div class="form-group">
+            <label for="Vintage">Vintage</label>
+            <input type="text" id="Vintage" placeholder="e.g., 2018">
+          </div>
+          <div class="form-group">
+            <label for="Denomination">Denomination</label>
+            <input type="text" id="Denomination" placeholder="e.g., Margaux AOC">
+          </div>
+          <div class="form-group">
+            <label for="Grapes">Grapes</label>
+            <input type="text" id="Grapes" placeholder="e.g., Cabernet Sauvignon 60%, Merlot 40%">
+          </div>
+          <div class="form-group">
+            <label for="ColorTheme">Wine Type</label>
+            <select id="ColorTheme">
+              <option value="Red">Red</option>
+              <option value="White">White</option>
+              <option value="Rosé">Rosé</option>
+              <option value="Sparkling">Sparkling</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Technical Details Section -->
+        <div class="form-section">
+          <h2>Technical Details</h2>
+          <div class="form-group">
+            <label for="AlcoholContent">Alcohol Content</label>
+            <input type="text" id="AlcoholContent" placeholder="e.g., 13.5">
+          </div>
+          <div class="form-group">
+            <label for="Aging">Aging</label>
+            <input type="text" id="Aging" placeholder="e.g., 18 months in French oak">
+          </div>
+          <div class="form-group">
+            <label for="ServingTemperature">Serving Temperature</label>
+            <input type="text" id="ServingTemperature" placeholder="e.g., 16-18°C">
+          </div>
+          <div class="form-group">
+            <label for="CellaringPotential">Cellaring Potential</label>
+            <input type="text" id="CellaringPotential" placeholder="e.g., 15-20 years">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sensory Description Section -->
+      <div class="form-section">
+        <h2>Sensory Description</h2>
+        <div class="form-group">
+          <label for="VintageDescription">Vintage Description</label>
+          <textarea id="VintageDescription" placeholder="Describe the vintage characteristics and conditions..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="FoodPairings">Food Pairings</label>
+          <textarea id="FoodPairings" placeholder="Suggest ideal food pairings..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="VisualNotes">Visual Notes</label>
+          <textarea id="VisualNotes" placeholder="Describe color, clarity, intensity..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="OlfactoryNotes">Olfactory Notes</label>
+          <textarea id="OlfactoryNotes" placeholder="Describe aroma characteristics..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="GustatoryNotes">Gustatory Notes</label>
+          <textarea id="GustatoryNotes" placeholder="Describe taste and mouthfeel..."></textarea>
+        </div>
+      </div>
+      
+      <div class="form-grid">
+        <!-- RADAR Profile Section -->
+        <div class="form-section">
+          <h2>RADAR Profile</h2>
+          <p><small>Rate each characteristic from 0 to 10</small></p>
+          <div class="radar-grid">
+            <div class="form-group">
+              <label for="RADAR-Body">Body</label>
+              <input type="number" id="RADAR-Body" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            <div class="form-group">
+              <label for="RADAR-Tannins">Tannins</label>
+              <input type="number" id="RADAR-Tannins" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            <div class="form-group">
+              <label for="RADAR-Alcohol">Alcohol</label>
+              <input type="number" id="RADAR-Alcohol" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            <div class="form-group">
+              <label for="RADAR-Persistence">Persistence</label>
+              <input type="number" id="RADAR-Persistence" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            <div class="form-group">
+              <label for="RADAR-Acidity">Acidity</label>
+              <input type="number" id="RADAR-Acidity" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            <div class="form-group">
+              <label for="RADAR-Complexity">Complexity</label>
+              <input type="number" id="RADAR-Complexity" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Aroma Profile Section -->
+        <div class="form-section">
+          <h2>Aroma Profile</h2>
+          <p><small>Rate intensity from 0 to 10 for each aroma</small></p>
+          <div class="aroma-grid">
+            <div class="aroma-header">Aroma 1</div>
+            <div class="form-group">
+              <label for="AROMA-1-Type">Type</label>
+              <input type="text" id="AROMA-1-Type" placeholder="e.g., Cherry">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-1-Value">Intensity</label>
+              <input type="number" id="AROMA-1-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            
+            <div class="aroma-header">Aroma 2</div>
+            <div class="form-group">
+              <label for="AROMA-2-Type">Type</label>
+              <input type="text" id="AROMA-2-Type" placeholder="e.g., Vanilla">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-2-Value">Intensity</label>
+              <input type="number" id="AROMA-2-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            
+            <div class="aroma-header">Aroma 3</div>
+            <div class="form-group">
+              <label for="AROMA-3-Type">Type</label>
+              <input type="text" id="AROMA-3-Type" placeholder="e.g., Tobacco">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-3-Value">Intensity</label>
+              <input type="number" id="AROMA-3-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            
+            <div class="aroma-header">Aroma 4</div>
+            <div class="form-group">
+              <label for="AROMA-4-Type">Type</label>
+              <input type="text" id="AROMA-4-Type" placeholder="e.g., Leather">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-4-Value">Intensity</label>
+              <input type="number" id="AROMA-4-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            
+            <div class="aroma-header">Aroma 5</div>
+            <div class="form-group">
+              <label for="AROMA-5-Type">Type</label>
+              <input type="text" id="AROMA-5-Type" placeholder="e.g., Spices">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-5-Value">Intensity</label>
+              <input type="number" id="AROMA-5-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            
+            <div class="aroma-header">Aroma 6</div>
+            <div class="form-group">
+              <label for="AROMA-6-Type">Type</label>
+              <input type="text" id="AROMA-6-Type" placeholder="e.g., Dark Fruits">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-6-Value">Intensity</label>
+              <input type="number" id="AROMA-6-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            
+            <div class="aroma-header">Aroma 7</div>
+            <div class="form-group">
+              <label for="AROMA-7-Type">Type</label>
+              <input type="text" id="AROMA-7-Type" placeholder="e.g., Mineral">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-7-Value">Intensity</label>
+              <input type="number" id="AROMA-7-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="button-group">
+        <button type="button" class="btn" id="generateCardBtn">Generate Wine Card</button>
+        <button type="button" class="btn btn-secondary" id="downloadJsonBtn">Download JSON</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Global variables
+    let generatedHtml = '';
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Detect context and apply appropriate view
+      function detectContext() {
+        const isMobile = window.innerWidth <= 768;
+        const urlParams = new URLSearchParams(window.location.search);
+        const context = urlParams.get('context') || (isMobile ? 'mobile' : 'desktop');
+        
+        // Reset all context classes
+        document.body.className = '';
+        
+        // Apply context-specific class
+        switch(context) {
+          case 'tasting':
+            document.body.classList.add('tasting-mode');
+            break;
+          case 'showroom':
+            document.body.classList.add('showroom-mode');
+            break;
+          case 'mobile':
+            document.body.classList.add('mobile-view');
+            break;
+          // Default is desktop (no special class needed)
+        }
+      }
+
+      // Initial context detection
+      detectContext();
+      
+      // Re-check on resize
+      window.addEventListener('resize', detectContext);
+
+      // Generate Wine Card functionality
+      document.getElementById('generateCardBtn').addEventListener('click', function() {
+        const btn = this;
+        btn.classList.add('loading');
+        btn.disabled = true;
+        
+        // Collect form data
+        const formData = collectFormData();
+        
+        // Generate HTML
+        setTimeout(() => {
+          generatedHtml = generateWineCardHtml(formData);
+          
+          // Show success message
+          const successMsg = document.getElementById('successMessage');
+          successMsg.style.display = 'block';
+          successMsg.scrollIntoView({ behavior: 'smooth' });
+          
+          // Update button to download
+          btn.textContent = 'Download Wine Card (HTML)';
+          btn.classList.remove('loading');
+          btn.disabled = false;
+          
+          // Change button behavior to download
+          btn.onclick = function() {
+            downloadHtml(generatedHtml, formData);
+          };
+        }, 1000);
+      });
+
+      // Download JSON functionality
+      document.getElementById('downloadJsonBtn').addEventListener('click', function() {
+        const formData = collectFormData();
+        downloadJson(formData);
+      });
+
+      // Helper functions
+      function collectFormData() {
+        const inputs = document.querySelectorAll('#wineForm input, #wineForm textarea, #wineForm select');
+        const data = {};
+        
+        inputs.forEach(input => {
+          if (input.type === 'button') return;
+          data[input.id] = input.value || '';
+        });
+        
+        return data;
+      }
+
+      function downloadJson(data) {
+        const json = JSON.stringify(data, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${data.Name || 'wine'}-${data.Vintage || 'data'}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      function downloadHtml(html, data) {
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${data.Name || 'wine'}-${data.Vintage || 'card'}.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      function generateWineCardHtml(data) {
+        // Map form data to wine data structure
+        const wineData = {
+          producer: data.Producer || "",
+          name: data.Name || "",
+          vintage: data.Vintage || "",
+          denomination: data.Denomination || "",
+          grapes: data.Grapes || "",
+          alcoholContent: data.AlcoholContent || "",
+          aging: data.Aging || "",
+          temperature: data.ServingTemperature || "",
+          potential: data.CellaringPotential || "",
+          vintageDescription: data.VintageDescription || "",
+          foodPairings: data.FoodPairings || "",
+          visualNotes: data.VisualNotes || "",
+          olfactoryNotes: data.OlfactoryNotes || "",
+          gustatoryNotes: data.GustatoryNotes || "",
+          colorTheme: data.ColorTheme || "Red"
+        };
+
+        // RADAR data
+        const radarData = {
+          body: parseFloat(data['RADAR-Body']) || 0,
+          tannins: parseFloat(data['RADAR-Tannins']) || 0,
+          alcohol: parseFloat(data['RADAR-Alcohol']) || 0,
+          persistence: parseFloat(data['RADAR-Persistence']) || 0,
+          acidity: parseFloat(data['RADAR-Acidity']) || 0,
+          complexity: parseFloat(data['RADAR-Complexity']) || 0
+        };
+
+        // Aroma data
+        const aromaData = [];
+        for (let i = 1; i <= 7; i++) {
+          const type = data[`AROMA-${i}-Type`];
+          const value = parseFloat(data[`AROMA-${i}-Value`]);
+          if (type && !isNaN(value)) {
+            aromaData.push({ name: type, value: value });
+          }
+        }
+
+        // Calculate radar coordinates
+        const radarCoords = calculateRadarCoordinates(radarData, 200, 150, 80);
+
+        // Generate complete HTML
+        return generateCompleteHtml(wineData, radarCoords, aromaData);
+      }
+
+      function calculateRadarCoordinates(data, centerX, centerY, radius) {
+        return {
+          body: {
+            x: centerX,
+            y: centerY - (data.body / 5 * radius)
+          },
+          tannins: {
+            x: centerX + (data.tannins / 5 * radius * 0.866),
+            y: centerY - (data.tannins / 5 * radius * 0.5)
+          },
+          alcohol: {
+            x: centerX + (data.alcohol / 5 * radius * 0.866),
+            y: centerY + (data.alcohol / 5 * radius * 0.5)
+          },
+          persistence: {
+            x: centerX,
+            y: centerY + (data.persistence / 5 * radius)
+          },
+          acidity: {
+            x: centerX - (data.acidity / 5 * radius * 0.866),
+            y: centerY + (data.acidity / 5 * radius * 0.5)
+          },
+          complexity: {
+            x: centerX - (data.complexity / 5 * radius * 0.866),
+            y: centerY - (data.complexity / 5 * radius * 0.5)
+          }
+        };
+      }
+
+      function getColorTheme(wineType) {
+        switch(wineType) {
+          case 'White':
+            return {
+              primary: '#83742a',
+              accent: '#f0e68c',
+              dark: '#5f5527',
+              lightBg: '#fcfbf7',
+              rgbPrimary: '131,116,42'
+            };
+          case 'Rosé':
+            return {
+              primary: '#c06377',
+              accent: '#f7cad0',
+              dark: '#904756',
+              lightBg: '#fdf5f7',
+              rgbPrimary: '192,99,119'
+            };
+          case 'Sparkling':
+            return {
+              primary: '#7d7f89',
+              accent: '#d0d0d8',
+              dark: '#4e5057',
+              lightBg: '#f9f9fb',
+              rgbPrimary: '125,127,137'
+            };
+          case 'Red':
+          default:
+            return {
+              primary: '#5e1914',
+              accent: '#e6d1a8',
+              dark: '#2c1e1d',
+              lightBg: '#f9f7f3',
+              rgbPrimary: '94,25,20'
+            };
+        }
+      }
+
+      function generateCompleteHtml(wineData, radarCoords, aromaData) {
+        const logoUrl = "https://github.com/S4ng4/WineCArd/blob/main/All%20Simbles.jpg";
+        const colorTheme = getColorTheme(wineData.colorTheme);
+        
+        const polygonPoints = [
+          radarCoords.body.x + ',' + radarCoords.body
