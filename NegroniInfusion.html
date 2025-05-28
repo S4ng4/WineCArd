@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negroni Infusion 2024 - Technical Sheet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #D4AF37;
+            --secondary: #B8860B;
+            --accent: #F5DEB3;
+            --background: #FAFAFA;
+            --surface: #FFFFFF;
+            --surface-alt: #F8F9FA;
+            --text-primary: #1A1A1A;
+            --text-secondary: #4A5568;
+            --text-muted: #718096;
+            --border: #E2E8F0;
+            --shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: float 20s infinite linear;
+            opacity: 0.3;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-30px, -30px) rotate(360deg); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .cocktail-type-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-left: 1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .card {
+            background: var(--surface);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            padding: 2rem 2rem 0;
+            position: relative;
+        }
+        
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .card-content {
+            padding: 0 2rem 2rem;
+        }
+        
+        .cocktail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        
+        .spec-item {
+            background: var(--surface-alt);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .spec-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(4px);
+        }
+        
+        .spec-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        
+        .spec-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .story-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .story-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .chart-container {
+            background: var(--surface-alt);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .chart-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .radar-chart {
+            width: 100%;
+            height: 350px;
+        }
+        
+        .flavor-chart {
+            width: 100%;
+            height: 350px;
+        }
+        
+        .tasting-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        
+        .tasting-card {
+            background: var(--surface-alt);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .tasting-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+        
+        .tasting-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .tasting-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        .footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 3rem;
+        }
+        
+        /* Radar Chart Styles */
+        .radar-grid {
+            stroke: var(--border);
+            stroke-width: 1;
+            fill: none;
+            opacity: 0.5;
+        }
+        
+        .radar-axis {
+            stroke: var(--border);
+            stroke-width: 1;
+            stroke-dasharray: 2,4;
+            opacity: 0.7;
+        }
+        
+        .radar-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            fill: var(--text-secondary);
+            text-anchor: middle;
+        }
+        
+        .radar-polygon {
+            fill: var(--primary);
+            fill-opacity: 0.3;
+            stroke: var(--primary);
+            stroke-width: 2;
+        }
+        
+        .radar-point {
+            fill: var(--primary);
+            stroke: var(--surface);
+            stroke-width: 3;
+        }
+        
+        /* Flavor Chart Styles */
+        .flavor-bar-bg {
+            fill: var(--border);
+            opacity: 0.3;
+            rx: 6;
+        }
+        
+        .flavor-bar {
+            fill: var(--primary);
+            rx: 6;
+            transition: all 0.5s ease;
+        }
+        
+        .flavor-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            fill: var(--text-primary);
+        }
+        
+        .flavor-value {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            fill: var(--primary);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .cocktail-grid, .charts-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .tasting-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                padding: 2rem 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-content {
+                padding: 0 1rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>Negroni Infusion 2024</h1>
+            <div class="cocktail-type-badge">Classic</div>
+            <p style="margin-top: 1rem; font-size: 1.1rem; opacity: 0.9;">by Gran Caffe l'Aquila</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Main Info Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Negroni Infusion</h2>
+                <p class="card-subtitle">Apéritif</p>
+            </div>
+            <div class="card-content">
+                <div class="cocktail-grid">
+                    <div class="specs-section">
+                        <div class="specs-grid">
+                            <div class="spec-item">
+                                <div class="spec-label">Bartender</div>
+                                <div class="spec-value">Gran Caffe l'Aquila</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">Main Ingredients</div>
+                                <div class="spec-value">London Dry Gin, Campari, Sweet Vermouth (1:1:1), Orange twist</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">Year Created</div>
+                                <div class="spec-value">2024</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">ABV</div>
+                                <div class="spec-value">24%</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">Technique</div>
+                                <div class="spec-value">Stirred over ice, strained</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">Serving Temperature</div>
+                                <div class="spec-value">On the Rocks</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="story-section">
+                        <h3>The Story Behind 2024</h3>
+                        <p>Born in Florence when Count Negroni requested his Americano be strengthened with gin instead of soda. The equal-parts formula became Italy's most iconic cocktail, embodying la dolce vita.In 2024 Gran Caffe l'Aquila Situated in Philadelphia create a new spin off, the Negroni mix is going thought a mix of coffee beans and orange peels</p>
+                        <h3>Perfect Pairings</h3>
+                        <p>Parmigiano Reggiano, Olive all'Ascolana, Prosciutto di Parma</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Charts Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Cocktail Profile Analysis</h2>
+            </div>
+            <div class="card-content">
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3 class="chart-title">Balance Profile</h3>
+                        <svg class="radar-chart" viewBox="0 0 400 350">
+                            <!-- Background circles -->
+                            <circle class="radar-grid" cx="200" cy="175" r="120"/>
+                            <circle class="radar-grid" cx="200" cy="175" r="80"/>
+                            <circle class="radar-grid" cx="200" cy="175" r="40"/>
+                            
+                            <!-- Axes -->
+                            <line class="radar-axis" x1="200" y1="175" x2="200" y2="55"/><line class="radar-axis" x1="200" y1="175" x2="303.92304845413264" y2="115"/><line class="radar-axis" x1="200" y1="175" x2="303.92304845413264" y2="235"/><line class="radar-axis" x1="200" y1="175" x2="200" y2="295"/><line class="radar-axis" x1="200" y1="175" x2="96.07695154586736" y2="235"/><line class="radar-axis" x1="200" y1="175" x2="96.07695154586737" y2="114.99999999999999"/>
+                            
+                            <!-- Labels -->
+                            <text class="radar-label" x="200" y="45">Sweetness</text>
+                            <text class="radar-label" x="330" y="115">Bitterness</text>
+                            <text class="radar-label" x="330" y="240">Alcohol</text>
+                            <text class="radar-label" x="200" y="320">Complexity</text>
+                            <text class="radar-label" x="70" y="240">Acidity</text>
+                            <text class="radar-label" x="70" y="115">Balance</text>
+                            
+                            <!-- Data polygon -->
+                            <polygon class="radar-polygon" points="200.0,105.4 287.3,124.6 274.8,218.2 200.0,284.2 155.3,200.8 109.6,122.8"/>
+                            
+                            <!-- Data points -->
+                            <circle class="radar-point" cx="200" cy="105.4" r="4"/><circle class="radar-point" cx="287.3" cy="124.6" r="4"/><circle class="radar-point" cx="274.8" cy="218.2" r="4"/><circle class="radar-point" cx="200" cy="284.2" r="4"/><circle class="radar-point" cx="155.3" cy="200.8" r="4"/><circle class="radar-point" cx="109.6" cy="122.8" r="4"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3 class="chart-title">Flavor Profile</h3>
+                        <svg class="flavor-chart" viewBox="0 0 400 350">
+                            
+      <rect class="flavor-bar-bg" x="120" y="40" width="250" height="24"/>
+      <rect class="flavor-bar" x="120" y="40" width="222.5" height="24"/>
+      <text class="flavor-label" x="110" y="56" text-anchor="end">Bitter orange</text>
+      <text class="flavor-value" x="347.5" y="56">8.9</text>
+    
+      <rect class="flavor-bar-bg" x="120" y="80" width="250" height="24"/>
+      <rect class="flavor-bar" x="120" y="80" width="182.5" height="24"/>
+      <text class="flavor-label" x="110" y="96" text-anchor="end">Juniper</text>
+      <text class="flavor-value" x="307.5" y="96">7.3</text>
+    
+      <rect class="flavor-bar-bg" x="120" y="120" width="250" height="24"/>
+      <rect class="flavor-bar" x="120" y="120" width="137.5" height="24"/>
+      <text class="flavor-label" x="110" y="136" text-anchor="end">Coffee</text>
+      <text class="flavor-value" x="262.5" y="136">5.5</text>
+    
+      <rect class="flavor-bar-bg" x="120" y="160" width="250" height="24"/>
+      <rect class="flavor-bar" x="120" y="160" width="195" height="24"/>
+      <text class="flavor-label" x="110" y="176" text-anchor="end">Gentian root</text>
+      <text class="flavor-value" x="320" y="176">7.8</text>
+    
+      <rect class="flavor-bar-bg" x="120" y="200" width="250" height="24"/>
+      <rect class="flavor-bar" x="120" y="200" width="130" height="24"/>
+      <text class="flavor-label" x="110" y="216" text-anchor="end">Orange peels</text>
+      <text class="flavor-value" x="255" y="216">5.2</text>
+    
+      <rect class="flavor-bar-bg" x="120" y="240" width="250" height="24"/>
+      <rect class="flavor-bar" x="120" y="240" width="152.5" height="24"/>
+      <text class="flavor-label" x="110" y="256" text-anchor="end">Raisin</text>
+      <text class="flavor-value" x="277.5" y="256">6.1</text>
+    
+      <rect class="flavor-bar-bg" x="120" y="280" width="250" height="24"/>
+      <rect class="flavor-bar" x="120" y="280" width="117.50000000000001" height="24"/>
+      <text class="flavor-label" x="110" y="296" text-anchor="end">Clove</text>
+      <text class="flavor-value" x="242.5" y="296">4.7</text>
+    
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tasting Notes Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Sensory Experience</h2>
+            </div>
+            <div class="card-content">
+                <div class="tasting-grid">
+                    <div class="tasting-card">
+                        <h3>Visual</h3>
+                        <p>Translucent ruby with amber highlights in a rocks glass, orange oil shimmering atop</p>
+                    </div>
+                    <div class="tasting-card">
+                        <h3>Aroma</h3>
+                        <p>Blood orange marmalade, Chinotto soda, Rhubarb root</p>
+                    </div>
+                    <div class="tasting-card">
+                        <h3>Taste</h3>
+                        <p>Bitter-sweet symphony opening with quinine punch, transitioning to vermouth's raisin depth and gin's juniper lift. Velvety texture with a long, herbal-orange finish that demands another sip.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; Gran Caffe l'Aquila 2025 - Negroni Infusion. Drink Responsibly.</p>
+    </footer>
+    
+    <script>
+        // Animate flavor bars on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const bars = document.querySelectorAll('.flavor-bar');
+            bars.forEach((bar, index) => {
+                const width = bar.getAttribute('width');
+                bar.setAttribute('width', '0');
+                setTimeout(() => {
+                    bar.setAttribute('width', width);
+                }, 200 + (index * 100));
+            });
+        });
+    </script>
+</body>
+</html>
