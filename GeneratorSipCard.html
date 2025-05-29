@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SipTap Wine Entry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #8B2635;
+      --secondary: #2E3532;
+      --light: #F8F7F7;
+      --accent: #D3D4D9;
+      --text: #333333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      color: var(--primary);
+      font-weight: 500;
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      font-size: 1.5rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .form-section {
+      background-color: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(139, 38, 53, 0.2);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .radar-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .aroma-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .aroma-header {
+      grid-column: span 2;
+      font-weight: 600;
+      color: var(--primary);
+      margin-top: 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0.5rem;
+      width: calc(50% - 1rem);
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #6a1e2a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+    }
+
+    .btn-secondary:hover {
+      background-color: #1a1f1c;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .success-message {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      border: 1px solid #c3e6cb;
+      display: none;
+    }
+
+    .btn.loading {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .btn.loading::after {
+      content: "...";
+      animation: loading 1s infinite;
+    }
+
+    @keyframes loading {
+      0% { content: ""; }
+      33% { content: "."; }
+      66% { content: ".."; }
+      100% { content: "..."; }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .radar-grid, .aroma-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .aroma-header {
+        grid-column: span 1;
+      }
+
+      .btn {
+        width: 100%;
+        margin: 0.25rem 0;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SipTap Wine Entry</h1>
+    
+    <div class="success-message" id="successMessage">
+      Wine card generated successfully! Click below to download.
+    </div>
+    
+    <form id="wineForm">
+      <div class="form-grid">
+        <!-- Wine Identity Section -->
+        <div class="form-section">
+          <h2>Wine Identity</h2>
+          <div class="form-group">
+            <label for="Producer">Producer</label>
+            <input type="text" id="Producer" placeholder="e.g., Château Margaux">
+          </div>
+          <div class="form-group">
+            <label for="Name">Name</label>
+            <input type="text" id="Name" placeholder="e.g., Grand Vin">
+          </div>
+          <div class="form-group">
+            <label for="Vintage">Vintage</label>
+            <input type="text" id="Vintage" placeholder="e.g., 2018">
+          </div>
+          <div class="form-group">
+            <label for="Denomination">Denomination</label>
+            <input type="text" id="Denomination" placeholder="e.g., Margaux AOC">
+          </div>
+          <div class="form-group">
+            <label for="Grapes">Grapes</label>
+            <input type="text" id="Grapes" placeholder="e.g., Cabernet Sauvignon 60%, Merlot 40%">
+          </div>
+          <div class="form-group">
+            <label for="ColorTheme">Wine Type</label>
+            <select id="ColorTheme">
+              <option value="Red">Red</option>
+              <option value="White">White</option>
+              <option value="Rosé">Rosé</option>
+              <option value="Sparkling">Sparkling</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Technical Details Section -->
+        <div class="form-section">
+          <h2>Technical Details</h2>
+          <div class="form-group">
+            <label for="AlcoholContent">Alcohol Content</label>
+            <input type="text" id="AlcoholContent" placeholder="e.g., 13.5">
+          </div>
+          <div class="form-group">
+            <label for="Aging">Aging</label>
+            <input type="text" id="Aging" placeholder="e.g., 18 months in French oak">
+          </div>
+          <div class="form-group">
+            <label for="ServingTemperature">Serving Temperature</label>
+            <input type="text" id="ServingTemperature" placeholder="e.g., 16-18°C">
+          </div>
+          <div class="form-group">
+            <label for="CellaringPotential">Cellaring Potential</label>
+            <input type="text" id="CellaringPotential" placeholder="e.g., 15-20 years">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sensory Description Section -->
+      <div class="form-section">
+        <h2>Sensory Description</h2>
+        <div class="form-group">
+          <label for="VintageDescription">Vintage Description</label>
+          <textarea id="VintageDescription" placeholder="Describe the vintage characteristics and conditions..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="FoodPairings">Food Pairings</label>
+          <textarea id="FoodPairings" placeholder="Suggest ideal food pairings..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="VisualNotes">Visual Notes</label>
+          <textarea id="VisualNotes" placeholder="Describe color, clarity, intensity..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="OlfactoryNotes">Olfactory Notes</label>
+          <textarea id="OlfactoryNotes" placeholder="Describe aroma characteristics..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="GustatoryNotes">Gustatory Notes</label>
+          <textarea id="GustatoryNotes" placeholder="Describe taste and mouthfeel..."></textarea>
+        </div>
+      </div>
+      
+      <div class="form-grid">
+        <!-- RADAR Profile Section -->
+        <div class="form-section">
+          <h2>RADAR Profile</h2>
+          <p><small>Rate each characteristic from 0 to 10</small></p>
+          <div class="radar-grid">
+            <div class="form-group">
+              <label for="RADAR-Body">Body</label>
+              <input type="number" id="RADAR-Body" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            <div class="form-group">
+              <label for="RADAR-Tannins">Tannins</label>
+              <input type="number" id="RADAR-Tannins" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            <div class="form-group">
+              <label for="RADAR-Alcohol">Alcohol</label>
+              <input type="number" id="RADAR-Alcohol" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            <div class="form-group">
+              <label for="RADAR-Persistence">Persistence</label>
+              <input type="number" id="RADAR-Persistence" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            <div class="form-group">
+              <label for="RADAR-Acidity">Acidity</label>
+              <input type="number" id="RADAR-Acidity" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            <div class="form-group">
+              <label for="RADAR-Complexity">Complexity</label>
+              <input type="number" id="RADAR-Complexity" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Aroma Profile Section -->
+        <div class="form-section">
+          <h2>Aroma Profile</h2>
+          <p><small>Rate intensity from 0 to 10 for each aroma</small></p>
+          <div class="aroma-grid">
+            <div class="aroma-header">Aroma 1</div>
+            <div class="form-group">
+              <label for="AROMA-1-Type">Type</label>
+              <input type="text" id="AROMA-1-Type" placeholder="e.g., Cherry">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-1-Value">Intensity</label>
+              <input type="number" id="AROMA-1-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            
+            <div class="aroma-header">Aroma 2</div>
+            <div class="form-group">
+              <label for="AROMA-2-Type">Type</label>
+              <input type="text" id="AROMA-2-Type" placeholder="e.g., Vanilla">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-2-Value">Intensity</label>
+              <input type="number" id="AROMA-2-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            
+            <div class="aroma-header">Aroma 3</div>
+            <div class="form-group">
+              <label for="AROMA-3-Type">Type</label>
+              <input type="text" id="AROMA-3-Type" placeholder="e.g., Tobacco">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-3-Value">Intensity</label>
+              <input type="number" id="AROMA-3-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            
+            <div class="aroma-header">Aroma 4</div>
+            <div class="form-group">
+              <label for="AROMA-4-Type">Type</label>
+              <input type="text" id="AROMA-4-Type" placeholder="e.g., Leather">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-4-Value">Intensity</label>
+              <input type="number" id="AROMA-4-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            
+            <div class="aroma-header">Aroma 5</div>
+            <div class="form-group">
+              <label for="AROMA-5-Type">Type</label>
+              <input type="text" id="AROMA-5-Type" placeholder="e.g., Spices">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-5-Value">Intensity</label>
+              <input type="number" id="AROMA-5-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            
+            <div class="aroma-header">Aroma 6</div>
+            <div class="form-group">
+              <label for="AROMA-6-Type">Type</label>
+              <input type="text" id="AROMA-6-Type" placeholder="e.g., Dark Fruits">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-6-Value">Intensity</label>
+              <input type="number" id="AROMA-6-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+            
+            <div class="aroma-header">Aroma 7</div>
+            <div class="form-group">
+              <label for="AROMA-7-Type">Type</label>
+              <input type="text" id="AROMA-7-Type" placeholder="e.g., Mineral">
+            </div>
+            <div class="form-group">
+              <label for="AROMA-7-Value">Intensity</label>
+              <input type="number" id="AROMA-7-Value" min="0" max="10" step="0.1" placeholder="0-10">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="button-group">
+        <button type="button" class="btn" id="generateCardBtn">Generate Wine Card</button>
+        <button type="button" class="btn btn-secondary" id="downloadJsonBtn">Download JSON</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    let generatedHtml = '';
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Generate Wine Card functionality
+      document.getElementById('generateCardBtn').addEventListener('click', function() {
+        const btn = this;
+        btn.classList.add('loading');
+        btn.disabled = true;
+        
+        // Collect form data
+        const formData = collectFormData();
+        
+        // Generate HTML
+        setTimeout(() => {
+          generatedHtml = generateWineCardHtml(formData);
+          
+          // Show success message
+          const successMsg = document.getElementById('successMessage');
+          successMsg.style.display = 'block';
+          successMsg.scrollIntoView({ behavior: 'smooth' });
+          
+          // Update button to download
+          btn.textContent = 'Download Wine Card (HTML)';
+          btn.classList.remove('loading');
+          btn.disabled = false;
+          
+          // Change button behavior to download
+          btn.onclick = function() {
+            downloadHtml(generatedHtml, formData);
+          };
+        }, 1000);
+      });
+
+      // Download JSON functionality
+      document.getElementById('downloadJsonBtn').addEventListener('click', function() {
+        const formData = collectFormData();
+        downloadJson(formData);
+      });
+
+      // Helper functions
+      function collectFormData() {
+        const inputs = document.querySelectorAll('#wineForm input, #wineForm textarea, #wineForm select');
+        const data = {};
+        
+        inputs.forEach(input => {
+          if (input.type === 'button') return;
+          data[input.id] = input.value || '';
+        });
+        
+        return data;
+      }
+
+      function downloadJson(data) {
+        const json = JSON.stringify(data, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${data.Name || 'wine'}-${data.Vintage || 'data'}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      function downloadHtml(html, data) {
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${data.Name || 'wine'}-${data.Vintage || 'card'}.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      function generateWineCardHtml(data) {
+        // Map form data to wine data structure
+        const wineData = {
+          producer: data.Producer || "",
+          name: data.Name || "",
+          vintage: data.Vintage || "",
+          denomination: data.Denomination || "",
+          grapes: data.Grapes || "",
+          alcoholContent: data.AlcoholContent || "",
+          aging: data.Aging || "",
+          temperature: data.ServingTemperature || "",
+          potential: data.CellaringPotential || "",
+          vintageDescription: data.VintageDescription || "",
+          foodPairings: data.FoodPairings || "",
+          visualNotes: data.VisualNotes || "",
+          olfactoryNotes: data.OlfactoryNotes || "",
+          gustatoryNotes: data.GustatoryNotes || "",
+          colorTheme: data.ColorTheme || "Red"
+        };
+
+        // RADAR data
+        const radarData = {
+          body: parseFloat(data['RADAR-Body']) || 0,
+          tannins: parseFloat(data['RADAR-Tannins']) || 0,
+          alcohol: parseFloat(data['RADAR-Alcohol']) || 0,
+          persistence: parseFloat(data['RADAR-Persistence']) || 0,
+          acidity: parseFloat(data['RADAR-Acidity']) || 0,
+          complexity: parseFloat(data['RADAR-Complexity']) || 0
+        };
+
+        // Aroma data
+        const aromaData = [];
+        for (let i = 1; i <= 7; i++) {
+          const type = data[`AROMA-${i}-Type`];
+          const value = parseFloat(data[`AROMA-${i}-Value`]);
+          if (type && !isNaN(value)) {
+            aromaData.push({ name: type, value: value });
+          }
+        }
+
+        // Generate complete HTML
+        return generateCompleteHtml(wineData, radarData, aromaData);
+      }
+
+      function getColorTheme(wineType) {
+        switch(wineType) {
+          case 'White':
+            return {
+              primary: '#83742a',
+              accent: '#f0e68c',
+              dark: '#5f5527',
+              lightBg: '#fcfbf7'
+            };
+          case 'Rosé':
+            return {
+              primary: '#c06377',
+              accent: '#f7cad0',
+              dark: '#904756',
+              lightBg: '#fdf5f7'
+            };
+          case 'Sparkling':
+            return {
+              primary: '#7d7f89',
+              accent: '#d0d0d8',
+              dark: '#4e5057',
+              lightBg: '#f9f9fb'
+            };
+          case 'Red':
+          default:
+            return {
+              primary: '#5e1914',
+              accent: '#e6d1a8',
+              dark: '#2c1e1d',
+              lightBg: '#f9f7f3'
+            };
+        }
+      }
+
+      function generateCompleteHtml(wineData, radarData, aromaData) {
+        const colorTheme = getColorTheme(wineData.colorTheme);
+        
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${wineData.producer} ${wineData.name} ${wineData.vintage}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: ${colorTheme.lightBg};
+            color: #333;
+            line-height: 1.6;
+        }
+        .wine-card {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, ${colorTheme.primary}, ${colorTheme.dark});
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .producer { font-size: 1.2em; font-weight: 300; margin-bottom: 10px; }
+        .wine-name { font-size: 2.5em; font-weight: 700; margin-bottom: 10px; }
+        .vintage { font-size: 1.5em; font-weight: 400; opacity: 0.9; }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h3 {
+            color: ${colorTheme.primary};
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 2px solid ${colorTheme.accent};
+            padding-bottom: 5px;
+        }
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .detail-item {
+            background: ${colorTheme.lightBg};
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid ${colorTheme.primary};
+        }
+        .detail-label {
+            font-weight: 600;
+            color: ${colorTheme.dark};
+            font-size: 0.9em;
+        }
+        .detail-value {
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+        .radar-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .radar-values {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .radar-item {
+            background: ${colorTheme.lightBg};
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .radar-label {
+            font-size: 0.9em;
+            color: ${colorTheme.dark};
+            font-weight: 500;
+        }
+        .radar-value {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: ${colorTheme.primary};
+        }
+        .aroma-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .aroma-item {
+            background: ${colorTheme.lightBg};
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .aroma-name {
+            font-weight: 600;
+            color: ${colorTheme.dark};
+            margin-bottom: 5px;
+        }
+        .aroma-intensity {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: ${colorTheme.primary};
+        }
+        .notes-text {
+            background: ${colorTheme.lightBg};
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.8;
+            font-size: 1.05em;
+            border-left: 4px solid ${colorTheme.primary};
+        }
+        @media (max-width: 768px) {
+            .wine-card { margin: 10px; }
+            .wine-name { font-size: 2em; }
+            .details-grid, .radar-values, .aroma-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wine-card">
+        <div class="header">
+            <div class="producer">${wineData.producer}</div>
+            <h1 class="wine-name">${wineData.name}</h1>
+            <div class="vintage">${wineData.vintage}</div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h3>Wine Details</h3>
+                <div class="details-grid">
+                    ${wineData.denomination ? `<div class="detail-item"><div class="detail-label">Denomination</div><div class="detail-value">${wineData.denomination}</div></div>` : ''}
+                    ${wineData.grapes ? `<div class="detail-item"><div class="detail-label">Grapes</div><div class="detail-value">${wineData.grapes}</div></div>` : ''}
+                    ${wineData.alcoholContent ? `<div class="detail-item"><div class="detail-label">Alcohol</div><div class="detail-value">${wineData.alcoholContent}%</div></div>` : ''}
+                    ${wineData.aging ? `<div class="detail-item"><div class="detail-label">Aging</div><div class="detail-value">${wineData.aging}</div></div>` : ''}
+                    ${wineData.temperature ? `<div class="detail-item"><div class="detail-label">Serving Temperature</div><div class="detail-value">${wineData.temperature}</div></div>` : ''}
+                    ${wineData.potential ? `<div class="detail-item"><div class="detail-label">Cellaring Potential</div><div class="detail-value">${wineData.potential}</div></div>` : ''}
+                </div>
+            </div>
+
+            ${Object.values(radarData).some(v => v > 0) ? `
+            <div class="section">
+                <h3>Sensory Profile</h3>
+                <div class="radar-values">
+                    <div class="radar-item"><div class="radar-label">Body</div><div class="radar-value">${radarData.body}/10</div></div>
+                    <div class="radar-item"><div class="radar-label">Tannins</div><div class="radar-value">${radarData.tannins}/10</div></div>
+                    <div class="radar-item"><div class="radar-label">Alcohol</div><div class="radar-value">${radarData.alcohol}/10</div></div>
+                    <div class="radar-item"><div class="radar-label">Persistence</div><div class="radar-value">${radarData.persistence}/10</div></div>
+                    <div class="radar-item"><div class="radar-label">Acidity</div><div class="radar-value">${radarData.acidity}/10</div></div>
+                    <div class="radar-item"><div class="radar-label">Complexity</div><div class="radar-value">${radarData.complexity}/10</div></div>
+                </div>
+            </div>
+            ` : ''}
+
+            ${aromaData.length > 0 ? `
+            <div class="section">
+                <h3>Aroma Profile</h3>
+                <div class="aroma-grid">
+                    ${aromaData.map(aroma => `
+                        <div class="aroma-item">
+                            <div class="aroma-name">${aroma.name}</div>
+                            <div class="aroma-intensity">${aroma.value}/10</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            ` : ''}
+
+            ${wineData.vintageDescription ? `
+            <div class="section">
+                <h3>Vintage Description</h3>
+                <div class="notes-text">${wineData.vintageDescription}</div>
+            </div>
+            ` : ''}
+
+            ${wineData.visualNotes ? `
+            <div class="section">
+                <h3>Visual Notes</h3>
+                <div class="notes-text">${wineData.visualNotes}</div>
+            </div>
+            ` : ''}
+
+            ${wineData.olfactoryNotes ? `
+            <div class="section">
+                <h3>Olfactory Notes</h3>
+                <div class="notes-text">${wineData.olfactoryNotes}</div>
+            </div>
+            ` : ''}
+
+            ${wineData.gustatoryNotes ? `
+            <div class="section">
+                <h3>Gustatory Notes</h3>
+                <div class="notes-text">${wineData.gustatoryNotes}</div>
+            </div>
+            ` : ''}
+
+            ${wineData.foodPairings ? `
+            <div class="section">
+                <h3>Food Pairings</h3>
+                <div class="notes-text">${wineData.foodPairings}</div>
+            </div>
+            ` : ''}
+        </div>
+    </div>
+</body>
+</html>`;
+      }
+    });
+  </script>
+</body>
+</html>
