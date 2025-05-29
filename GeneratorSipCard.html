@@ -177,6 +177,26 @@
       animation: loading 1s infinite;
     }
 
+    input[type="file"] {
+      border: 2px dashed var(--accent);
+      background-color: var(--light);
+      cursor: pointer;
+    }
+
+    input[type="file"]:hover {
+      border-color: var(--primary);
+      background-color: white;
+    }
+
+    .excel-preview {
+      background-color: var(--light);
+      padding: 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      color: var(--secondary);
+    }
+
     @keyframes loading {
       0% { content: ""; }
       33% { content: "."; }
@@ -414,6 +434,29 @@
         </div>
       </div>
       
+      <!-- Excel Upload Section -->
+      <div class="form-section">
+        <h2>Import from Excel</h2>
+        <div class="form-group">
+          <label for="excelFile">Upload Excel File (.xlsx, .xls)</label>
+          <input type="file" id="excelFile" accept=".xlsx,.xls" style="padding: 0.5rem;">
+          <small style="color: #666; margin-top: 0.5rem; display: block;">
+            Upload an Excel file with wine data. The first row should contain column headers.
+          </small>
+        </div>
+        <div class="form-group" id="sheetSelector" style="display: none;">
+          <label for="sheetSelect">Select Sheet</label>
+          <select id="sheetSelect"></select>
+        </div>
+        <div class="form-group" id="rowSelector" style="display: none;">
+          <label for="rowSelect">Select Row</label>
+          <select id="rowSelect"></select>
+        </div>
+        <button type="button" class="btn btn-secondary" id="loadFromExcelBtn" style="display: none; width: 100%;">
+          Load Selected Data
+        </button>
+      </div>
+
       <div class="button-group">
         <button type="button" class="btn" id="generateCardBtn">Generate Wine Card</button>
         <button type="button" class="btn btn-secondary" id="downloadJsonBtn">Download JSON</button>
@@ -423,8 +466,13 @@
 
   <script>
     let generatedHtml = '';
+    let excelData = null;
 
     document.addEventListener('DOMContentLoaded', function() {
+      // Excel file handling
+      document.getElementById('excelFile').addEventListener('change', handleExcelFile);
+      document.getElementById('sheetSelect').addEventListener('change', handleSheetSelection);
+      document.getElementById('loadFromExcelBtn').addEventListener('click', loadSelectedData);
       // Generate Wine Card functionality
       document.getElementById('generateCardBtn').addEventListener('click', function() {
         const btn = this;
@@ -455,7 +503,233 @@
         }, 1000);
       });
 
-      // Download JSON functionality
+      // Excel handling functions
+      async function handleExcelFile(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        try {
+          const arrayBuffer = await file.arrayBuffer();
+          
+          // Load SheetJS library if not already loaded
+          if (typeof XLSX === 'undefined') {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+            script.onload = () => processExcelFile(arrayBuffer);
+            document.head.appendChild(script);
+          } else {
+            processExcelFile(arrayBuffer);
+          }
+        } catch (error) {
+          alert('Error reading file: ' + error.message);
+        }
+      }
+
+      function processExcelFile(arrayBuffer) {
+        try {
+          const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+          excelData = workbook;
+          
+          // Populate sheet selector
+          const sheetSelect = document.getElementById('sheetSelect');
+          const sheetSelector = document.getElementById('sheetSelector');
+          
+          sheetSelect.innerHTML = '<option value="">Select a sheet...</option>';
+          
+          workbook.SheetNames.forEach(sheetName => {
+            const option = document.createElement('option');
+            option.value = sheetName;
+            option.textContent = sheetName;
+            sheetSelect.appendChild(option);
+          });
+          
+          sheetSelector.style.display = 'block';
+        } catch (error) {
+          alert('Error processing Excel file: ' + error.message);
+        }
+      }
+
+      function handleSheetSelection() {
+        const sheetName = document.getElementById('sheetSelect').value;
+        if (!sheetName || !excelData) return;
+
+        try {
+          const worksheet = excelData.Sheets[sheetName];
+          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+          
+          // Populate row selector
+          const rowSelect = document.getElementById('rowSelect');
+          const rowSelector = document.getElementById('rowSelector');
+          const loadBtn = document.getElementById('loadFromExcelBtn');
+          
+          rowSelect.innerHTML = '<option value="">Select a row...</option>';
+          
+          // Skip header row (index 0), start from row 1
+          for (let i = 1; i < jsonData.length; i++) {
+            if (jsonData[i].some(cell => cell !== undefined && cell !== '')) {
+              const option = document.createElement('option');
+              option.value = i;
+              // Show preview of first few cells
+              const preview = jsonData[i].slice(0, 3).join(' | ') + '...';
+              option.textContent = `Row ${i + 1}: ${preview}`;
+              rowSelect.appendChild(option);
+            }
+          }
+          
+          rowSelector.style.display = 'block';
+          loadBtn.style.display = 'block';
+        } catch (error) {
+          alert('Error reading sheet data: ' + error.message);
+        }
+      }
+
+      function loadSelectedData() {
+        const sheetName = document.getElementById('sheetSelect').value;
+        const rowIndex = parseInt(document.getElementById('rowSelect').value);
+        
+        if (!sheetName || isNaN(rowIndex) || !excelData) return;
+
+        try {
+          const worksheet = excelData.Sheets[sheetName];
+          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+          
+          const headers = jsonData[0]; // First row as headers
+          const selectedRow = jsonData[rowIndex]; // Selected data row
+          
+          if (!headers || !selectedRow) {
+            alert('Invalid data selection');
+            return;
+          }
+
+          // Create mapping object
+          const dataMapping = {};
+          headers.forEach((header, index) => {
+            if (header && selectedRow[index] !== undefined) {
+              dataMapping[header.toString().toLowerCase()] = selectedRow[index];
+            }
+          });
+
+          // Map Excel data to form fields
+          mapExcelDataToForm(dataMapping);
+          
+          alert('Data loaded successfully!');
+          
+        } catch (error) {
+          alert('Error loading data: ' + error.message);
+        }
+      }
+
+      function mapExcelDataToForm(data) {
+        // Define mapping between Excel columns and form fields
+        const fieldMappings = {
+          'producer': ['producer', 'winery', 'brand', 'estate'],
+          'name': ['name', 'wine name', 'wine', 'product'],
+          'vintage': ['vintage', 'year', 'annata'],
+          'denomination': ['denomination', 'appellation', 'doc', 'docg', 'igt'],
+          'grapes': ['grapes', 'varietals', 'blend', 'composition'],
+          'alcoholcontent': ['alcohol', 'alc', 'alcohol content', 'abv'],
+          'aging': ['aging', 'ageing', 'maturation', 'fermentation'],
+          'servingtemperature': ['temperature', 'serving temp', 'serving temperature'],
+          'cellaringpotential': ['cellaring', 'aging potential', 'storage'],
+          'vintagedescription': ['vintage description', 'vintage notes', 'harvest'],
+          'foodpairings': ['food pairing', 'pairing', 'food', 'cuisine'],
+          'visualnotes': ['visual', 'color', 'appearance', 'look'],
+          'olfactorynotes': ['aroma', 'nose', 'olfactory', 'smell', 'bouquet'],
+          'gustatorynotes': ['taste', 'palate', 'gustatory', 'flavor', 'mouth'],
+          'colorheme': ['type', 'wine type', 'style', 'color']
+        };
+
+        // Clear form first
+        document.querySelectorAll('#wineForm input, #wineForm textarea, #wineForm select').forEach(field => {
+          if (field.type !== 'file' && field.type !== 'button') {
+            field.value = '';
+          }
+        });
+
+        // Map data to form fields
+        Object.keys(fieldMappings).forEach(formField => {
+          const possibleColumns = fieldMappings[formField];
+          
+          for (const column of possibleColumns) {
+            const value = findValueInData(data, column);
+            if (value !== null && value !== undefined && value !== '') {
+              const fieldElement = document.getElementById(formField.charAt(0).toUpperCase() + formField.slice(1));
+              if (fieldElement) {
+                fieldElement.value = value;
+                break; // Found a match, stop looking
+              }
+            }
+          }
+        });
+
+        // Handle RADAR data
+        const radarMappings = {
+          'RADAR-Body': ['body', 'corposity', 'structure'],
+          'RADAR-Tannins': ['tannins', 'tannin', 'tannic'],
+          'RADAR-Alcohol': ['alcohol intensity', 'alcohol perception'],
+          'RADAR-Persistence': ['persistence', 'finish', 'length'],
+          'RADAR-Acidity': ['acidity', 'acid', 'freshness'],
+          'RADAR-Complexity': ['complexity', 'complex', 'depth']
+        };
+
+        Object.keys(radarMappings).forEach(radarField => {
+          const possibleColumns = radarMappings[radarField];
+          
+          for (const column of possibleColumns) {
+            const value = findValueInData(data, column);
+            if (value !== null && value !== undefined && value !== '') {
+              const fieldElement = document.getElementById(radarField);
+              if (fieldElement) {
+                fieldElement.value = parseFloat(value) || 0;
+                break;
+              }
+            }
+          }
+        });
+
+        // Handle Aroma data (look for numbered aroma columns)
+        for (let i = 1; i <= 7; i++) {
+          const aromaColumns = [`aroma${i}`, `aroma ${i}`, `aroma_${i}`];
+          const intensityColumns = [`intensity${i}`, `intensity ${i}`, `intensity_${i}`, `value${i}`];
+          
+          // Look for aroma type
+          for (const column of aromaColumns) {
+            const value = findValueInData(data, column);
+            if (value) {
+              const fieldElement = document.getElementById(`AROMA-${i}-Type`);
+              if (fieldElement) {
+                fieldElement.value = value;
+                break;
+              }
+            }
+          }
+          
+          // Look for aroma intensity
+          for (const column of intensityColumns) {
+            const value = findValueInData(data, column);
+            if (value !== null && value !== undefined && value !== '') {
+              const fieldElement = document.getElementById(`AROMA-${i}-Value`);
+              if (fieldElement) {
+                fieldElement.value = parseFloat(value) || 0;
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      function findValueInData(data, searchKey) {
+        // Case-insensitive search for key in data
+        const lowerSearchKey = searchKey.toLowerCase();
+        
+        for (const [key, value] of Object.entries(data)) {
+          if (key.toLowerCase().includes(lowerSearchKey) || lowerSearchKey.includes(key.toLowerCase())) {
+            return value;
+          }
+        }
+        
+        return null;
+      }
       document.getElementById('downloadJsonBtn').addEventListener('click', function() {
         const formData = collectFormData();
         downloadJson(formData);
@@ -987,3 +1261,8 @@
     </footer>
 </body>
 </html>`;
+      }
+    });
+  </script>
+</body>
+</html>
