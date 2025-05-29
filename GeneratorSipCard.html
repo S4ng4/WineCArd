@@ -577,232 +577,96 @@
         }
       }
 
-      function generateCompleteHtml(wineData, radarData, aromaData) {
-        const colorTheme = getColorTheme(wineData.colorTheme);
-        
-        return `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${wineData.producer} ${wineData.name} ${wineData.vintage}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: ${colorTheme.lightBg};
-            color: #333;
-            line-height: 1.6;
-        }
-        .wine-card {
-            max-width: 800px;
-            margin: 20px auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, ${colorTheme.primary}, ${colorTheme.dark});
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        .producer { font-size: 1.2em; font-weight: 300; margin-bottom: 10px; }
-        .wine-name { font-size: 2.5em; font-weight: 700; margin-bottom: 10px; }
-        .vintage { font-size: 1.5em; font-weight: 400; opacity: 0.9; }
-        .content {
-            padding: 30px;
-        }
-        .section {
-            margin-bottom: 30px;
-        }
-        .section h3 {
-            color: ${colorTheme.primary};
-            font-weight: 600;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-            border-bottom: 2px solid ${colorTheme.accent};
-            padding-bottom: 5px;
-        }
-        .details-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-        .detail-item {
-            background: ${colorTheme.lightBg};
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid ${colorTheme.primary};
-        }
-        .detail-label {
-            font-weight: 600;
-            color: ${colorTheme.dark};
-            font-size: 0.9em;
-        }
-        .detail-value {
-            font-size: 1.1em;
-            margin-top: 5px;
-        }
-        .radar-section {
-            text-align: center;
-            margin: 30px 0;
-        }
-        .radar-values {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .radar-item {
-            background: ${colorTheme.lightBg};
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .radar-label {
-            font-size: 0.9em;
-            color: ${colorTheme.dark};
-            font-weight: 500;
-        }
-        .radar-value {
-            font-size: 1.5em;
-            font-weight: 700;
-            color: ${colorTheme.primary};
-        }
-        .aroma-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        .aroma-item {
-            background: ${colorTheme.lightBg};
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .aroma-name {
-            font-weight: 600;
-            color: ${colorTheme.dark};
-            margin-bottom: 5px;
-        }
-        .aroma-intensity {
-            font-size: 1.2em;
-            font-weight: 700;
-            color: ${colorTheme.primary};
-        }
-        .notes-text {
-            background: ${colorTheme.lightBg};
-            padding: 20px;
-            border-radius: 8px;
-            line-height: 1.8;
-            font-size: 1.05em;
-            border-left: 4px solid ${colorTheme.primary};
-        }
-        @media (max-width: 768px) {
-            .wine-card { margin: 10px; }
-            .wine-name { font-size: 2em; }
-            .details-grid, .radar-values, .aroma-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="wine-card">
-        <div class="header">
-            <div class="producer">${wineData.producer}</div>
-            <h1 class="wine-name">${wineData.name}</h1>
-            <div class="vintage">${wineData.vintage}</div>
-        </div>
-        
-        <div class="content">
-            <div class="section">
-                <h3>Wine Details</h3>
-                <div class="details-grid">
-                    ${wineData.denomination ? `<div class="detail-item"><div class="detail-label">Denomination</div><div class="detail-value">${wineData.denomination}</div></div>` : ''}
-                    ${wineData.grapes ? `<div class="detail-item"><div class="detail-label">Grapes</div><div class="detail-value">${wineData.grapes}</div></div>` : ''}
-                    ${wineData.alcoholContent ? `<div class="detail-item"><div class="detail-label">Alcohol</div><div class="detail-value">${wineData.alcoholContent}%</div></div>` : ''}
-                    ${wineData.aging ? `<div class="detail-item"><div class="detail-label">Aging</div><div class="detail-value">${wineData.aging}</div></div>` : ''}
-                    ${wineData.temperature ? `<div class="detail-item"><div class="detail-label">Serving Temperature</div><div class="detail-value">${wineData.temperature}</div></div>` : ''}
-                    ${wineData.potential ? `<div class="detail-item"><div class="detail-label">Cellaring Potential</div><div class="detail-value">${wineData.potential}</div></div>` : ''}
-                </div>
-            </div>
-
-            ${Object.values(radarData).some(v => v > 0) ? `
-            <div class="section">
-                <h3>Sensory Profile</h3>
-                <div class="radar-values">
-                    <div class="radar-item"><div class="radar-label">Body</div><div class="radar-value">${radarData.body}/10</div></div>
-                    <div class="radar-item"><div class="radar-label">Tannins</div><div class="radar-value">${radarData.tannins}/10</div></div>
-                    <div class="radar-item"><div class="radar-label">Alcohol</div><div class="radar-value">${radarData.alcohol}/10</div></div>
-                    <div class="radar-item"><div class="radar-label">Persistence</div><div class="radar-value">${radarData.persistence}/10</div></div>
-                    <div class="radar-item"><div class="radar-label">Acidity</div><div class="radar-value">${radarData.acidity}/10</div></div>
-                    <div class="radar-item"><div class="radar-label">Complexity</div><div class="radar-value">${radarData.complexity}/10</div></div>
-                </div>
-            </div>
-            ` : ''}
-
-            ${aromaData.length > 0 ? `
-            <div class="section">
-                <h3>Aroma Profile</h3>
-                <div class="aroma-grid">
-                    ${aromaData.map(aroma => `
-                        <div class="aroma-item">
-                            <div class="aroma-name">${aroma.name}</div>
-                            <div class="aroma-intensity">${aroma.value}/10</div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-            ` : ''}
-
-            ${wineData.vintageDescription ? `
-            <div class="section">
-                <h3>Vintage Description</h3>
-                <div class="notes-text">${wineData.vintageDescription}</div>
-            </div>
-            ` : ''}
-
-            ${wineData.visualNotes ? `
-            <div class="section">
-                <h3>Visual Notes</h3>
-                <div class="notes-text">${wineData.visualNotes}</div>
-            </div>
-            ` : ''}
-
-            ${wineData.olfactoryNotes ? `
-            <div class="section">
-                <h3>Olfactory Notes</h3>
-                <div class="notes-text">${wineData.olfactoryNotes}</div>
-            </div>
-            ` : ''}
-
-            ${wineData.gustatoryNotes ? `
-            <div class="section">
-                <h3>Gustatory Notes</h3>
-                <div class="notes-text">${wineData.gustatoryNotes}</div>
-            </div>
-            ` : ''}
-
-            ${wineData.foodPairings ? `
-            <div class="section">
-                <h3>Food Pairings</h3>
-                <div class="notes-text">${wineData.foodPairings}</div>
-            </div>
-            ` : ''}
-        </div>
-    </div>
-</body>
-</html>`;
+      function calculateRadarCoordinates(data, centerX, centerY, radius) {
+        const maxValue = 10;
+        return {
+          body: {
+            x: centerX,
+            y: centerY - (data.body / maxValue * radius)
+          },
+          tannins: {
+            x: centerX + (data.tannins / maxValue * radius * Math.cos(Math.PI/6)),
+            y: centerY - (data.tannins / maxValue * radius * Math.sin(Math.PI/6))
+          },
+          alcohol: {
+            x: centerX + (data.alcohol / maxValue * radius * Math.cos(Math.PI/6)),
+            y: centerY + (data.alcohol / maxValue * radius * Math.sin(Math.PI/6))
+          },
+          persistence: {
+            x: centerX,
+            y: centerY + (data.persistence / maxValue * radius)
+          },
+          acidity: {
+            x: centerX - (data.acidity / maxValue * radius * Math.cos(Math.PI/6)),
+            y: centerY + (data.acidity / maxValue * radius * Math.sin(Math.PI/6))
+          },
+          complexity: {
+            x: centerX - (data.complexity / maxValue * radius * Math.cos(Math.PI/6)),
+            y: centerY - (data.complexity / maxValue * radius * Math.sin(Math.PI/6))
+          }
+        };
       }
-    });
-  </script>
-</body>
-</html>
+
+      function generateRadarChart(radarData, colorTheme, wineData) {
+        const coords = calculateRadarCoordinates(radarData, 200, 150, 80);
+        const polygonPoints = `${coords.body.x},${coords.body.y} ${coords.tannins.x},${coords.tannins.y} ${coords.alcohol.x},${coords.alcohol.y} ${coords.persistence.x},${coords.persistence.y} ${coords.acidity.x},${coords.acidity.y} ${coords.complexity.x},${coords.complexity.y}`;
+        
+        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+            <!-- Title -->
+            <text x="200" y="30" font-family="Garamond" font-size="18" fill="${colorTheme.primary}" text-anchor="middle" font-weight="bold">Body and Structure</text>
+            
+            <!-- Background hexagons -->
+            <polygon points="200,70 270,110 270,190 200,230 130,190 130,110" fill="${colorTheme.lightBg}" stroke="${colorTheme.accent}" stroke-width="1"/>
+            <polygon points="200,90 250,120 250,180 200,210 150,180 150,120" fill="${colorTheme.lightBg}" stroke="${colorTheme.accent}" stroke-width="1"/>
+            <polygon points="200,110 230,130 230,170 200,190 170,170 170,130" fill="${colorTheme.lightBg}" stroke="${colorTheme.accent}" stroke-width="1"/>
+            
+            <!-- Axis lines -->
+            <line x1="200" y1="150" x2="200" y2="70" stroke="#888888" stroke-width="1"/>
+            <line x1="200" y1="150" x2="270" y2="190" stroke="#888888" stroke-width="1"/>
+            <line x1="200" y1="150" x2="270" y2="110" stroke="#888888" stroke-width="1"/>
+            <line x1="200" y1="150" x2="200" y2="230" stroke="#888888" stroke-width="1"/>
+            <line x1="200" y1="150" x2="130" y2="190" stroke="#888888" stroke-width="1"/>
+            <line x1="200" y1="150" x2="130" y2="110" stroke="#888888" stroke-width="1"/>
+            
+            <!-- Labels -->
+            <text x="200" y="65" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="middle">Body</text>
+            <text x="280" y="110" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="start">Tannins</text>
+            <text x="280" y="190" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="start">Alcohol</text>
+            <text x="200" y="240" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="middle">Persistence</text>
+            <text x="120" y="190" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="end">Acidity</text>
+            <text x="120" y="110" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="end">Complexity</text>
+            
+            <!-- Data polygon -->
+            <polygon points="${polygonPoints}" fill="rgba(${getRGB(colorTheme.primary)},0.5)" stroke="${colorTheme.primary}" stroke-width="2"/>
+            
+            <!-- Data points -->
+            <circle cx="${coords.body.x}" cy="${coords.body.y}" r="4" fill="${colorTheme.primary}"/>
+            <circle cx="${coords.tannins.x}" cy="${coords.tannins.y}" r="4" fill="${colorTheme.primary}"/>
+            <circle cx="${coords.alcohol.x}" cy="${coords.alcohol.y}" r="4" fill="${colorTheme.primary}"/>
+            <circle cx="${coords.persistence.x}" cy="${coords.persistence.y}" r="4" fill="${colorTheme.primary}"/>
+            <circle cx="${coords.acidity.x}" cy="${coords.acidity.y}" r="4" fill="${colorTheme.primary}"/>
+            <circle cx="${coords.complexity.x}" cy="${coords.complexity.y}" r="4" fill="${colorTheme.primary}"/>
+            
+            <!-- Legend -->
+            <foreignObject x="50%" y="260" width="500" height="50" transform="translate(-250, 0)">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; background-color: #ffffff; border: 1px solid ${colorTheme.accent}; border-radius: 5px; padding: 5px 15px; white-space: nowrap; transform: translateX(-50%); position: relative; left: 50%;">
+                <div style="display: flex; align-items: center;">
+                  <div style="width: 10px; height: 10px; background-color: rgba(${getRGB(colorTheme.primary)},0.5); border: 1px solid ${colorTheme.primary}; margin-right: 10px;"></div>
+                  <span style="font-family: Garamond; font-size: 12px; color: ${colorTheme.dark};">${wineData.name} ${wineData.vintage}</span>
+                </div>
+              </div>
+            </foreignObject>
+        </svg>`;
+      }
+
+      function generateAromaChart(aromaData, colorTheme) {
+        if (aromaData.length === 0) {
+          return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" width="100%" height="100%">
+            <text x="200" y="30" font-family="Garamond" font-size="18" fill="${colorTheme.primary}" text-anchor="middle" font-weight="bold">Aromatic Profile</text>
+            <text x="200" y="175" font-family="Garamond" font-size="16" fill="${colorTheme.dark}" text-anchor="middle">No aroma data provided</text>
+          </svg>`;
+        }
+
+        let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" width="100%" height="100%">
+            <!-- Title -->
+            <text x="200" y="30" font-family="Garamond" font-size="18" fill="${colorTheme.primary}" text-anchor="middle" font-weight="bold">Aromatic
