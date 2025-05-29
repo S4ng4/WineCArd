@@ -669,4 +669,321 @@
 
         let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" width="100%" height="100%">
             <!-- Title -->
-            <text x="200" y="30" font-family="Garamond" font-size="18" fill="${colorTheme.primary}" text-anchor="middle" font-weight="bold">Aromatic
+            <text x="200" y="30" font-family="Garamond" font-size="18" fill="${colorTheme.primary}" text-anchor="middle" font-weight="bold">Aromatic Profile</text>`;
+        
+        aromaData.forEach((aroma, index) => {
+          const y = 70 + (index * 35);
+          const barWidth = (aroma.value / 10) * 200;
+          
+          svgContent += `
+            <!-- Bar background -->
+            <rect x="120" y="${y}" width="200" height="25" fill="${colorTheme.lightBg}" stroke="${colorTheme.accent}" stroke-width="1"/>
+            <!-- Label -->
+            <text x="115" y="${y + 17}" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="end">${aroma.name}</text>
+            <!-- Data bar -->
+            <rect x="120" y="${y}" width="${barWidth}" height="25" fill="rgba(${getRGB(colorTheme.primary)},0.7)"/>`;
+        });
+
+        svgContent += `
+            <!-- Intensity scale -->
+            <text x="120" y="325" font-family="Garamond" font-size="12" fill="${colorTheme.dark}">Low</text>
+            <text x="220" y="325" font-family="Garamond" font-size="12" fill="${colorTheme.dark}" text-anchor="middle">Medium</text>
+            <text x="320" y="325" font-family="Garamond" font-size="12" fill="${colorTheme.dark}" text-anchor="end">High</text>
+            <line x1="120" y1="330" x2="320" y2="330" stroke="#888888" stroke-width="1"/>
+            <line x1="120" y1="328" x2="120" y2="332" stroke="#888888" stroke-width="1"/>
+            <line x1="220" y1="328" x2="220" y2="332" stroke="#888888" stroke-width="1"/>
+            <line x1="320" y1="328" x2="320" y2="332" stroke="#888888" stroke-width="1"/>
+        </svg>`;
+        
+        return svgContent;
+      }
+
+      function getRGB(hexColor) {
+        // Convert hex color to RGB values for rgba usage
+        const hex = hexColor.replace('#', '');
+        const r = parseInt(hex.substr(0, 2), 16);
+        const g = parseInt(hex.substr(2, 2), 16);
+        const b = parseInt(hex.substr(4, 2), 16);
+        return `${r},${g},${b}`;
+      }
+
+      function generateCompleteHtml(wineData, radarData, aromaData) {
+        const colorTheme = getColorTheme(wineData.colorTheme);
+        
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${wineData.name} ${wineData.vintage} - Technical Sheet</title>
+    <style>
+        body {
+            font-family: 'Garamond', serif;
+            margin: 0;
+            padding: 0;
+            background-color: ${colorTheme.lightBg};
+            color: #333333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: ${colorTheme.primary};
+            color: #ffffff;
+            padding: 15px;
+            text-align: center;
+        }
+        .content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card-container {
+            position: relative;
+            margin-bottom: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .wine-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .logo-background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0.1;
+            pointer-events: none;
+            text-align: center;
+        }
+        .logo-background img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            filter: grayscale(100%) brightness(0.7);
+        }
+        .wine-info h1 {
+            color: ${colorTheme.primary};
+            margin-top: 0;
+            border-bottom: 2px solid ${colorTheme.accent};
+            padding-bottom: 10px;
+        }
+        .wine-info h2 {
+            font-style: italic;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+        .specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .spec-item {
+            display: flex;
+        }
+        .spec-item strong {
+            min-width: 120px;
+            color: ${colorTheme.primary};
+        }
+        .chart-container {
+            position: relative;
+            padding: 20px;
+            z-index: 2;
+        }
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            position: relative;
+            z-index: 3;
+        }
+        .chart-title {
+            color: ${colorTheme.primary};
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 3;
+        }
+        .radar-chart {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            z-index: 3;
+        }
+        .aroma-chart {
+            width: 100%;
+            height: 350px;
+            position: relative;
+            z-index: 3;
+        }
+        .flavor-profile {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+        }
+        .flavor-category {
+            padding: 10px;
+        }
+        .flavor-category h3 {
+            color: ${colorTheme.primary};
+            margin-top: 0;
+        }
+        footer {
+            background-color: ${colorTheme.dark};
+            color: ${colorTheme.accent};
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .wine-type-indicator {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: ${colorTheme.primary};
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        
+        /* Media queries for mobile version */
+        @media (max-width: 768px) {
+            .content {
+                padding: 10px;
+            }
+            .wine-card {
+                grid-template-columns: 1fr;
+            }
+            .chart-row {
+                grid-template-columns: 1fr;
+            }
+            .specs {
+                grid-template-columns: 1fr;
+            }
+            .flavor-profile {
+                grid-template-columns: 1fr;
+            }
+            .spec-item {
+                flex-direction: column;
+            }
+            .spec-item strong {
+                min-width: auto;
+                margin-bottom: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>${wineData.producer} - ${wineData.name} ${wineData.vintage} <span class="wine-type-indicator">${wineData.colorTheme}</span></h1>
+    </header>
+    
+    <div class="content">
+        <!-- First Card -->
+        <div class="card-container">
+            <div class="logo-background">
+                <img src="https://raw.githubusercontent.com/S4ng4/WineCArd/refs/heads/main/logoNoSfondo.png" alt="Wine logo" onerror="this.style.display='none'">
+            </div>
+            <div class="wine-card">
+                <div class="wine-info">
+                    <h1>${wineData.name} ${wineData.vintage}</h1>
+                    <h2>${wineData.denomination}</h2>
+                    <div class="specs">
+                        <div class="spec-item">
+                            <strong>Producer:</strong>
+                            <span>${wineData.producer}</span>
+                        </div>
+                        ${wineData.grapes ? `<div class="spec-item">
+                            <strong>Grapes:</strong>
+                            <span>${wineData.grapes}</span>
+                        </div>` : ''}
+                        <div class="spec-item">
+                            <strong>Vintage:</strong>
+                            <span>${wineData.vintage}</span>
+                        </div>
+                        ${wineData.alcoholContent ? `<div class="spec-item">
+                            <strong>Alcohol Content:</strong>
+                            <span>${wineData.alcoholContent}%</span>
+                        </div>` : ''}
+                        ${wineData.aging ? `<div class="spec-item">
+                            <strong>Aging:</strong>
+                            <span>${wineData.aging}</span>
+                        </div>` : ''}
+                        ${wineData.temperature ? `<div class="spec-item">
+                            <strong>Serving Temperature:</strong>
+                            <span>${wineData.temperature}</span>
+                        </div>` : ''}
+                        ${wineData.potential ? `<div class="spec-item">
+                            <strong>Cellaring Potential:</strong>
+                            <span>${wineData.potential}</span>
+                        </div>` : ''}
+                    </div>
+                </div>
+                <div class="wine-summary">
+                    ${wineData.vintageDescription ? `<h3>Vintage ${wineData.vintage}</h3>
+                    <p>${wineData.vintageDescription}</p>` : ''}
+                    ${wineData.foodPairings ? `<h3>Ideal Food Pairings</h3>
+                    <p>${wineData.foodPairings}</p>` : ''}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Second Card -->
+        <div class="card-container">
+            <div class="logo-background">
+                <img src="https://raw.githubusercontent.com/S4ng4/WineCArd/refs/heads/main/logoNoSfondo.png" alt="Wine logo" onerror="this.style.display='none'">
+            </div>
+            <div class="chart-container">
+                <h2 class="chart-title">Organoleptic Profile</h2>
+                <div class="chart-row">
+                    <div class="radar-chart">
+                        ${generateRadarChart(radarData, colorTheme, wineData)}
+                    </div>
+                    
+                    <div class="aroma-chart">
+                        ${generateAromaChart(aromaData, colorTheme)}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Third Card -->
+        <div class="card-container">
+            <div class="logo-background">
+                <img src="https://raw.githubusercontent.com/S4ng4/WineCArd/refs/heads/main/logoNoSfondo.png" alt="Wine logo" onerror="this.style.display='none'">
+            </div>
+            <div class="chart-container">
+                <h2 class="chart-title">Tasting Notes</h2>
+                <div class="flavor-profile">
+                    <div class="flavor-category">
+                        <h3>Visual</h3>
+                        <p>${wineData.visualNotes || 'Beautiful color with elegant reflections'}</p>
+                    </div>
+                    <div class="flavor-category">
+                        <h3>Olfactory</h3>
+                        <p>${wineData.olfactoryNotes || 'Complex and inviting aroma profile'}</p>
+                    </div>
+                    <div class="flavor-category">
+                        <h3>Gustatory</h3>
+                        <p>${wineData.gustatoryNotes || 'Balanced and harmonious on the palate'}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy;Andrea Sangalli 2025 - ${wineData.producer} - ${wineData.name}. Consume responsibly.</p>
+    </footer>
+</body>
+</html>`;
