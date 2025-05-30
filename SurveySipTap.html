@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <style>
         :root {
             --primary-gold: #D4B456;
@@ -437,6 +438,8 @@
                 <div class="logo-container">
                     <img src="LogoFinal.png" alt="SipTap Logo">
                 </div>
+                
+                <h1>🍷 Wine Experience Survey</h1>
                 <p>Help us understand how wine bars and enotecas can better serve their customers through innovative technology. Your insights will shape the future of wine discovery.</p>
             </div>
         </div>
@@ -1037,9 +1040,17 @@
             }, 2000);
         });
 
-        // Email notification function
+        // Email notification function - sends to your email using EmailJS
         function sendEmailNotification(data) {
-            const emailBody = `
+            // Initialize EmailJS (you need to replace 'YOUR_USER_ID' with your actual EmailJS user ID)
+            emailjs.init('YOUR_USER_ID');
+            
+            const emailParams = {
+                to_email: 'asangalli01@gmail.com',
+                from_name: `${data.contactInfo.firstName} ${data.contactInfo.lastName}`,
+                venue_name: data.contactInfo.venueName,
+                subject: `New SipTap Survey: ${data.contactInfo.venueName}`,
+                message: `
 New Wine Bar Survey Submission - SipTap Research
 
 CONTACT INFORMATION:
@@ -1071,14 +1082,19 @@ BUSINESS GOALS:
 - Personalization Interest: ${data.businessGoals.personalizationInterest}
 
 Submitted: ${new Date(data.submittedAt).toLocaleString()}
-            `;
+                `
+            };
 
-            // Create mailto link
-            const subject = `New Survey: ${data.contactInfo.venueName} - ${data.contactInfo.firstName} ${data.contactInfo.lastName}`;
-            const mailtoLink = `mailto:asangalli01@gmail.com.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-            
-            // Open email client
-            window.open(mailtoLink);
+            // Send email using EmailJS
+            // You need to replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual EmailJS IDs
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', emailParams)
+                .then(function(response) {
+                    console.log('Email sent successfully!', response.status, response.text);
+                })
+                .catch(function(error) {
+                    console.log('Email failed to send:', error);
+                    // Fallback: still save data and show success message
+                });
         }
 
         // CSV export function
@@ -1165,15 +1181,8 @@ Submitted: ${new Date(data.submittedAt).toLocaleString()}
         updateProgress();
 
         form.addEventListener('change', function(e) {
-            // Only auto-scroll for radio buttons, not checkboxes
-            if (e.target.type === 'radio') {
-                setTimeout(() => {
-                    const nextUnanswered = form.querySelector('input[required]:not(:checked):not([value]), select[required][value=""]');
-                    if (nextUnanswered) {
-                        nextUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                }, 100);
-            }
+            // Disable auto-scroll completely to avoid jumping
+            // updateProgress will still work
         });
 
         function generateDashboardData() {
