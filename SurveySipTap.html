@@ -51,7 +51,7 @@
 
         .container {
             max-width: 900px;
-            margin: 0 auto;
+            margin: 20px auto;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
@@ -94,146 +94,19 @@
             width: 100%;
             max-width: 500px;
             margin: 0 auto 2rem;
-            flex-wrap: wrap;
             z-index: 2;
         }
 
-        .logo-element {
-            width: 50px;
-            height: 50px;
-            margin: 0.5rem;
-            position: relative;
-        }
-
-        .red-circle {
-            border-radius: 50%;
-            background-color: var(--primary-gold);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .red-circle::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                45deg,
-                rgba(255, 255, 255, 0.1),
-                rgba(255, 255, 255, 0.1) 3px,
-                transparent 3px,
-                transparent 6px
-            );
-        }
-
-        .gold-hook {
-            background-color: transparent;
-            position: relative;
-        }
-
-        .gold-hook::before {
-            content: '';
-            position: absolute;
-            width: 25px;
-            height: 40px;
-            border-radius: 50% 50% 0 50%;
-            border: 5px solid white;
-            border-left: 0;
-            transform: rotate(-15deg);
-            top: 5px;
-            right: 10px;
-        }
-
-        .pink-flower {
-            position: relative;
-        }
-
-        .pink-flower::before,
-        .pink-flower::after {
-            content: '';
-            position: absolute;
-            background-color: white;
-            border-radius: 50% 50% 0 50%;
-            width: 18px;
-            height: 18px;
-            top: 16px;
-            left: 16px;
-        }
-
-        .pink-flower::before {
-            transform: rotate(0deg);
-        }
-
-        .pink-flower::after {
-            transform: rotate(120deg);
-        }
-
-        .pink-flower span {
-            position: absolute;
-            background-color: white;
-            border-radius: 50% 50% 0 50%;
-            width: 18px;
-            height: 18px;
-            top: 16px;
-            left: 16px;
-            transform: rotate(240deg);
-        }
-
-        .cream-spiral {
-            position: relative;
-        }
-
-        .cream-spiral::before {
-            content: '';
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            border: 5px solid white;
-            border-top-color: transparent;
-            border-radius: 50%;
-            top: 10px;
-            left: 10px;
-            transform: rotate(45deg);
-        }
-
-        .cream-spiral::after {
-            content: '';
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            border: 3px solid white;
-            border-top-color: transparent;
-            border-radius: 50%;
-            top: 16px;
-            left: 16px;
-            transform: rotate(45deg);
-        }
-
-        .logo-text {
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 3rem;
-            color: white;
-            text-align: center;
-            width: 100%;
-            letter-spacing: 0.3rem;
-            margin: 1rem 0;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            position: relative;
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+            filter: brightness(0) invert(1);
             transition: all 0.3s ease;
         }
 
-        .logo-text::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 1px;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.6), transparent);
+        .logo-container img:hover {
+            transform: scale(1.05);
+            filter: brightness(0) invert(1) drop-shadow(0 0 20px rgba(212, 180, 86, 0.5));
         }
 
         .header h1 {
@@ -489,9 +362,8 @@
                 padding: 30px 20px;
             }
 
-            .logo-text {
-                font-size: 2rem;
-                letter-spacing: 0.2rem;
+            .logo-container img {
+                max-width: 150px;
             }
 
             .header h1 {
@@ -546,7 +418,6 @@
             color: var(--text-color);
         }
 
-        /* Floating elements animation */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -565,9 +436,7 @@
         <div class="header">
             <div class="header-content">
                 <div class="logo-container">
-                     <div class="logo-container">
-                     <img src="LogoFinal.png" alt="SipTap Logo">
-                     </div> 
+                    <img src="LogoFinal.png" alt="SipTap Logo">
                 </div>
                 
                 <h1>🍷 Wine Experience Survey</h1>
@@ -581,7 +450,7 @@
             </div>
 
             <form id="surveyForm">
-                <!-- Personal Information Section -->
+                <!-- Contact Information Section -->
                 <div class="section">
                     <h2 class="section-title">Contact Information</h2>
                     
@@ -657,34 +526,40 @@
                     </div>
                 </div>
 
-                 <!-- Customer Experience Section -->
+                <!-- Business Profile Section -->
                 <div class="section">
-                    <h2 class="section-title">aaaaaa</h2>
+                    <h2 class="section-title">Business Profile</h2>
                     
                     <div class="question-group">
                         <label class="question-label">
-                            1. How much time does your staff typically spend explaining wines to customers? <span class="required">*</span>
+                            1. What type of venue do you manage? <span class="required">*</span>
                         </label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="time_under5" name="timeSpent" value="under_5" required>
-                                <label for="time_under5">Less than 5 minutes</label>
+                                <input type="radio" id="venue_wine_bar" name="venueType" value="wine_bar" required>
+                                <label for="venue_wine_bar">Wine Bar</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="time_5_10" name="timeSpent" value="5_10" required>
-                                <label for="time_5_10">5-10 minutes</label>
+                                <input type="radio" id="venue_enoteca" name="venueType" value="enoteca" required>
+                                <label for="venue_enoteca">Enoteca with tasting area</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="time_10_20" name="timeSpent" value="10_20" required>
-                                <label for="time_10_20">10-20 minutes</label>
+                                <input type="radio" id="venue_fine_dining" name="venueType" value="fine_dining" required>
+                                <label for="venue_fine_dining">Fine dining restaurant with wine focus</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="time_over20" name="timeSpent" value="over_20" required>
-                                <label for="time_over20">Over 20 minutes</label>
+                                <input type="radio" id="venue_wine_shop" name="venueType" value="wine_shop" required>
+                                <label for="venue_wine_shop">Wine shop with tasting area</label>
                             </div>
+                            <div class="radio-item">
+                                <input type="radio" id="venue_other" name="venueType" value="other" required>
+                                <label for="venue_other">Other</label>
+                            </div>
+                            <input type="text" id="venueTypeOther" name="venueTypeOther" placeholder="Please specify..." class="other-input">
                         </div>
                     </div>
-                <div class="question-group">
+
+                    <div class="question-group">
                         <label class="question-label">
                             2. How many wine labels do you typically have on your wine list? <span class="required">*</span>
                         </label>
@@ -707,8 +582,8 @@
                             </div>
                         </div>
                     </div>
-                
-                <div class="question-group">
+
+                    <div class="question-group">
                         <label class="question-label">
                             3. What's the average price of a bottle you sell? <span class="required">*</span>
                         </label>
@@ -733,7 +608,7 @@
                     </div>
                 </div>
 
-         <!-- Customer Experience Section -->
+                <!-- Customer Experience Section -->
                 <div class="section">
                     <h2 class="section-title">Customer Experience</h2>
                     
@@ -760,12 +635,7 @@
                             </div>
                         </div>
                     </div>
-        
-                
-                <!-- Business Profile Section -->
-                <div class="section">
-                    <h2 class="section-title">Business Profile</h2>
-                    
+
                     <div class="question-group">
                         <label class="question-label">
                             5. What's the main challenge you face in educating customers about wines? <span class="required">*</span>
@@ -919,7 +789,7 @@
                     </div>
                 </div>
 
-                <!-- Pain Points & Goals Section -->
+                <!-- Business Goals & Challenges Section -->
                 <div class="section">
                     <h2 class="section-title">Business Goals & Challenges</h2>
                     
@@ -1027,33 +897,27 @@
     </div>
 
     <script>
-        // Form validation and interactivity
         const form = document.getElementById('surveyForm');
         const progressFill = document.getElementById('progressFill');
         const submitBtn = document.getElementById('submitBtn');
         const successMessage = document.getElementById('successMessage');
         
-        // Store form data for dashboard
         let surveyData = {};
 
-        // Handle "Other" option visibility
         document.querySelectorAll('input[type="radio"]').forEach(radio => {
             radio.addEventListener('change', function() {
                 const name = this.name;
                 const otherInput = document.getElementById(name + 'Other');
                 
-                // Hide all other inputs for this question
                 document.querySelectorAll(`input[name="${name}Other"]`).forEach(input => {
                     input.classList.remove('show');
                     input.value = '';
                 });
                 
-                // Show other input if "other" is selected
                 if (this.value === 'other' && otherInput) {
                     otherInput.classList.add('show');
                 }
                 
-                // Update visual selection
                 document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
                     r.closest('.radio-item').classList.remove('selected');
                 });
@@ -1063,13 +927,11 @@
             });
         });
 
-        // Handle checkbox selections
         document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
             checkbox.addEventListener('change', function() {
                 const name = this.name;
                 const otherInput = document.getElementById(name + 'Other');
                 
-                // Handle "other" checkbox special case
                 if (this.value === 'other' && otherInput) {
                     if (this.checked) {
                         otherInput.classList.add('show');
@@ -1079,7 +941,6 @@
                     }
                 }
                 
-                // Update visual selection
                 if (this.checked) {
                     this.closest('.checkbox-item').classList.add('selected');
                 } else {
@@ -1090,7 +951,6 @@
             });
         });
 
-        // Progress tracking
         function updateProgress() {
             const totalFields = form.querySelectorAll('input[required], select[required]').length;
             const filledFields = Array.from(form.querySelectorAll('input[required], select[required]')).filter(field => {
@@ -1103,7 +963,6 @@
             const progress = (filledFields / totalFields) * 100;
             progressFill.style.width = progress + '%';
             
-            // Enable submit button when form is complete
             if (progress === 100) {
                 submitBtn.disabled = false;
             } else {
@@ -1111,15 +970,12 @@
             }
         }
 
-        // Form submission
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Collect all form data
             const formData = new FormData(form);
             surveyData = {};
             
-            // Basic contact info
             surveyData.contactInfo = {
                 firstName: formData.get('firstName'),
                 lastName: formData.get('lastName'),
@@ -1131,7 +987,6 @@
                 phone: formData.get('phone')
             };
             
-            // Business profile
             surveyData.businessProfile = {
                 venueType: formData.get('venueType'),
                 venueTypeOther: formData.get('venueTypeOther'),
@@ -1139,7 +994,6 @@
                 averagePrice: formData.get('averagePrice')
             };
             
-            // Customer experience
             const wineDiscoveryMethods = formData.getAll('wineDiscovery');
             surveyData.customerExperience = {
                 timeSpent: formData.get('timeSpent'),
@@ -1149,7 +1003,6 @@
                 wineDiscoveryOther: formData.get('wineDiscoveryOther')
             };
             
-            // Technology adoption
             const currentTech = formData.getAll('currentTech');
             surveyData.technology = {
                 currentTech: currentTech,
@@ -1158,7 +1011,6 @@
                 monthlyBudget: formData.get('monthlyBudget')
             };
             
-            // Business goals
             surveyData.businessGoals = {
                 businessChallenge: formData.get('businessChallenge'),
                 businessChallengeOther: formData.get('businessChallengeOther'),
@@ -1166,22 +1018,17 @@
                 personalizationInterest: formData.get('personalizationInterest')
             };
             
-            // Add timestamp
             surveyData.submittedAt = new Date().toISOString();
             
-            // Simulate submission (replace with actual API call)
             submitBtn.innerHTML = 'Submitting...';
             submitBtn.disabled = true;
             
             setTimeout(() => {
-                // Hide form and show success message
                 form.style.display = 'none';
                 successMessage.style.display = 'block';
                 
-                // Log data for dashboard (in real implementation, send to server)
                 console.log('Survey Data for Dashboard:', surveyData);
                 
-                // Store in localStorage for demo purposes
                 const existingData = JSON.parse(localStorage.getItem('wineBarSurveyData') || '[]');
                 existingData.push(surveyData);
                 localStorage.setItem('wineBarSurveyData', JSON.stringify(existingData));
@@ -1189,10 +1036,8 @@
             }, 2000);
         });
 
-        // Initialize progress on page load
         updateProgress();
 
-        // Add smooth scrolling for better UX
         form.addEventListener('change', function() {
             setTimeout(() => {
                 const nextUnanswered = form.querySelector('input[required]:not(:checked):not([value]), select[required][value=""]');
@@ -1202,7 +1047,6 @@
             }, 100);
         });
 
-        // Dashboard data structure for analytics
         function generateDashboardData() {
             const allData = JSON.parse(localStorage.getItem('wineBarSurveyData') || '[]');
             
@@ -1257,6 +1101,7 @@
             return techCounts;
         }
 
-        // Export function for dashboard use
         window.getSurveyDashboardData = generateDashboardData;
     </script>
+</body>
+</html>
