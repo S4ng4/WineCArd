@@ -423,10 +423,9 @@
             50% { transform: translateY(-10px); }
         }
 
-        .logo-element:nth-child(1) { animation: float 3s ease-in-out infinite; }
-        .logo-element:nth-child(2) { animation: float 3s ease-in-out infinite 0.5s; }
-        .logo-element:nth-child(3) { animation: float 3s ease-in-out infinite 1s; }
-        .logo-element:nth-child(4) { animation: float 3s ease-in-out infinite 1.5s; }
+        .logo-container img {
+            animation: float 4s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
@@ -438,8 +437,6 @@
                 <div class="logo-container">
                     <img src="LogoFinal.png" alt="SipTap Logo">
                 </div>
-                
-                <h1>🍷 Wine Experience Survey</h1>
                 <p>Help us understand how wine bars and enotecas can better serve their customers through innovative technology. Your insights will shape the future of wine discovery.</p>
             </div>
         </div>
@@ -1023,6 +1020,10 @@
             submitBtn.innerHTML = 'Submitting...';
             submitBtn.disabled = true;
             
+            // Send email and save data
+            sendEmailNotification(surveyData);
+            saveToCSV(surveyData);
+            
             setTimeout(() => {
                 form.style.display = 'none';
                 successMessage.style.display = 'block';
@@ -1036,15 +1037,143 @@
             }, 2000);
         });
 
+        // Email notification function
+        function sendEmailNotification(data) {
+            const emailBody = `
+New Wine Bar Survey Submission - SipTap Research
+
+CONTACT INFORMATION:
+- Name: ${data.contactInfo.firstName} ${data.contactInfo.lastName}
+- Venue: ${data.contactInfo.venueName}
+- Position: ${data.contactInfo.position}
+- Location: ${data.contactInfo.city}, ${data.contactInfo.country}
+- Email: ${data.contactInfo.email}
+- Phone: ${data.contactInfo.phone || 'Not provided'}
+
+BUSINESS PROFILE:
+- Venue Type: ${data.businessProfile.venueType}${data.businessProfile.venueTypeOther ? ' (' + data.businessProfile.venueTypeOther + ')' : ''}
+- Wine Labels: ${data.businessProfile.wineLabels}
+- Average Price: €${data.businessProfile.averagePrice}
+
+CUSTOMER EXPERIENCE:
+- Time Spent on Wine Education: ${data.customerExperience.timeSpent}
+- Main Challenge: ${data.customerExperience.mainChallenge}${data.customerExperience.mainChallengeOther ? ' (' + data.customerExperience.mainChallengeOther + ')' : ''}
+- Wine Discovery Methods: ${data.customerExperience.wineDiscovery.join(', ')}${data.customerExperience.wineDiscoveryOther ? ' (' + data.customerExperience.wineDiscoveryOther + ')' : ''}
+
+TECHNOLOGY:
+- Current Tech: ${data.technology.currentTech.join(', ')}${data.technology.currentTechOther ? ' (' + data.technology.currentTechOther + ')' : ''}
+- NFC Interest: ${data.technology.nfcInterest}
+- Monthly Budget: €${data.technology.monthlyBudget}
+
+BUSINESS GOALS:
+- Main Business Challenge: ${data.businessGoals.businessChallenge}${data.businessGoals.businessChallengeOther ? ' (' + data.businessGoals.businessChallengeOther + ')' : ''}
+- Data Importance: ${data.businessGoals.dataImportance}
+- Personalization Interest: ${data.businessGoals.personalizationInterest}
+
+Submitted: ${new Date(data.submittedAt).toLocaleString()}
+            `;
+
+            // Create mailto link
+            const subject = `New Survey: ${data.contactInfo.venueName} - ${data.contactInfo.firstName} ${data.contactInfo.lastName}`;
+            const mailtoLink = `mailto:asangalli01@gmail.com.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+            
+            // Open email client
+            window.open(mailtoLink);
+        }
+
+        // CSV export function
+        function saveToCSV(data) {
+            const allData = JSON.parse(localStorage.getItem('wineBarSurveyData') || '[]');
+            allData.push(data);
+            
+            const csvHeaders = [
+                'Submission Date',
+                'First Name',
+                'Last Name', 
+                'Venue Name',
+                'Position',
+                'City',
+                'Country',
+                'Email',
+                'Phone',
+                'Venue Type',
+                'Venue Type Other',
+                'Wine Labels Count',
+                'Average Price Range',
+                'Time Spent on Education',
+                'Main Challenge',
+                'Main Challenge Other',
+                'Wine Discovery Methods',
+                'Wine Discovery Other',
+                'Current Technology',
+                'Current Tech Other',
+                'NFC Interest Level',
+                'Monthly Budget',
+                'Business Challenge',
+                'Business Challenge Other',
+                'Data Importance',
+                'Personalization Interest'
+            ];
+            
+            const csvRows = allData.map(item => [
+                new Date(item.submittedAt).toLocaleString(),
+                item.contactInfo.firstName,
+                item.contactInfo.lastName,
+                item.contactInfo.venueName,
+                item.contactInfo.position,
+                item.contactInfo.city,
+                item.contactInfo.country,
+                item.contactInfo.email,
+                item.contactInfo.phone || '',
+                item.businessProfile.venueType,
+                item.businessProfile.venueTypeOther || '',
+                item.businessProfile.wineLabels,
+                item.businessProfile.averagePrice,
+                item.customerExperience.timeSpent,
+                item.customerExperience.mainChallenge,
+                item.customerExperience.mainChallengeOther || '',
+                item.customerExperience.wineDiscovery.join('; '),
+                item.customerExperience.wineDiscoveryOther || '',
+                item.technology.currentTech.join('; '),
+                item.technology.currentTechOther || '',
+                item.technology.nfcInterest,
+                item.technology.monthlyBudget,
+                item.businessGoals.businessChallenge,
+                item.businessGoals.businessChallengeOther || '',
+                item.businessGoals.dataImportance,
+                item.businessGoals.personalizationInterest
+            ]);
+            
+            // Create CSV content
+            const csvContent = [
+                csvHeaders.join(','),
+                ...csvRows.map(row => row.map(field => `"${String(field).replace(/"/g, '""')}"`).join(','))
+            ].join('\n');
+            
+            // Download CSV file
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `siptap-survey-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
         updateProgress();
 
-        form.addEventListener('change', function() {
-            setTimeout(() => {
-                const nextUnanswered = form.querySelector('input[required]:not(:checked):not([value]), select[required][value=""]');
-                if (nextUnanswered) {
-                    nextUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }, 100);
+        form.addEventListener('change', function(e) {
+            // Only auto-scroll for radio buttons, not checkboxes
+            if (e.target.type === 'radio') {
+                setTimeout(() => {
+                    const nextUnanswered = form.querySelector('input[required]:not(:checked):not([value]), select[required][value=""]');
+                    if (nextUnanswered) {
+                        nextUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 100);
+            }
         });
 
         function generateDashboardData() {
