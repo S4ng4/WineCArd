@@ -167,6 +167,16 @@
       display: none;
     }
 
+    .debug-info {
+      background-color: #fff3cd;
+      border: 1px solid #ffeaa7;
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+      display: none;
+    }
+
     .btn.loading {
       opacity: 0.7;
       cursor: not-allowed;
@@ -238,6 +248,11 @@
     
     <div class="success-message" id="successMessage">
       Wine card generated successfully! Click below to download.
+    </div>
+
+    <div class="debug-info" id="debugInfo">
+      <strong>Debug Information:</strong>
+      <div id="debugContent"></div>
     </div>
     
     <form id="wineForm">
@@ -455,6 +470,9 @@
         <button type="button" class="btn btn-secondary" id="loadFromExcelBtn" style="display: none; width: 100%;">
           Load Selected Data
         </button>
+        <button type="button" class="btn btn-secondary" id="showDebugBtn" style="display: none; width: 100%; margin-top: 0.5rem;">
+          Show Debug Info
+        </button>
       </div>
 
       <div class="button-group">
@@ -467,12 +485,15 @@
   <script>
     let generatedHtml = '';
     let excelData = null;
+    let currentRowData = null;
 
     document.addEventListener('DOMContentLoaded', function() {
       // Excel file handling
       document.getElementById('excelFile').addEventListener('change', handleExcelFile);
       document.getElementById('sheetSelect').addEventListener('change', handleSheetSelection);
       document.getElementById('loadFromExcelBtn').addEventListener('click', loadSelectedData);
+      document.getElementById('showDebugBtn').addEventListener('click', showDebugInfo);
+      
       // Generate Wine Card functionality
       document.getElementById('generateCardBtn').addEventListener('click', function() {
         const btn = this;
@@ -561,6 +582,7 @@
           const rowSelect = document.getElementById('rowSelect');
           const rowSelector = document.getElementById('rowSelector');
           const loadBtn = document.getElementById('loadFromExcelBtn');
+          const debugBtn = document.getElementById('showDebugBtn');
           
           rowSelect.innerHTML = '<option value="">Select a row...</option>';
           
@@ -578,6 +600,7 @@
           
           rowSelector.style.display = 'block';
           loadBtn.style.display = 'block';
+          debugBtn.style.display = 'block';
         } catch (error) {
           alert('Error reading sheet data: ' + error.message);
         }
@@ -587,7 +610,10 @@
         const sheetName = document.getElementById('sheetSelect').value;
         const rowIndex = parseInt(document.getElementById('rowSelect').value);
         
-        if (!sheetName || isNaN(rowIndex) || !excelData) return;
+        if (!sheetName || isNaN(rowIndex) || !excelData) {
+          alert('Please select both sheet and row');
+          return;
+        }
 
         try {
           const worksheet = excelData.Sheets[sheetName];
@@ -601,42 +627,60 @@
             return;
           }
 
-          // Create mapping object
+          // Create mapping object with exact header names
           const dataMapping = {};
           headers.forEach((header, index) => {
-            if (header && selectedRow[index] !== undefined) {
-              dataMapping[header.toString().toLowerCase()] = selectedRow[index];
+            if (header && selectedRow[index] !== undefined && selectedRow[index] !== '') {
+              // Store both original and cleaned versions
+              const cleanHeader = header.toString().trim().toLowerCase();
+              dataMapping[cleanHeader] = selectedRow[index];
+              dataMapping[header.toString()] = selectedRow[index]; // Keep original case too
             }
           });
 
+          // Store for debugging
+          currentRowData = {
+            headers: headers,
+            selectedRow: selectedRow,
+            dataMapping: dataMapping,
+            rowIndex: rowIndex
+          };
+
+          console.log('Data mapping created:', dataMapping);
+          console.log('Headers found:', headers);
+          console.log('Selected row:', selectedRow);
+
           // Map Excel data to form fields
-          mapExcelDataToForm(dataMapping);
+          const mappedFields = mapExcelDataToForm(dataMapping);
           
-          alert('Data loaded successfully!');
+          alert(`Data loaded successfully! ${mappedFields} fields were populated.`);
           
         } catch (error) {
+          console.error('Error in loadSelectedData:', error);
           alert('Error loading data: ' + error.message);
         }
       }
 
       function mapExcelDataToForm(data) {
-        // Define mapping between Excel columns and form fields
+        let mappedCount = 0;
+        
+        // Enhanced mapping with more flexible matching
         const fieldMappings = {
-          'producer': ['producer', 'winery', 'brand', 'estate'],
-          'name': ['name', 'wine name', 'wine', 'product'],
-          'vintage': ['vintage', 'year', 'annata'],
-          'denomination': ['denomination', 'appellation', 'doc', 'docg', 'igt'],
-          'grapes': ['grapes', 'varietals', 'blend', 'composition'],
-          'alcoholcontent': ['alcohol', 'alc', 'alcohol content', 'abv'],
-          'aging': ['aging', 'ageing', 'maturation', 'fermentation'],
-          'servingtemperature': ['temperature', 'serving temp', 'serving temperature'],
-          'cellaringpotential': ['cellaring', 'aging potential', 'storage'],
-          'vintagedescription': ['vintage description', 'vintage notes', 'harvest'],
-          'foodpairings': ['food pairing', 'pairing', 'food', 'cuisine'],
-          'visualnotes': ['visual', 'color', 'appearance', 'look'],
-          'olfactorynotes': ['aroma', 'nose', 'olfactory', 'smell', 'bouquet'],
-          'gustatorynotes': ['taste', 'palate', 'gustatory', 'flavor', 'mouth'],
-          'colorheme': ['type', 'wine type', 'style', 'color']
+          'Producer': ['producer', 'winery', 'brand', 'estate', 'cantina', 'azienda'],
+          'Name': ['name', 'wine name', 'wine', 'product', 'nome', 'vino'],
+          'Vintage': ['vintage', 'year', 'annata', 'anno'],
+          'Denomination': ['denomination', 'appellation', 'doc', 'docg', 'igt', 'denominazione'],
+          'Grapes': ['grapes', 'varietals', 'blend', 'composition', 'uve', 'vitigni'],
+          'AlcoholContent': ['alcohol', 'alc', 'alcohol content', 'abv', 'alcol', 'grado alcolico'],
+          'Aging': ['aging', 'ageing', 'maturation', 'fermentation', 'affinamento', 'invecchiamento'],
+          'ServingTemperature': ['temperature', 'serving temp', 'serving temperature', 'temperatura', 'temp servizio'],
+          'CellaringPotential': ['cellaring', 'aging potential', 'storage', 'conservazione', 'potenziale'],
+          'VintageDescription': ['vintage description', 'vintage notes', 'harvest', 'descrizione annata', 'vendemmia'],
+          'FoodPairings': ['food pairing', 'pairing', 'food', 'cuisine', 'abbinamenti', 'cibo'],
+          'VisualNotes': ['visual', 'color', 'appearance', 'look', 'visivo', 'colore', 'aspetto'],
+          'OlfactoryNotes': ['aroma', 'nose', 'olfactory', 'smell', 'bouquet', 'olfattivo', 'profumo'],
+          'GustatoryNotes': ['taste', 'palate', 'gustatory', 'flavor', 'mouth', 'gustativo', 'sapore', 'gusto'],
+          'ColorTheme': ['type', 'wine type', 'style', 'color', 'tipo', 'tipologia']
         };
 
         // Clear form first
@@ -646,623 +690,175 @@
           }
         });
 
-        // Map data to form fields
-        Object.keys(fieldMappings).forEach(formField => {
-          const possibleColumns = fieldMappings[formField];
+        // Map basic wine data to form fields
+        Object.keys(fieldMappings).forEach(formFieldId => {
+          const possibleColumns = fieldMappings[formFieldId];
           
-          for (const column of possibleColumns) {
-            const value = findValueInData(data, column);
+          for (const searchTerm of possibleColumns) {
+            const value = findValueInDataFlexible(data, searchTerm);
             if (value !== null && value !== undefined && value !== '') {
-              const fieldElement = document.getElementById(formField.charAt(0).toUpperCase() + formField.slice(1));
+              const fieldElement = document.getElementById(formFieldId);
               if (fieldElement) {
                 fieldElement.value = value;
-                break; // Found a match, stop looking
+                mappedCount++;
+                console.log(`Mapped ${formFieldId} = ${value} (from search term: ${searchTerm})`);
+                break;
               }
             }
           }
         });
 
-        // Handle RADAR data
+        // Handle RADAR data with flexible matching
         const radarMappings = {
-          'RADAR-Body': ['body', 'corposity', 'structure'],
-          'RADAR-Tannins': ['tannins', 'tannin', 'tannic'],
-          'RADAR-Alcohol': ['alcohol intensity', 'alcohol perception'],
-          'RADAR-Persistence': ['persistence', 'finish', 'length'],
-          'RADAR-Acidity': ['acidity', 'acid', 'freshness'],
-          'RADAR-Complexity': ['complexity', 'complex', 'depth']
+          'RADAR-Body': ['body', 'corpo', 'corposity', 'structure', 'struttura'],
+          'RADAR-Tannins': ['tannins', 'tannin', 'tannic', 'tannini'],
+          'RADAR-Alcohol': ['alcohol intensity', 'alcohol perception', 'alcol percezione', 'intensità alcolica'],
+          'RADAR-Persistence': ['persistence', 'finish', 'length', 'persistenza', 'finale'],
+          'RADAR-Acidity': ['acidity', 'acid', 'freshness', 'acidità', 'freschezza'],
+          'RADAR-Complexity': ['complexity', 'complex', 'depth', 'complessità', 'profondità']
         };
 
-        Object.keys(radarMappings).forEach(radarField => {
-          const possibleColumns = radarMappings[radarField];
+        Object.keys(radarMappings).forEach(radarFieldId => {
+          const possibleColumns = radarMappings[radarFieldId];
           
-          for (const column of possibleColumns) {
-            const value = findValueInData(data, column);
+          for (const searchTerm of possibleColumns) {
+            const value = findValueInDataFlexible(data, searchTerm);
             if (value !== null && value !== undefined && value !== '') {
-              const fieldElement = document.getElementById(radarField);
+              const fieldElement = document.getElementById(radarFieldId);
               if (fieldElement) {
-                fieldElement.value = parseFloat(value) || 0;
-                break;
+                const numValue = parseFloat(value);
+                if (!isNaN(numValue)) {
+                  fieldElement.value = numValue;
+                  mappedCount++;
+                  console.log(`Mapped ${radarFieldId} = ${numValue} (from search term: ${searchTerm})`);
+                  break;
+                }
               }
             }
           }
         });
 
-        // Handle Aroma data (look for numbered aroma columns)
+        // Handle Aroma data with more flexible patterns
         for (let i = 1; i <= 7; i++) {
-          const aromaColumns = [`aroma${i}`, `aroma ${i}`, `aroma_${i}`];
-          const intensityColumns = [`intensity${i}`, `intensity ${i}`, `intensity_${i}`, `value${i}`];
+          // Multiple patterns for aroma type
+          const aromaTypePatterns = [
+            `aroma${i}`, `aroma ${i}`, `aroma_${i}`, `aroma-${i}`,
+            `aroma${i}_type`, `aroma${i} type`, `aroma${i}_nome`, `aroma${i} nome`,
+            `profumo${i}`, `profumo ${i}`, `note${i}`, `note ${i}`
+          ];
+          
+          // Multiple patterns for aroma intensity/value
+          const aromaValuePatterns = [
+            `aroma${i}_value`, `aroma${i} value`, `aroma${i}_intensity`, `aroma${i} intensity`,
+            `aroma${i}_intensità`, `aroma${i} intensità`, `aroma${i}_valore`, `aroma${i} valore`,
+            `intensity${i}`, `intensity ${i}`, `intensity_${i}`, `intensity-${i}`,
+            `value${i}`, `value ${i}`, `value_${i}`, `value-${i}`,
+            `intensità${i}`, `intensità ${i}`, `valore${i}`, `valore ${i}`
+          ];
           
           // Look for aroma type
-          for (const column of aromaColumns) {
-            const value = findValueInData(data, column);
-            if (value) {
+          for (const pattern of aromaTypePatterns) {
+            const value = findValueInDataFlexible(data, pattern);
+            if (value && value.toString().trim() !== '') {
               const fieldElement = document.getElementById(`AROMA-${i}-Type`);
               if (fieldElement) {
-                fieldElement.value = value;
+                fieldElement.value = value.toString().trim();
+                mappedCount++;
+                console.log(`Mapped AROMA-${i}-Type = ${value} (from pattern: ${pattern})`);
                 break;
               }
             }
           }
           
-          // Look for aroma intensity
-          for (const column of intensityColumns) {
-            const value = findValueInData(data, column);
+          // Look for aroma intensity/value
+          for (const pattern of aromaValuePatterns) {
+            const value = findValueInDataFlexible(data, pattern);
             if (value !== null && value !== undefined && value !== '') {
               const fieldElement = document.getElementById(`AROMA-${i}-Value`);
               if (fieldElement) {
-                fieldElement.value = parseFloat(value) || 0;
-                break;
+                const numValue = parseFloat(value);
+                if (!isNaN(numValue)) {
+                  fieldElement.value = numValue;
+                  mappedCount++;
+                  console.log(`Mapped AROMA-${i}-Value = ${numValue} (from pattern: ${pattern})`);
+                  break;
+                }
               }
             }
           }
         }
+
+        return mappedCount;
       }
 
-      function findValueInData(data, searchKey) {
-        // Case-insensitive search for key in data
-        const lowerSearchKey = searchKey.toLowerCase();
+      function findValueInDataFlexible(data, searchKey) {
+        if (!data || !searchKey) return null;
         
+        const lowerSearchKey = searchKey.toString().toLowerCase().trim();
+        
+        // First try exact match (case insensitive)
         for (const [key, value] of Object.entries(data)) {
-          if (key.toLowerCase().includes(lowerSearchKey) || lowerSearchKey.includes(key.toLowerCase())) {
+          const lowerKey = key.toString().toLowerCase().trim();
+          if (lowerKey === lowerSearchKey) {
+            return value;
+          }
+        }
+        
+        // Then try partial matches
+        for (const [key, value] of Object.entries(data)) {
+          const lowerKey = key.toString().toLowerCase().trim();
+          
+          // Check if key contains search term or search term contains key
+          if (lowerKey.includes(lowerSearchKey) || lowerSearchKey.includes(lowerKey)) {
+            return value;
+          }
+          
+          // Check for matches with common separators removed
+          const cleanKey = lowerKey.replace(/[\s_\-\.]/g, '');
+          const cleanSearch = lowerSearchKey.replace(/[\s_\-\.]/g, '');
+          
+          if (cleanKey === cleanSearch || cleanKey.includes(cleanSearch) || cleanSearch.includes(cleanKey)) {
             return value;
           }
         }
         
         return null;
       }
-      document.getElementById('downloadJsonBtn').addEventListener('click', function() {
-        const formData = collectFormData();
-        downloadJson(formData);
-      });
 
-      // Helper functions
-      function collectFormData() {
-        const inputs = document.querySelectorAll('#wineForm input, #wineForm textarea, #wineForm select');
-        const data = {};
+      function showDebugInfo() {
+        const debugDiv = document.getElementById('debugInfo');
+        const debugContent = document.getElementById('debugContent');
         
-        inputs.forEach(input => {
-          if (input.type === 'button') return;
-          data[input.id] = input.value || '';
+        if (!currentRowData) {
+          alert('No data loaded yet. Please load data from Excel first.');
+          return;
+        }
+        
+        let debugHtml = '<h4>Headers found in Excel:</h4>';
+        debugHtml += '<ul>';
+        currentRowData.headers.forEach((header, index) => {
+          const value = currentRowData.selectedRow[index];
+          debugHtml += `<li><strong>${header}</strong>: ${value || '(empty)'}</li>`;
         });
+        debugHtml += '</ul>';
         
-        return data;
-      }
-
-      function downloadJson(data) {
-        const json = JSON.stringify(data, null, 2);
-        const blob = new Blob([json], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${data.Name || 'wine'}-${data.Vintage || 'data'}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
-
-      function downloadHtml(html, data) {
-        const blob = new Blob([html], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${data.Name || 'wine'}-${data.Vintage || 'card'}.html`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
-
-      function generateWineCardHtml(data) {
-        // Map form data to wine data structure
-        const wineData = {
-          producer: data.Producer || "",
-          name: data.Name || "",
-          vintage: data.Vintage || "",
-          denomination: data.Denomination || "",
-          grapes: data.Grapes || "",
-          alcoholContent: data.AlcoholContent || "",
-          aging: data.Aging || "",
-          temperature: data.ServingTemperature || "",
-          potential: data.CellaringPotential || "",
-          vintageDescription: data.VintageDescription || "",
-          foodPairings: data.FoodPairings || "",
-          visualNotes: data.VisualNotes || "",
-          olfactoryNotes: data.OlfactoryNotes || "",
-          gustatoryNotes: data.GustatoryNotes || "",
-          colorTheme: data.ColorTheme || "Red"
-        };
-
-        // RADAR data
-        const radarData = {
-          body: parseFloat(data['RADAR-Body']) || 0,
-          tannins: parseFloat(data['RADAR-Tannins']) || 0,
-          alcohol: parseFloat(data['RADAR-Alcohol']) || 0,
-          persistence: parseFloat(data['RADAR-Persistence']) || 0,
-          acidity: parseFloat(data['RADAR-Acidity']) || 0,
-          complexity: parseFloat(data['RADAR-Complexity']) || 0
-        };
-
-        // Aroma data
-        const aromaData = [];
-        for (let i = 1; i <= 7; i++) {
-          const type = data[`AROMA-${i}-Type`];
-          const value = parseFloat(data[`AROMA-${i}-Value`]);
-          if (type && !isNaN(value)) {
-            aromaData.push({ name: type, value: value });
-          }
-        }
-
-        // Generate complete HTML
-        return generateCompleteHtml(wineData, radarData, aromaData);
-      }
-
-      function getColorTheme(wineType) {
-        switch(wineType) {
-          case 'White':
-            return {
-              primary: '#83742a',
-              accent: '#f0e68c',
-              dark: '#5f5527',
-              lightBg: '#fcfbf7'
-            };
-          case 'Rosé':
-            return {
-              primary: '#c06377',
-              accent: '#f7cad0',
-              dark: '#904756',
-              lightBg: '#fdf5f7'
-            };
-          case 'Sparkling':
-            return {
-              primary: '#7d7f89',
-              accent: '#d0d0d8',
-              dark: '#4e5057',
-              lightBg: '#f9f9fb'
-            };
-          case 'Red':
-          default:
-            return {
-              primary: '#5e1914',
-              accent: '#e6d1a8',
-              dark: '#2c1e1d',
-              lightBg: '#f9f7f3'
-            };
-        }
-      }
-
-      function calculateRadarCoordinates(data, centerX, centerY, radius) {
-        const maxValue = 10;
-        return {
-          body: {
-            x: centerX,
-            y: centerY - (data.body / maxValue * radius)
-          },
-          tannins: {
-            x: centerX + (data.tannins / maxValue * radius * Math.cos(Math.PI/6)),
-            y: centerY - (data.tannins / maxValue * radius * Math.sin(Math.PI/6))
-          },
-          alcohol: {
-            x: centerX + (data.alcohol / maxValue * radius * Math.cos(Math.PI/6)),
-            y: centerY + (data.alcohol / maxValue * radius * Math.sin(Math.PI/6))
-          },
-          persistence: {
-            x: centerX,
-            y: centerY + (data.persistence / maxValue * radius)
-          },
-          acidity: {
-            x: centerX - (data.acidity / maxValue * radius * Math.cos(Math.PI/6)),
-            y: centerY + (data.acidity / maxValue * radius * Math.sin(Math.PI/6))
-          },
-          complexity: {
-            x: centerX - (data.complexity / maxValue * radius * Math.cos(Math.PI/6)),
-            y: centerY - (data.complexity / maxValue * radius * Math.sin(Math.PI/6))
-          }
-        };
-      }
-
-      function generateRadarChart(radarData, colorTheme, wineData) {
-        const coords = calculateRadarCoordinates(radarData, 200, 150, 80);
-        const polygonPoints = `${coords.body.x},${coords.body.y} ${coords.tannins.x},${coords.tannins.y} ${coords.alcohol.x},${coords.alcohol.y} ${coords.persistence.x},${coords.persistence.y} ${coords.acidity.x},${coords.acidity.y} ${coords.complexity.x},${coords.complexity.y}`;
-        
-        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
-            <!-- Title -->
-            <text x="200" y="30" font-family="Garamond" font-size="18" fill="${colorTheme.primary}" text-anchor="middle" font-weight="bold">Body and Structure</text>
-            
-            <!-- Background hexagons -->
-            <polygon points="200,70 270,110 270,190 200,230 130,190 130,110" fill="${colorTheme.lightBg}" stroke="${colorTheme.accent}" stroke-width="1"/>
-            <polygon points="200,90 250,120 250,180 200,210 150,180 150,120" fill="${colorTheme.lightBg}" stroke="${colorTheme.accent}" stroke-width="1"/>
-            <polygon points="200,110 230,130 230,170 200,190 170,170 170,130" fill="${colorTheme.lightBg}" stroke="${colorTheme.accent}" stroke-width="1"/>
-            
-            <!-- Axis lines -->
-            <line x1="200" y1="150" x2="200" y2="70" stroke="#888888" stroke-width="1"/>
-            <line x1="200" y1="150" x2="270" y2="190" stroke="#888888" stroke-width="1"/>
-            <line x1="200" y1="150" x2="270" y2="110" stroke="#888888" stroke-width="1"/>
-            <line x1="200" y1="150" x2="200" y2="230" stroke="#888888" stroke-width="1"/>
-            <line x1="200" y1="150" x2="130" y2="190" stroke="#888888" stroke-width="1"/>
-            <line x1="200" y1="150" x2="130" y2="110" stroke="#888888" stroke-width="1"/>
-            
-            <!-- Labels -->
-            <text x="200" y="65" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="middle">Body</text>
-            <text x="280" y="110" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="start">Tannins</text>
-            <text x="280" y="190" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="start">Alcohol</text>
-            <text x="200" y="240" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="middle">Persistence</text>
-            <text x="120" y="190" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="end">Acidity</text>
-            <text x="120" y="110" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="end">Complexity</text>
-            
-            <!-- Data polygon -->
-            <polygon points="${polygonPoints}" fill="rgba(${getRGB(colorTheme.primary)},0.5)" stroke="${colorTheme.primary}" stroke-width="2"/>
-            
-            <!-- Data points -->
-            <circle cx="${coords.body.x}" cy="${coords.body.y}" r="4" fill="${colorTheme.primary}"/>
-            <circle cx="${coords.tannins.x}" cy="${coords.tannins.y}" r="4" fill="${colorTheme.primary}"/>
-            <circle cx="${coords.alcohol.x}" cy="${coords.alcohol.y}" r="4" fill="${colorTheme.primary}"/>
-            <circle cx="${coords.persistence.x}" cy="${coords.persistence.y}" r="4" fill="${colorTheme.primary}"/>
-            <circle cx="${coords.acidity.x}" cy="${coords.acidity.y}" r="4" fill="${colorTheme.primary}"/>
-            <circle cx="${coords.complexity.x}" cy="${coords.complexity.y}" r="4" fill="${colorTheme.primary}"/>
-            
-            <!-- Legend -->
-            <foreignObject x="50%" y="260" width="500" height="50" transform="translate(-250, 0)">
-              <div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; background-color: #ffffff; border: 1px solid ${colorTheme.accent}; border-radius: 5px; padding: 5px 15px; white-space: nowrap; transform: translateX(-50%); position: relative; left: 50%;">
-                <div style="display: flex; align-items: center;">
-                  <div style="width: 10px; height: 10px; background-color: rgba(${getRGB(colorTheme.primary)},0.5); border: 1px solid ${colorTheme.primary}; margin-right: 10px;"></div>
-                  <span style="font-family: Garamond; font-size: 12px; color: ${colorTheme.dark};">${wineData.name} ${wineData.vintage}</span>
-                </div>
-              </div>
-            </foreignObject>
-        </svg>`;
-      }
-
-      function generateAromaChart(aromaData, colorTheme) {
-        if (aromaData.length === 0) {
-          return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" width="100%" height="100%">
-            <text x="200" y="30" font-family="Garamond" font-size="18" fill="${colorTheme.primary}" text-anchor="middle" font-weight="bold">Aromatic Profile</text>
-            <text x="200" y="175" font-family="Garamond" font-size="16" fill="${colorTheme.dark}" text-anchor="middle">No aroma data provided</text>
-          </svg>`;
-        }
-
-        let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" width="100%" height="100%">
-            <!-- Title -->
-            <text x="200" y="30" font-family="Garamond" font-size="18" fill="${colorTheme.primary}" text-anchor="middle" font-weight="bold">Aromatic Profile</text>`;
-        
-        aromaData.forEach((aroma, index) => {
-          const y = 70 + (index * 35);
-          const barWidth = (aroma.value / 10) * 200;
-          
-          svgContent += `
-            <!-- Bar background -->
-            <rect x="120" y="${y}" width="200" height="25" fill="${colorTheme.lightBg}" stroke="${colorTheme.accent}" stroke-width="1"/>
-            <!-- Label -->
-            <text x="115" y="${y + 17}" font-family="Garamond" font-size="14" fill="${colorTheme.dark}" text-anchor="end">${aroma.name}</text>
-            <!-- Data bar -->
-            <rect x="120" y="${y}" width="${barWidth}" height="25" fill="rgba(${getRGB(colorTheme.primary)},0.7)"/>`;
+        debugHtml += '<h4>Data mapping (cleaned keys):</h4>';
+        debugHtml += '<ul>';
+        Object.entries(currentRowData.dataMapping).forEach(([key, value]) => {
+          debugHtml += `<li><strong>"${key}"</strong> → ${value}</li>`;
         });
-
-        svgContent += `
-            <!-- Intensity scale -->
-            <text x="120" y="325" font-family="Garamond" font-size="12" fill="${colorTheme.dark}">Low</text>
-            <text x="220" y="325" font-family="Garamond" font-size="12" fill="${colorTheme.dark}" text-anchor="middle">Medium</text>
-            <text x="320" y="325" font-family="Garamond" font-size="12" fill="${colorTheme.dark}" text-anchor="end">High</text>
-            <line x1="120" y1="330" x2="320" y2="330" stroke="#888888" stroke-width="1"/>
-            <line x1="120" y1="328" x2="120" y2="332" stroke="#888888" stroke-width="1"/>
-            <line x1="220" y1="328" x2="220" y2="332" stroke="#888888" stroke-width="1"/>
-            <line x1="320" y1="328" x2="320" y2="332" stroke="#888888" stroke-width="1"/>
-        </svg>`;
+        debugHtml += '</ul>';
         
-        return svgContent;
+        debugHtml += '<h4>Form field IDs:</h4>';
+        debugHtml += '<ul>';
+        document.querySelectorAll('#wineForm input, #wineForm textarea, #wineForm select').forEach(field => {
+          if (field.type !== 'file' && field.type !== 'button') {
+            debugHtml += `<li>${field.id}</li>`;
+          }
+        });
+        debugHtml += '</ul>';
+        
+        debugContent.innerHTML = debugHtml;
+        debugDiv.style.display = 'block';
+        debugDiv.scrollIntoView({ behavior: 'smooth' });
       }
-
-      function getRGB(hexColor) {
-        // Convert hex color to RGB values for rgba usage
-        const hex = hexColor.replace('#', '');
-        const r = parseInt(hex.substr(0, 2), 16);
-        const g = parseInt(hex.substr(2, 2), 16);
-        const b = parseInt(hex.substr(4, 2), 16);
-        return `${r},${g},${b}`;
-      }
-
-      function generateCompleteHtml(wineData, radarData, aromaData) {
-        const colorTheme = getColorTheme(wineData.colorTheme);
-        
-        return `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${wineData.name} ${wineData.vintage} - Technical Sheet</title>
-    <style>
-        body {
-            font-family: 'Garamond', serif;
-            margin: 0;
-            padding: 0;
-            background-color: ${colorTheme.lightBg};
-            color: #333333;
-            line-height: 1.6;
-        }
-        header {
-            background-color: ${colorTheme.primary};
-            color: #ffffff;
-            padding: 15px;
-            text-align: center;
-        }
-        .content {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .card-container {
-            position: relative;
-            margin-bottom: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
-        .wine-card {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            padding: 20px;
-            position: relative;
-            z-index: 2;
-        }
-        .logo-background {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-            opacity: 0.1;
-            pointer-events: none;
-            text-align: center;
-        }
-        .logo-background img {
-            width: 200px;
-            height: 200px;
-            object-fit: contain;
-            filter: grayscale(100%) brightness(0.7);
-        }
-        .wine-info h1 {
-            color: ${colorTheme.primary};
-            margin-top: 0;
-            border-bottom: 2px solid ${colorTheme.accent};
-            padding-bottom: 10px;
-        }
-        .wine-info h2 {
-            font-style: italic;
-            font-weight: normal;
-            margin-top: 5px;
-        }
-        .specs {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        .spec-item {
-            display: flex;
-        }
-        .spec-item strong {
-            min-width: 120px;
-            color: ${colorTheme.primary};
-        }
-        .chart-container {
-            position: relative;
-            padding: 20px;
-            z-index: 2;
-        }
-        .chart-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            position: relative;
-            z-index: 3;
-        }
-        .chart-title {
-            color: ${colorTheme.primary};
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 3;
-        }
-        .radar-chart {
-            width: 100%;
-            height: 300px;
-            position: relative;
-            z-index: 3;
-        }
-        .aroma-chart {
-            width: 100%;
-            height: 350px;
-            position: relative;
-            z-index: 3;
-        }
-        .flavor-profile {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            text-align: center;
-            position: relative;
-            z-index: 3;
-        }
-        .flavor-category {
-            padding: 10px;
-        }
-        .flavor-category h3 {
-            color: ${colorTheme.primary};
-            margin-top: 0;
-        }
-        footer {
-            background-color: ${colorTheme.dark};
-            color: ${colorTheme.accent};
-            text-align: center;
-            padding: 15px;
-            margin-top: 20px;
-        }
-        .wine-type-indicator {
-            display: inline-block;
-            padding: 5px 10px;
-            background-color: ${colorTheme.primary};
-            color: white;
-            border-radius: 4px;
-            font-size: 12px;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-        
-        /* Media queries for mobile version */
-        @media (max-width: 768px) {
-            .content {
-                padding: 10px;
-            }
-            .wine-card {
-                grid-template-columns: 1fr;
-            }
-            .chart-row {
-                grid-template-columns: 1fr;
-            }
-            .specs {
-                grid-template-columns: 1fr;
-            }
-            .flavor-profile {
-                grid-template-columns: 1fr;
-            }
-            .spec-item {
-                flex-direction: column;
-            }
-            .spec-item strong {
-                min-width: auto;
-                margin-bottom: 3px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>${wineData.producer} - ${wineData.name} ${wineData.vintage} <span class="wine-type-indicator">${wineData.colorTheme}</span></h1>
-    </header>
-    
-    <div class="content">
-        <!-- First Card -->
-        <div class="card-container">
-            <div class="logo-background">
-                <img src="https://raw.githubusercontent.com/S4ng4/WineCArd/refs/heads/main/logoNoSfondo.png" alt="Wine logo" onerror="this.style.display='none'">
-            </div>
-            <div class="wine-card">
-                <div class="wine-info">
-                    <h1>${wineData.name} ${wineData.vintage}</h1>
-                    <h2>${wineData.denomination}</h2>
-                    <div class="specs">
-                        <div class="spec-item">
-                            <strong>Producer:</strong>
-                            <span>${wineData.producer}</span>
-                        </div>
-                        ${wineData.grapes ? `<div class="spec-item">
-                            <strong>Grapes:</strong>
-                            <span>${wineData.grapes}</span>
-                        </div>` : ''}
-                        <div class="spec-item">
-                            <strong>Vintage:</strong>
-                            <span>${wineData.vintage}</span>
-                        </div>
-                        ${wineData.alcoholContent ? `<div class="spec-item">
-                            <strong>Alcohol Content:</strong>
-                            <span>${wineData.alcoholContent}%</span>
-                        </div>` : ''}
-                        ${wineData.aging ? `<div class="spec-item">
-                            <strong>Aging:</strong>
-                            <span>${wineData.aging}</span>
-                        </div>` : ''}
-                        ${wineData.temperature ? `<div class="spec-item">
-                            <strong>Serving Temperature:</strong>
-                            <span>${wineData.temperature}</span>
-                        </div>` : ''}
-                        ${wineData.potential ? `<div class="spec-item">
-                            <strong>Cellaring Potential:</strong>
-                            <span>${wineData.potential}</span>
-                        </div>` : ''}
-                    </div>
-                </div>
-                <div class="wine-summary">
-                    ${wineData.vintageDescription ? `<h3>Vintage ${wineData.vintage}</h3>
-                    <p>${wineData.vintageDescription}</p>` : ''}
-                    ${wineData.foodPairings ? `<h3>Ideal Food Pairings</h3>
-                    <p>${wineData.foodPairings}</p>` : ''}
-                </div>
-            </div>
-        </div>
-        
-        <!-- Second Card -->
-        <div class="card-container">
-            <div class="logo-background">
-                <img src="https://raw.githubusercontent.com/S4ng4/WineCArd/refs/heads/main/logoNoSfondo.png" alt="Wine logo" onerror="this.style.display='none'">
-            </div>
-            <div class="chart-container">
-                <h2 class="chart-title">Organoleptic Profile</h2>
-                <div class="chart-row">
-                    <div class="radar-chart">
-                        ${generateRadarChart(radarData, colorTheme, wineData)}
-                    </div>
-                    
-                    <div class="aroma-chart">
-                        ${generateAromaChart(aromaData, colorTheme)}
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Third Card -->
-        <div class="card-container">
-            <div class="logo-background">
-                <img src="https://raw.githubusercontent.com/S4ng4/WineCArd/refs/heads/main/logoNoSfondo.png" alt="Wine logo" onerror="this.style.display='none'">
-            </div>
-            <div class="chart-container">
-                <h2 class="chart-title">Tasting Notes</h2>
-                <div class="flavor-profile">
-                    <div class="flavor-category">
-                        <h3>Visual</h3>
-                        <p>${wineData.visualNotes || 'Beautiful color with elegant reflections'}</p>
-                    </div>
-                    <div class="flavor-category">
-                        <h3>Olfactory</h3>
-                        <p>${wineData.olfactoryNotes || 'Complex and inviting aroma profile'}</p>
-                    </div>
-                    <div class="flavor-category">
-                        <h3>Gustatory</h3>
-                        <p>${wineData.gustatoryNotes || 'Balanced and harmonious on the palate'}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <footer>
-        <p>&copy;Andrea Sangalli 2025 - ${wineData.producer} - ${wineData.name}. Consume responsibly.</p>
-    </footer>
-</body>
-</html>`;
-      }
-    });
-  </script>
-</body>
-</html>
