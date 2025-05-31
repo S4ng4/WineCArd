@@ -529,27 +529,43 @@
         const file = event.target.files[0];
         if (!file) return;
 
+        console.log('File selected:', file.name);
+
         try {
           const arrayBuffer = await file.arrayBuffer();
+          console.log('File read as array buffer, size:', arrayBuffer.byteLength);
           
           // Load SheetJS library if not already loaded
           if (typeof XLSX === 'undefined') {
+            console.log('Loading XLSX library...');
             const script = document.createElement('script');
             script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
-            script.onload = () => processExcelFile(arrayBuffer);
+            script.onload = () => {
+              console.log('XLSX library loaded successfully');
+              processExcelFile(arrayBuffer);
+            };
+            script.onerror = () => {
+              console.error('Failed to load XLSX library');
+              alert('Failed to load Excel processing library. Please check your internet connection.');
+            };
             document.head.appendChild(script);
           } else {
+            console.log('XLSX library already available');
             processExcelFile(arrayBuffer);
           }
         } catch (error) {
+          console.error('Error in handleExcelFile:', error);
           alert('Error reading file: ' + error.message);
         }
       }
 
       function processExcelFile(arrayBuffer) {
         try {
+          console.log('Processing Excel file with XLSX...');
           const workbook = XLSX.read(arrayBuffer, { type: 'array' });
           excelData = workbook;
+          
+          console.log('Workbook loaded, sheets found:', workbook.SheetNames);
           
           // Populate sheet selector
           const sheetSelect = document.getElementById('sheetSelect');
@@ -562,21 +578,34 @@
             option.value = sheetName;
             option.textContent = sheetName;
             sheetSelect.appendChild(option);
+            console.log('Added sheet option:', sheetName);
           });
           
           sheetSelector.style.display = 'block';
+          console.log('Sheet selector made visible');
+          
         } catch (error) {
+          console.error('Error in processExcelFile:', error);
           alert('Error processing Excel file: ' + error.message);
         }
       }
 
       function handleSheetSelection() {
         const sheetName = document.getElementById('sheetSelect').value;
-        if (!sheetName || !excelData) return;
+        console.log('Sheet selected:', sheetName);
+        
+        if (!sheetName || !excelData) {
+          console.log('No sheet selected or no excel data available');
+          return;
+        }
 
         try {
           const worksheet = excelData.Sheets[sheetName];
+          console.log('Worksheet found:', worksheet ? 'Yes' : 'No');
+          
           const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+          console.log('JSON data extracted, rows:', jsonData.length);
+          console.log('First few rows:', jsonData.slice(0, 3));
           
           // Populate row selector
           const rowSelect = document.getElementById('rowSelect');
@@ -588,20 +617,24 @@
           
           // Skip header row (index 0), start from row 1
           for (let i = 1; i < jsonData.length; i++) {
-            if (jsonData[i].some(cell => cell !== undefined && cell !== '')) {
+            if (jsonData[i] && jsonData[i].some(cell => cell !== undefined && cell !== '')) {
               const option = document.createElement('option');
               option.value = i;
               // Show preview of first few cells
-              const preview = jsonData[i].slice(0, 3).join(' | ') + '...';
+              const preview = jsonData[i].slice(0, 3).map(cell => cell || '(empty)').join(' | ') + '...';
               option.textContent = `Row ${i + 1}: ${preview}`;
               rowSelect.appendChild(option);
+              console.log(`Added row option ${i + 1}:`, preview);
             }
           }
           
           rowSelector.style.display = 'block';
           loadBtn.style.display = 'block';
           debugBtn.style.display = 'block';
+          console.log('Row selector and buttons made visible');
+          
         } catch (error) {
+          console.error('Error in handleSheetSelection:', error);
           alert('Error reading sheet data: ' + error.message);
         }
       }
