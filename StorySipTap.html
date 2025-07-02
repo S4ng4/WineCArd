@@ -3,113 +3,437 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Discover SipTag</title>
+  <title>Discover SipTag - Where Wine Finds Its Voice</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #F3F3F3;
-      color: #1C1C1C;
-      font-family: 'Poppins', sans-serif;
+    * {
       margin: 0;
       padding: 0;
-      line-height: 1.6;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --wine-primary: #6C1E24;
+      --wine-secondary: #8B0000;
+      --wine-accent: #D6B370;
+      --wine-light: #F5F3F0;
+      --text-primary: #1C1C1C;
+      --text-secondary: #4A5568;
+      --white: #FFFFFF;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, var(--wine-light) 0%, #E8E5E1 100%);
+      color: var(--text-primary);
+      line-height: 1.7;
       overflow-x: hidden;
       position: relative;
     }
 
+    /* Hero Section */
     .hero {
-      background-color: #6C1E24;
-      color: #FFFFFF;
-      padding: 100px 20px;
+      background: linear-gradient(135deg, var(--wine-primary) 0%, var(--wine-secondary) 100%);
+      color: var(--white);
+      padding: 120px 20px 100px;
       text-align: center;
-      transition: background 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(214, 179, 112, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(214, 179, 112, 0.08) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-10px) rotate(1deg); }
+      66% { transform: translateY(5px) rotate(-1deg); }
+    }
+
+    .hero-content {
+      max-width: 800px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      animation: slideInUp 1s ease 0.2s forwards;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      font-weight: 300;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      letter-spacing: 0.5px;
+      opacity: 0;
+      animation: slideInUp 1s ease 0.4s forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--wine-accent), #E8C278);
+      color: var(--text-primary);
+      padding: 16px 32px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      animation: slideInUp 1s ease 0.6s forwards;
+      box-shadow: var(--shadow-medium);
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: var(--shadow-heavy);
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 1000px;
+      margin: -50px auto 0;
+      position: relative;
+      z-index: 3;
+    }
+
+    .content-section {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-radius: 32px;
+      padding: 60px 50px;
+      margin: 40px 20px;
+      box-shadow: var(--shadow-medium);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
     }
-    .hero:hover {
-      background-color: #7D272D;
+
+    .content-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--wine-primary), var(--wine-accent), var(--wine-primary));
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
-    .content {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 40px 20px;
-      background: #FFFFFF;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .content:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    .content-section:hover::before {
+      opacity: 1;
     }
 
-    h1, h2, h3 {
-      margin-bottom: 20px;
+    .content-section:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-heavy);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--wine-accent);
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--wine-primary), var(--wine-accent));
+      margin: 1rem auto;
+    }
+
+    .story-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 600;
+      color: var(--wine-primary);
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
       transition: color 0.3s ease;
     }
-    h2, h3 {
-      color: #6C1E24;
-      font-size: 28px;
+
+    .story-heading:hover {
+      color: var(--wine-secondary);
     }
-    h3:hover {
-      color: #8A7332;
+
+    .story-text {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.8;
+      transition: all 0.3s ease;
     }
-    p {
-      margin-bottom: 20px;
-      font-size: 18px;
-      transition: color 0.3s ease;
+
+    .story-text:hover {
+      color: var(--text-primary);
     }
-    p:hover {
-      color: #555555;
+
+    .story-text:first-letter {
+      font-size: 3.5rem;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--wine-primary);
+      float: left;
+      line-height: 1;
+      margin: 0.1rem 0.5rem 0 0;
     }
-    .btn {
-      display: inline-block;
-      background-color: #6C1E24;
-      color: #FFFFFF;
-      padding: 12px 24px;
-      margin-top: 20px;
-      text-decoration: none;
+
+    .highlight-section {
+      background: linear-gradient(135deg, rgba(108, 30, 36, 0.05), rgba(214, 179, 112, 0.05));
+      border-radius: 24px;
+      padding: 40px;
+      margin: 40px 0;
+      border-left: 4px solid var(--wine-accent);
+      position: relative;
+    }
+
+    .highlight-section::before {
+      content: '💡';
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      opacity: 0.6;
+    }
+
+    .quote-section {
+      text-align: center;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--wine-primary);
+      margin: 60px 0;
+      position: relative;
+    }
+
+    .quote-section::before,
+    .quote-section::after {
+      content: '"';
+      font-size: 4rem;
+      font-family: 'Playfair Display', serif;
+      color: var(--wine-accent);
+      opacity: 0.6;
+    }
+
+    .quote-section::before {
+      position: absolute;
+      top: -20px;
+      left: -20px;
+    }
+
+    .quote-section::after {
+      position: absolute;
+      bottom: -40px;
+      right: -20px;
+    }
+
+    .final-section {
+      background: linear-gradient(135deg, var(--wine-primary), var(--wine-secondary));
+      color: var(--white);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 30% 20%, rgba(214, 179, 112, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    }
+
+    .final-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .final-section .story-heading {
+      color: var(--white);
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
+
+    .final-section .story-text {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.2rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 80px 20px 60px;
+        min-height: 60vh;
+      }
+
+      .content-section {
+        padding: 40px 30px;
+        margin: 30px 15px;
+        border-radius: 24px;
+      }
+
+      .story-text:first-letter {
+        font-size: 2.8rem;
+        margin: 0.05rem 0.3rem 0 0;
+      }
+
+      .highlight-section {
+        padding: 30px 20px;
+      }
+
+      .quote-section {
+        font-size: 1.1rem;
+        margin: 40px 0;
+      }
+    }
+
+    /* Scroll animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--wine-light);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, var(--wine-primary), var(--wine-accent));
       border-radius: 4px;
-      transition: background 0.3s, color 0.3s, transform 0.3s;
     }
-    .btn:hover {
-      background-color: #D6B370;
-      color: #1C1C1C;
-      transform: scale(1.05);
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(45deg, var(--wine-secondary), var(--wine-accent));
     }
   </style>
 </head>
 <body>
 
-<div class="hero">
-  <h1>Discover SipTap</h1>
-  <p>The future of wine is already here.</p>
-  <a href="#" class="btn"></a>
-</div>
+<section class="hero">
+  <div class="hero-content">
+    <h1>Discover SipTag</h1>
+    <p class="hero-subtitle">The future of wine storytelling is already here</p>
+    <a href="#story" class="hero-cta">
+      <span>Begin the Journey</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M7 17L17 7M17 7H7M17 7V17"/>
+      </svg>
+    </a>
+  </div>
+</section>
 
-<div id="content" class="content">
-  <h2>- T H E I D E A -</h2>
-  <h3>When Selling a Bottle of Wine Isn't That Simple</h3>
-  <p>Working in the restaurant industry, I realized how challenging it can be to sell a bottle of wine. Even with passion and preparation, telling the story of a wine in a simple, engaging, and personalized way for each customer is a daily challenge. I often felt the frustration of knowing the value inside a bottle without being able to fully convey it to those in front of me.</p>
-  <p>From this real experience, a question was born: "What if the wine could tell its own story?"</p>
+<main class="main-content">
+  <section id="story" class="content-section fade-in">
+    <div class="section-title">The Idea</div>
+    <h2 class="story-heading">When Selling a Bottle of Wine Isn't That Simple</h2>
+    <p class="story-text">Working in the restaurant industry, I realized how challenging it can be to sell a bottle of wine. Even with passion and preparation, telling the story of a wine in a simple, engaging, and personalized way for each customer is a daily challenge. I often felt the frustration of knowing the value inside a bottle without being able to fully convey it to those in front of me.</p>
+    
+    <div class="quote-section">
+      What if the wine could tell its own story?
+    </div>
+  </section>
 
-  <h3>The Idea That Sparked SipTag</h3>
-  <p>That's how SipTag was born: a simple yet powerful idea. A system capable of connecting every bottle to a living story, offering an immediate and professional narrative that bridges the gap between sellers and buyers. SipTag is not just a sales tool, but also a means of education and personal enjoyment: perfect for restaurant staff seeking to enhance their wine knowledge, and for customers and enthusiasts wanting to discover wines in a free and natural way.</p>
+  <section class="content-section fade-in">
+    <h2 class="story-heading">The Idea That Sparked SipTag</h2>
+    <p class="story-text">That's how SipTag was born: a simple yet powerful idea. A system capable of connecting every bottle to a living story, offering an immediate and professional narrative that bridges the gap between sellers and buyers.</p>
+    
+    <div class="highlight-section">
+      <p class="story-text">SipTag icould be not just a sales tool, but also a means of education and personal enjoyment: perfect for restaurant staff seeking to enhance their wine knowledge, and for customers and enthusiasts wanting to discover wines in a free and natural way.</p>
+    </div>
+  </section>
 
-  <h3>A Concrete Opportunity to Stand Out</h3>
-  <p>For wine shops and restaurants, SipTag is a real opportunity to differentiate from competitors, offering customers a richer, more immersive experience. It's a genuine tool to increase sales, boost engagement, and highlight the hard work behind selecting and promoting great wines.</p>
+  <section class="content-section fade-in">
+    <h2 class="story-heading">A Concrete Opportunity to Stand Out</h2>
+    <p class="story-text">For wine shops and restaurants, SipTag could be a real opportunity to differentiate from competitors, offering customers a richer, more immersive experience. It's a genuine tool to increase sales, boost engagement, and highlight the hard work behind selecting and promoting great wines.</p>
+  </section>
 
-  <h3>A Technology Designed for the Future</h3>
-  <p>To launch SipTag and bring it quickly to the market, I chose to use NFC technology. This choice was no coincidence: I strongly believe that NFC and RFID represent the future of ultra-fast traceability, intelligent supply chain management, and may eventually replace traditional barcodes.</p>
-  <p>With a simple gesture, the customer can enjoy a fast, elegant, and captivating experience: just bring the phone close to the bottle and instantly dive into its world, discovering a new emotion with every interaction.</p>
+  <section class="content-section fade-in">
+    <h2 class="story-heading">A Technology Designed for the Future</h2>
+    <p class="story-text">To launch SipTag and bring it quickly to the market, I chose to use NFC technology. This choice was no coincidence: I strongly believe that NFC and RFID represent the future of ultra-fast traceability, intelligent supply chain management, and may eventually replace traditional barcodes.</p>
+    
+    <div class="highlight-section">
+      <p class="story-text">With a simple gesture, the customer can enjoy a fast, elegant, and captivating experience: just bring the phone close to the bottle and instantly dive into its world, discovering a new emotion with every interaction.</p>
+    </div>
+  </section>
 
-  <h3>Just the Beginning of a Bigger Journey</h3>
-  <p>SipTag is only the first step of a much bigger vision. The goal is to evolve toward a full integration with RFID and SentinelTag technologies, developing smarter, more connected solutions that transform every interaction into a moment of discovery and inspiration.</p>
-  <p>Imagine a future where every bottle, every product, and every experience can tell its own story, breaking down cultural barriers and enriching the buying experience for everyone.</p>
+  <section class="content-section fade-in">
+    <h2 class="story-heading">Just the Beginning of a Bigger Journey</h2>
+    <p class="story-text">SipTag is only the first step of a much bigger vision. The goal is to evolve toward a full integration with RFID and SentinelTag technologies, developing smarter, more connected solutions that transform every interaction into a moment of discovery and inspiration.</p>
+    
+    <p class="story-text">Imagine a future where every bottle, every product, and every experience can tell its own story, breaking down cultural barriers and enriching the buying experience for everyone.</p>
+  </section>
 
-  <h3>SipTag: Where Wine Finds Its Voice</h3>
-  <p>SipTag is not just a smart label. It's the spark of a larger vision: building a bridge between wine and people, turning every bottle into an opportunity for discovery, every tasting into a journey, and every sale into a story worth telling.</p>
-</div>
+  <section class="content-section final-section fade-in">
+    <div class="final-content">
+      <h2 class="story-heading">SipTag: Where Wine Finds Its Voice</h2>
+      <p class="story-text">SipTag is not just a smart label. It's the spark of a larger vision: building a bridge between wine and people, turning every bottle into an opportunity for discovery, every tasting into a journey, and every sale into a story worth telling.</p>
+    </div>
+  </section>
+</main>
 
 <script>
   // Smooth scrolling for anchor links
@@ -119,12 +443,42 @@
       
       const target = document.querySelector(this.getAttribute('href'));
       if (target) {
-        window.scrollTo({
-          top: target.offsetTop,
-          behavior: 'smooth'
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
         });
       }
     });
+  });
+
+  // Intersection Observer for fade-in animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  // Observe all fade-in elements
+  document.querySelectorAll('.fade-in').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Add parallax effect to hero
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const parallaxElements = document.querySelector('.hero::before');
+    const speed = scrolled * 0.5;
+    
+    if (scrolled < window.innerHeight) {
+      document.querySelector('.hero').style.transform = `translateY(${speed}px)`;
+    }
   });
 </script>
 
