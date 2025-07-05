@@ -184,22 +184,12 @@
             transition: min-height 0.3s ease;
         }
         
-        /* Auto-expand chart container when in edit mode */
-        .chart-container.editing {
-            min-height: 1200px;
-            padding-bottom: 100px;
-        }
-        
         .chart-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             position: relative;
             z-index: 3;
-        }
-        
-        .chart-row.editing {
-            margin-bottom: 120px;
         }
         
         .chart-title {
@@ -211,16 +201,9 @@
             z-index: 3;
         }
         
-        .radar-chart {
+        .radar-chart, .aroma-chart {
             width: 100%;
-            height: 400px; /* Increased height */
-            position: relative;
-            z-index: 3;
-        }
-        
-        .aroma-chart {
-            width: 100%;
-            height: 450px; /* Increased height */
+            height: auto;
             position: relative;
             z-index: 3;
         }
@@ -371,112 +354,104 @@
             display: block;
         }
         
-        /* Media queries for mobile version */
+        /* Media queries for mobile version - REVISED */
         @media (max-width: 768px) {
             .content {
                 padding: 10px;
             }
-            .wine-card {
-                grid-template-columns: 1fr;
-            }
-            .chart-row {
-                grid-template-columns: 1fr;
-                gap: 50px; /* Increased gap between charts */
-            }
-            .chart-row.editing {
-                margin-bottom: 200px; /* Much more space at bottom */
-            }
-            .chart-container.editing {
-                min-height: 1800px; /* Much more height for mobile */
-                padding-bottom: 200px; /* Much more bottom padding */
-            }
-            
-            /* Give each chart wrapper more space when editing */
-            .chart-wrapper {
-                margin-bottom: 80px; /* Increased space between chart wrappers */
-            }
-            
-            .chart-wrapper:first-child {
-                margin-bottom: 120px; /* Even more space after the first chart (radar) */
-            }
-            
-            /* Ensure charts don't overlap with editors */
-            .radar-chart {
-                height: 300px; /* Reduced chart height on mobile */
-                margin-bottom: 30px; /* More space below radar chart */
-            }
-            
-            .aroma-chart {
-                height: 320px; /* Reduced chart height on mobile */
-                margin-bottom: 30px; /* More space below aroma chart */
-                margin-top: 250px; /* Add space above aroma chart */
-            }
-            
-            .specs {
-                grid-template-columns: 1fr;
-            }
+
+            /* Universal single-column layout for mobile */
+            .wine-card,
+            .chart-row,
+            .specs,
             .flavor-profile {
                 grid-template-columns: 1fr;
             }
+
+            /* Use gap for consistent spacing between charts */
+            .chart-row {
+                gap: 30px; 
+            }
+
             .spec-item {
                 flex-direction: column;
+                gap: 4px;
             }
+
             .spec-item strong {
                 min-width: auto;
-                margin-bottom: 3px;
             }
+
+            /* Adjust control panel for mobile */
             .edit-controls {
                 position: static;
-                margin-bottom: 20px;
                 flex-direction: row;
                 justify-content: center;
-                flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+                flex-wrap: wrap;
+                margin-bottom: 20px;
             }
+
             .edit-mode-indicator {
                 position: static;
                 transform: none;
-                margin-bottom: 10px;
                 text-align: center;
+                margin-bottom: 10px;
             }
+
+            /* --- CHART AND LAYOUT FIXES --- */
+            /*
+            * CRITICAL FIX: Remove fixed heights and excessive paddings.
+            * This was the main cause of the "too long" card issue.
+            */
+            .chart-container.editing,
+            .chart-row.editing {
+                min-height: unset; /* Let height be determined by content */
+                padding-bottom: 0;
+                margin-bottom: 0;
+            }
+
+            /* Make charts responsive using aspect-ratio */
+            .radar-chart,
+            .aroma-chart {
+                width: 100%;
+                height: auto; /* Allow scaling */
+                aspect-ratio: 4 / 3; /* Maintain shape without fixed height */
+                margin: 0; /* Remove all fixed margins */
+            }
+
+            /* Clean up wrapper spacing */
+            .chart-wrapper {
+                margin: 0;
+                padding: 0;
+            }
+            
+            /* Add a clean separator between chart sections */
+            .chart-wrapper:first-child {
+                padding-bottom: 20px;
+                border-bottom: 1px solid #e6d1a8;
+            }
+
+            /* Clean up editor styling */
             .chart-editor {
-                margin-top: 50px; /* Much more space above editors */
+                margin-top: 15px; /* Consistent space above editors */
                 padding: 15px;
-                position: relative;
-                top: auto;
-                left: auto;
-                right: auto;
-                clear: both; /* Ensure editors clear any floated elements */
                 width: 100%;
                 box-sizing: border-box;
             }
+            
             .chart-editor.active {
-                max-height: none; /* Remove height restriction */
-                margin-bottom: 50px; /* Much more space below each editor */
+                margin-bottom: 20px; /* Space below active editors */
             }
+
+            /* Minor slider adjustments */
             .slider-item {
-                grid-template-columns: 70px 1fr 30px; /* Slightly narrower labels */
+                grid-template-columns: 80px 1fr 30px;
                 gap: 8px;
-                padding: 6px; /* Reduced padding */
-                margin-bottom: 5px; /* Space between slider items */
+                padding: 8px;
             }
+
             .slider-item label {
-                font-size: 11px; /* Smaller font for mobile */
-            }
-            .chart-clickable::after {
-                display: none; /* Hide on mobile */
-            }
-            
-            /* Ensure proper stacking order */
-            .chart-editor h4 {
-                font-size: 14px; /* Smaller heading on mobile */
-                margin-bottom: 10px;
-            }
-            
-            /* Add clear separation between chart sections */
-            .chart-wrapper:first-child {
-                margin-bottom: 120px; /* Even more space after the first chart (radar) */
-                padding-bottom: 80px; /* More padding below radar section */
-                border-bottom: 2px solid #e6d1a8; /* Thicker border */
+                font-size: 12px;
             }
         }
     </style>
@@ -553,46 +528,48 @@
             <div class="chart-container">
                 <h2 class="chart-title">Organoleptic Profile</h2>
                 <div class="chart-row">
-                    <div class="radar-chart chart-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%" id="radarChart" class="chart-clickable">
-                            <text x="200" y="30" font-family="Garamond" font-size="18" fill="#5e1914" text-anchor="middle" font-weight="bold">Body and Structure</text>
-                            
-                            <polygon points="200,70 270,110 270,190 200,230 130,190 130,110" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
-                            <polygon points="200,90 250,120 250,180 200,210 150,180 150,120" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
-                            <polygon points="200,110 230,130 230,170 200,190 170,170 170,130" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
-                            
-                            <line x1="200" y1="150" x2="200" y2="70" stroke="#888888" stroke-width="1"/>
-                            <line x1="200" y1="150" x2="270" y2="190" stroke="#888888" stroke-width="1"/>
-                            <line x1="200" y1="150" x2="270" y2="110" stroke="#888888" stroke-width="1"/>
-                            <line x1="200" y1="150" x2="200" y2="230" stroke="#888888" stroke-width="1"/>
-                            <line x1="200" y1="150" x2="130" y2="190" stroke="#888888" stroke-width="1"/>
-                            <line x1="200" y1="150" x2="130" y2="110" stroke="#888888" stroke-width="1"/>
-                            
-                            <text x="200" y="65" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="middle">Body</text>
-                            <text x="280" y="110" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="start">Tannins</text>
-                            <text x="280" y="190" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="start">Alcohol</text>
-                            <text x="200" y="240" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="middle">Persistence</text>
-                            <text x="120" y="190" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Acidity</text>
-                            <text x="120" y="110" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Complexity</text>
-                            
-                            <polygon id="dataPolygon" points="200,102 241.56799999999998,126 255.424,182 200,198 144.576,182 158.43200000000002,126" fill="rgba(94,25,20,0.5)" stroke="#5e1914" stroke-width="2"/>
-                            
-                            <circle id="point1" cx="200" cy="102" r="4" fill="#5e1914"/>
-                            <circle id="point2" cx="241.56799999999998" cy="126" r="4" fill="#5e1914"/>
-                            <circle id="point3" cx="255.424" cy="182" r="4" fill="#5e1914"/>
-                            <circle id="point4" cx="200" cy="198" r="4" fill="#5e1914"/>
-                            <circle id="point5" cx="144.576" cy="182" r="4" fill="#5e1914"/>
-                            <circle id="point6" cx="158.43200000000002" cy="126" r="4" fill="#5e1914"/>
-                            
-                            <foreignObject x="50%" y="260" width="500" height="50" transform="translate(-250, 0)">
-                              <div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; background-color: #ffffff; border: 1px solid #e6d1a8; border-radius: 5px; padding: 5px 15px; white-space: nowrap; transform: translateX(-50%); position: relative; left: 50%;">
-                                <div style="display: flex; align-items: center;">
-                                  <div style="width: 10px; height: 10px; background-color: rgba(94,25,20,0.5); border: 1px solid #5e1914; margin-right: 10px;"></div>
-                                  <span style="font-family: Garamond; font-size: 12px; color: #2c1e1d;" class="editable" data-field="chartLegend">Barbera d'Alba 2017</span>
-                                </div>
-                              </div>
-                            </foreignObject>
-                        </svg>
+                    <div class="chart-wrapper">
+                        <div class="radar-chart" class="chart-clickable">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%" id="radarChart">
+                                <text x="200" y="30" font-family="Garamond" font-size="18" fill="#5e1914" text-anchor="middle" font-weight="bold">Body and Structure</text>
+                                
+                                <polygon points="200,70 270,110 270,190 200,230 130,190 130,110" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                                <polygon points="200,90 250,120 250,180 200,210 150,180 150,120" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                                <polygon points="200,110 230,130 230,170 200,190 170,170 170,130" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                                
+                                <line x1="200" y1="150" x2="200" y2="70" stroke="#888888" stroke-width="1"/>
+                                <line x1="200" y1="150" x2="270" y2="190" stroke="#888888" stroke-width="1"/>
+                                <line x1="200" y1="150" x2="270" y2="110" stroke="#888888" stroke-width="1"/>
+                                <line x1="200" y1="150" x2="200" y2="230" stroke="#888888" stroke-width="1"/>
+                                <line x1="200" y1="150" x2="130" y2="190" stroke="#888888" stroke-width="1"/>
+                                <line x1="200" y1="150" x2="130" y2="110" stroke="#888888" stroke-width="1"/>
+                                
+                                <text x="200" y="65" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="middle">Body</text>
+                                <text x="280" y="110" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="start">Tannins</text>
+                                <text x="280" y="190" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="start">Alcohol</text>
+                                <text x="200" y="240" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="middle">Persistence</text>
+                                <text x="120" y="190" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Acidity</text>
+                                <text x="120" y="110" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Complexity</text>
+                                
+                                <polygon id="dataPolygon" points="200,102 241.56799999999998,126 255.424,182 200,198 144.576,182 158.43200000000002,126" fill="rgba(94,25,20,0.5)" stroke="#5e1914" stroke-width="2"/>
+                                
+                                <circle id="point1" cx="200" cy="102" r="4" fill="#5e1914"/>
+                                <circle id="point2" cx="241.56799999999998" cy="126" r="4" fill="#5e1914"/>
+                                <circle id="point3" cx="255.424" cy="182" r="4" fill="#5e1914"/>
+                                <circle id="point4" cx="200" cy="198" r="4" fill="#5e1914"/>
+                                <circle id="point5" cx="144.576" cy="182" r="4" fill="#5e1914"/>
+                                <circle id="point6" cx="158.43200000000002" cy="126" r="4" fill="#5e1914"/>
+                                
+                                <foreignObject x="50%" y="260" width="500" height="50" transform="translate(-250, 0)">
+                                  <div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; background-color: #ffffff; border: 1px solid #e6d1a8; border-radius: 5px; padding: 5px 15px; white-space: nowrap; transform: translateX(-50%); position: relative; left: 50%;">
+                                    <div style="display: flex; align-items: center;">
+                                      <div style="width: 10px; height: 10px; background-color: rgba(94,25,20,0.5); border: 1px solid #5e1914; margin-right: 10px;"></div>
+                                      <span style="font-family: Garamond; font-size: 12px; color: #2c1e1d;" class="editable" data-field="chartLegend">Barbera d'Alba 2017</span>
+                                    </div>
+                                  </div>
+                                </foreignObject>
+                            </svg>
+                        </div>
                         <div class="chart-editor" id="radarEditor">
                             <h4>Edit Structure Profile</h4>
                             <div class="slider-group">
@@ -629,42 +606,44 @@
                             </div>
                         </div>
                     </div>
-                    <div class="aroma-chart chart-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" width="100%" height="100%" id="aromaChart" class="chart-clickable">
-                            <text x="200" y="30" font-family="Garamond" font-size="18" fill="#5e1914" text-anchor="middle" font-weight="bold">Aromatic Profile</text>
-                            
-                            <rect x="120" y="70" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
-                            <rect x="120" y="105" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
-                            <rect x="120" y="140" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
-                            <rect x="120" y="175" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
-                            <rect x="120" y="210" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
-                            <rect x="120" y="245" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
-                            <rect x="120" y="280" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
-                            
-                            <text x="115" y="87" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Red Fruit</text>
-                            <text x="115" y="122" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Black Fruit</text>
-                            <text x="115" y="157" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Floral</text>
-                            <text x="115" y="192" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Vanilla</text>
-                            <text x="115" y="227" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Spice</text>
-                            <text x="115" y="262" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Earth</text>
-                            <text x="115" y="297" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Coffee</text>
-                            
-                            <rect id="redFruitBar" x="120" y="70" width="80" height="25" fill="rgba(94,25,20,0.7)"/>
-                            <rect id="blackFruitBar" x="120" y="105" width="80" height="25" fill="rgba(94,25,20,0.7)"/>
-                            <rect id="floralBar" x="120" y="140" width="40" height="25" fill="rgba(94,25,20,0.7)"/>
-                            <rect id="vanillaBar" x="120" y="175" width="60" height="25" fill="rgba(94,25,20,0.7)"/>
-                            <rect id="spiceBar" x="120" y="210" width="60" height="25" fill="rgba(94,25,20,0.7)"/>
-                            <rect id="earthBar" x="120" y="245" width="40" height="25" fill="rgba(94,25,20,0.7)"/>
-                            <rect id="coffeeBar" x="120" y="280" width="40" height="25" fill="rgba(94,25,20,0.7)"/>
-                            
-                            <text x="120" y="325" font-family="Garamond" font-size="12" fill="#2c1e1d">Low</text>
-                            <text x="220" y="325" font-family="Garamond" font-size="12" fill="#2c1e1d" text-anchor="middle">Medium</text>
-                            <text x="320" y="325" font-family="Garamond" font-size="12" fill="#2c1e1d" text-anchor="end">High</text>
-                            <line x1="120" y1="330" x2="320" y2="330" stroke="#888888" stroke-width="1"/>
-                            <line x1="120" y1="328" x2="120" y2="332" stroke="#888888" stroke-width="1"/>
-                            <line x1="220" y1="328" x2="220" y2="332" stroke="#888888" stroke-width="1"/>
-                            <line x1="320" y1="328" x2="320" y2="332" stroke="#888888" stroke-width="1"/>
-                        </svg>
+                    <div class="chart-wrapper">
+                        <div class="aroma-chart" class="chart-clickable">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" width="100%" height="100%" id="aromaChart">
+                                <text x="200" y="30" font-family="Garamond" font-size="18" fill="#5e1914" text-anchor="middle" font-weight="bold">Aromatic Profile</text>
+                                
+                                <rect x="120" y="70" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                                <rect x="120" y="105" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                                <rect x="120" y="140" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                                <rect x="120" y="175" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                                <rect x="120" y="210" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                                <rect x="120" y="245" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                                <rect x="120" y="280" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
+                                
+                                <text x="115" y="87" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Red Fruit</text>
+                                <text x="115" y="122" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Black Fruit</text>
+                                <text x="115" y="157" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Floral</text>
+                                <text x="115" y="192" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Vanilla</text>
+                                <text x="115" y="227" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Spice</text>
+                                <text x="115" y="262" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Earth</text>
+                                <text x="115" y="297" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Coffee</text>
+                                
+                                <rect id="redFruitBar" x="120" y="70" width="80" height="25" fill="rgba(94,25,20,0.7)"/>
+                                <rect id="blackFruitBar" x="120" y="105" width="80" height="25" fill="rgba(94,25,20,0.7)"/>
+                                <rect id="floralBar" x="120" y="140" width="40" height="25" fill="rgba(94,25,20,0.7)"/>
+                                <rect id="vanillaBar" x="120" y="175" width="60" height="25" fill="rgba(94,25,20,0.7)"/>
+                                <rect id="spiceBar" x="120" y="210" width="60" height="25" fill="rgba(94,25,20,0.7)"/>
+                                <rect id="earthBar" x="120" y="245" width="40" height="25" fill="rgba(94,25,20,0.7)"/>
+                                <rect id="coffeeBar" x="120" y="280" width="40" height="25" fill="rgba(94,25,20,0.7)"/>
+                                
+                                <text x="120" y="325" font-family="Garamond" font-size="12" fill="#2c1e1d">Low</text>
+                                <text x="220" y="325" font-family="Garamond" font-size="12" fill="#2c1e1d" text-anchor="middle">Medium</text>
+                                <text x="320" y="325" font-family="Garamond" font-size="12" fill="#2c1e1d" text-anchor="end">High</text>
+                                <line x1="120" y1="330" x2="320" y2="330" stroke="#888888" stroke-width="1"/>
+                                <line x1="120" y1="328" x2="120" y2="332" stroke="#888888" stroke-width="1"/>
+                                <line x1="220" y1="328" x2="220" y2="332" stroke="#888888" stroke-width="1"/>
+                                <line x1="320" y1="328" x2="320" y2="332" stroke="#888888" stroke-width="1"/>
+                            </svg>
+                        </div>
                         <div class="chart-editor" id="aromaEditor">
                             <h4>Edit Aromatic Profile</h4>
                             <div class="slider-group">
@@ -771,7 +750,6 @@
             const chartEditors = document.querySelectorAll('.chart-editor');
             const chartContainers = document.querySelectorAll('.chart-container');
             const chartRows = document.querySelectorAll('.chart-row');
-            const chartClickables = document.querySelectorAll('.chart-clickable');
             const body = document.body; // Get the body element
 
             if (editMode) {
@@ -787,9 +765,6 @@
                 });
                 chartRows.forEach(row => {
                     row.classList.add('editing');
-                });
-                chartClickables.forEach(chart => {
-                    chart.classList.add('editing');
                 });
 
                 // AUTOMATICALLY SHOW ALL CHART EDITORS
@@ -815,9 +790,6 @@
                 chartRows.forEach(row => {
                     row.classList.remove('editing');
                 });
-                chartClickables.forEach(chart => {
-                    chart.classList.remove('editing');
-                });
 
                 // AUTOMATICALLY HIDE ALL CHART EDITORS
                 chartEditors.forEach(editor => {
@@ -837,61 +809,33 @@
             // Temporarily hide edit controls and indicators for the screenshot
             const editControls = document.querySelector('.edit-controls');
             const editIndicator = document.getElementById('editIndicator');
+            const wasInEditMode = editMode;
+
+            // Always exit edit mode for a clean screenshot
+            if(wasInEditMode) {
+                toggleEditMode();
+            }
+
             editControls.style.display = 'none';
-            editIndicator.style.display = 'none';
-
-            // Remove editing styles for the screenshot
-            const editables = document.querySelectorAll('.editable');
-            editables.forEach(el => {
-                el.classList.remove('editing');
-                el.removeAttribute('contenteditable');
-            });
-            document.body.classList.remove('edit-mode'); // Ensure header color is default
-
-            // Hide chart editors
-            const chartEditors = document.querySelectorAll('.chart-editor');
-            chartEditors.forEach(editor => editor.classList.remove('active'));
-
+            
             html2canvas(cardElement, {
                 scale: 2, // Increase scale for better quality
-                useCORS: true, // Enable CORS if images are from external sources
-                logging: true, // Enable logging for debugging
-                allowTaint: true // Allow tainting the canvas from cross-origin images
+                useCORS: true, 
+                logging: true,
+                allowTaint: true 
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'wine-card.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
 
-                // Restore original styles and visibility
+                // Restore controls
                 editControls.style.display = 'flex';
-                if (editMode) {
-                    editIndicator.style.display = 'block';
-                    editables.forEach(el => {
-                        el.setAttribute('contenteditable', 'true');
-                        el.classList.add('editing');
-                    });
-                    document.body.classList.add('edit-mode'); // Restore header color if still in edit mode
-                    // Restore chart editors if in edit mode
-                    chartEditors.forEach(editor => editor.classList.add('active'));
-                } else {
-                    editIndicator.style.display = 'none';
-                }
+
             }).catch(error => {
                 console.error("Error generating image:", error);
                 // Ensure controls are visible even if there's an error
                 editControls.style.display = 'flex';
-                if (editMode) {
-                    editIndicator.style.display = 'block';
-                    editables.forEach(el => {
-                        el.setAttribute('contenteditable', 'true');
-                        el.classList.add('editing');
-                    });
-                    document.body.classList.add('edit-mode');
-                    chartEditors.forEach(editor => editor.classList.add('active'));
-                } else {
-                    editIndicator.style.display = 'none';
-                }
             });
         }
 
@@ -972,32 +916,31 @@
             document.getElementById('complexityValue').textContent = wineData.radar.complexity;
 
             document.getElementById('redFruitSlider').value = wineData.aroma.redFruit;
-            document.getElementById('redFruitValue').textContent = wineData.aroma.redFruit / 20; // Convert to 0-10 scale
+            document.getElementById('redFruitValue').textContent = Math.round(wineData.aroma.redFruit / 20);
             document.getElementById('blackFruitSlider').value = wineData.aroma.blackFruit;
-            document.getElementById('blackFruitValue').textContent = wineData.aroma.blackFruit / 20;
+            document.getElementById('blackFruitValue').textContent = Math.round(wineData.aroma.blackFruit / 20);
             document.getElementById('floralSlider').value = wineData.aroma.floral;
-            document.getElementById('floralValue').textContent = wineData.aroma.floral / 20;
+            document.getElementById('floralValue').textContent = Math.round(wineData.aroma.floral / 20);
             document.getElementById('vanillaSlider').value = wineData.aroma.vanilla;
-            document.getElementById('vanillaValue').textContent = wineData.aroma.vanilla / 20;
+            document.getElementById('vanillaValue').textContent = Math.round(wineData.aroma.vanilla / 20);
             document.getElementById('spiceSlider').value = wineData.aroma.spice;
-            document.getElementById('spiceValue').textContent = wineData.aroma.spice / 20;
+            document.getElementById('spiceValue').textContent = Math.round(wineData.aroma.spice / 20);
             document.getElementById('earthSlider').value = wineData.aroma.earth;
-            document.getElementById('earthValue').textContent = wineData.aroma.earth / 20;
+            document.getElementById('earthValue').textContent = Math.round(wineData.aroma.earth / 20);
             document.getElementById('coffeeSlider').value = wineData.aroma.coffee;
-            document.getElementById('coffeeValue').textContent = wineData.aroma.coffee / 20;
+            document.getElementById('coffeeValue').textContent = Math.round(wineData.aroma.coffee / 20);
         }
 
-        // Make charts clickable to show/hide editors (optional now since they auto-show)
-        document.getElementById('radarChart').addEventListener('click', function() {
-            if (editMode) {
-                document.getElementById('radarEditor').classList.toggle('active');
-            }
-        });
-
-        document.getElementById('aromaChart').addEventListener('click', function() {
-            if (editMode) {
-                document.getElementById('aromaEditor').classList.toggle('active');
-            }
+        // Make charts clickable to show/hide editors
+        document.querySelectorAll('.chart-clickable').forEach(chart => {
+            chart.addEventListener('click', function() {
+                if (editMode) {
+                    const editor = this.nextElementSibling;
+                    if (editor && editor.classList.contains('chart-editor')) {
+                        editor.classList.toggle('active');
+                    }
+                }
+            });
         });
 
         // Radar chart update logic
@@ -1014,7 +957,6 @@
 
         function updateRadarChart() {
             const values = radarSliders.map(metric => wineData.radar[metric]);
-            const svg = document.getElementById('radarChart');
             const centerX = 200;
             const centerY = 150;
             const radius = 80;
@@ -1040,7 +982,7 @@
             const valueSpan = document.getElementById(`${aroma}Value`);
             slider.addEventListener('input', () => {
                 wineData.aroma[aroma] = parseInt(slider.value);
-                valueSpan.textContent = (slider.value / 20).toFixed(0); // Convert to 0-10 scale for display
+                valueSpan.textContent = Math.round(slider.value / 20); // Convert to 0-10 scale for display
                 updateAromaChart();
             });
         });
@@ -1054,8 +996,10 @@
         }
 
         // Initial chart rendering
-        updateRadarChart();
-        updateAromaChart();
+        document.addEventListener('DOMContentLoaded', () => {
+            updateRadarChart();
+            updateAromaChart();
+        });
     </script>
 </body>
 </html>
