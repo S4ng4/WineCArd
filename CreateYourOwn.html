@@ -336,6 +336,25 @@
             font-size: 14px;
             min-width: 25px;
         }
+
+        /* New styles for editable aroma names */
+        .aroma-name-input {
+            border: 1px solid #e6d1a8;
+            border-radius: 3px;
+            padding: 2px 4px;
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            background: white;
+            width: 80px;
+            text-align: left;
+        }
+
+        .aroma-name-input:focus {
+            outline: none;
+            border-color: #5e1914;
+            background: #fff;
+        }
         
         .edit-mode-indicator {
             position: fixed;
@@ -451,6 +470,11 @@
             }
 
             .slider-item label {
+                font-size: 12px;
+            }
+
+            .aroma-name-input {
+                width: 70px;
                 font-size: 12px;
             }
         }
@@ -619,13 +643,13 @@
                                 <rect x="120" y="245" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
                                 <rect x="120" y="280" width="200" height="25" fill="#f9f7f3" stroke="#e6d1a8" stroke-width="1"/>
                                 
-                                <text x="115" y="87" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Red Fruit</text>
-                                <text x="115" y="122" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Black Fruit</text>
-                                <text x="115" y="157" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Floral</text>
-                                <text x="115" y="192" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Vanilla</text>
-                                <text x="115" y="227" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Spice</text>
-                                <text x="115" y="262" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Earth</text>
-                                <text x="115" y="297" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Coffee</text>
+                                <text id="aromaLabel1" x="115" y="87" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Red Fruit</text>
+                                <text id="aromaLabel2" x="115" y="122" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Black Fruit</text>
+                                <text id="aromaLabel3" x="115" y="157" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Floral</text>
+                                <text id="aromaLabel4" x="115" y="192" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Vanilla</text>
+                                <text id="aromaLabel5" x="115" y="227" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Spice</text>
+                                <text id="aromaLabel6" x="115" y="262" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Earth</text>
+                                <text id="aromaLabel7" x="115" y="297" font-family="Garamond" font-size="14" fill="#2c1e1d" text-anchor="end">Coffee</text>
                                 
                                 <rect id="redFruitBar" x="120" y="70" width="80" height="25" fill="rgba(94,25,20,0.7)"/>
                                 <rect id="blackFruitBar" x="120" y="105" width="80" height="25" fill="rgba(94,25,20,0.7)"/>
@@ -648,37 +672,37 @@
                             <h4>Edit Aromatic Profile</h4>
                             <div class="slider-group">
                                 <div class="slider-item">
-                                    <label>Red Fruit:</label>
+                                    <input type="text" class="aroma-name-input" id="redFruitName" value="Red Fruit">
                                     <input type="range" min="0" max="200" value="80" id="redFruitSlider">
                                     <span id="redFruitValue">4</span>
                                 </div>
                                 <div class="slider-item">
-                                    <label>Black Fruit:</label>
+                                    <input type="text" class="aroma-name-input" id="blackFruitName" value="Black Fruit">
                                     <input type="range" min="0" max="200" value="80" id="blackFruitSlider">
                                     <span id="blackFruitValue">4</span>
                                 </div>
                                 <div class="slider-item">
-                                    <label>Floral:</label>
+                                    <input type="text" class="aroma-name-input" id="floralName" value="Floral">
                                     <input type="range" min="0" max="200" value="40" id="floralSlider">
                                     <span id="floralValue">2</span>
                                 </div>
                                 <div class="slider-item">
-                                    <label>Vanilla:</label>
+                                    <input type="text" class="aroma-name-input" id="vanillaName" value="Vanilla">
                                     <input type="range" min="0" max="200" value="60" id="vanillaSlider">
                                     <span id="vanillaValue">3</span>
                                 </div>
                                 <div class="slider-item">
-                                    <label>Spice:</label>
+                                    <input type="text" class="aroma-name-input" id="spiceName" value="Spice">
                                     <input type="range" min="0" max="200" value="60" id="spiceSlider">
                                     <span id="spiceValue">3</span>
                                 </div>
                                 <div class="slider-item">
-                                    <label>Earth:</label>
+                                    <input type="text" class="aroma-name-input" id="earthName" value="Earth">
                                     <input type="range" min="0" max="200" value="40" id="earthSlider">
                                     <span id="earthValue">2</span>
                                 </div>
                                 <div class="slider-item">
-                                    <label>Coffee:</label>
+                                    <input type="text" class="aroma-name-input" id="coffeeName" value="Coffee">
                                     <input type="range" min="0" max="200" value="40" id="coffeeSlider">
                                     <span id="coffeeValue">2</span>
                                 </div>
@@ -737,6 +761,16 @@
                 spice: 60,
                 earth: 40,
                 coffee: 40
+            },
+            // Default aroma names
+            aromaNames: {
+                redFruit: "Red Fruit",
+                blackFruit: "Black Fruit",
+                floral: "Floral",
+                vanilla: "Vanilla",
+                spice: "Spice",
+                earth: "Earth",
+                coffee: "Coffee"
             }
         };
 
@@ -899,6 +933,16 @@
                 earth: 40,
                 coffee: 40
             };
+            wineData.aromaNames = {
+                redFruit: "Red Fruit",
+                blackFruit: "Black Fruit",
+                floral: "Floral",
+                vanilla: "Vanilla",
+                spice: "Spice",
+                earth: "Earth",
+                coffee: "Coffee"
+            };
+
             updateRadarChart();
             updateAromaChart();
 
@@ -929,6 +973,15 @@
             document.getElementById('earthValue').textContent = Math.round(wineData.aroma.earth / 20);
             document.getElementById('coffeeSlider').value = wineData.aroma.coffee;
             document.getElementById('coffeeValue').textContent = Math.round(wineData.aroma.coffee / 20);
+
+            // Reset aroma name inputs
+            document.getElementById('redFruitName').value = wineData.aromaNames.redFruit;
+            document.getElementById('blackFruitName').value = wineData.aromaNames.blackFruit;
+            document.getElementById('floralName').value = wineData.aromaNames.floral;
+            document.getElementById('vanillaName').value = wineData.aromaNames.vanilla;
+            document.getElementById('spiceName').value = wineData.aromaNames.spice;
+            document.getElementById('earthName').value = wineData.aromaNames.earth;
+            document.getElementById('coffeeName').value = wineData.aromaNames.coffee;
         }
 
         // Make charts clickable to show/hide editors
@@ -980,18 +1033,32 @@
         aromaSliders.forEach(aroma => {
             const slider = document.getElementById(`${aroma}Slider`);
             const valueSpan = document.getElementById(`${aroma}Value`);
+            const nameInput = document.getElementById(`${aroma}Name`);
+            
             slider.addEventListener('input', () => {
                 wineData.aroma[aroma] = parseInt(slider.value);
                 valueSpan.textContent = Math.round(slider.value / 20); // Convert to 0-10 scale for display
                 updateAromaChart();
             });
+
+            // Add event listener for aroma name changes
+            nameInput.addEventListener('input', () => {
+                wineData.aromaNames[aroma] = nameInput.value;
+                updateAromaChart();
+            });
         });
 
         function updateAromaChart() {
-            aromaSliders.forEach(aroma => {
+            aromaSliders.forEach((aroma, index) => {
                 const bar = document.getElementById(`${aroma}Bar`);
+                const label = document.getElementById(`aromaLabel${index + 1}`);
                 const width = wineData.aroma[aroma]; // Value is directly the width
+                
+                // Update bar width
                 bar.setAttribute('width', width);
+                
+                // Update label text
+                label.textContent = wineData.aromaNames[aroma];
             });
         }
 
@@ -1001,5 +1068,3 @@
             updateAromaChart();
         });
     </script>
-</body>
-</html>
