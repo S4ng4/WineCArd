@@ -73,7 +73,7 @@
       background: linear-gradient(135deg, var(--bg-white) 0%, rgba(var(--bg-light), 0.8) 100%);
     }
     
-    .floating-logo {
+    .site-header-logo { /* Renamed from .floating-logo for clarity */
         position: absolute; /* Absolute for precise positioning */
         top: 40px;
         left: 40px;
@@ -84,15 +84,7 @@
         transition: opacity 0.3s ease-out;
     }
     
-    .logo-container {
-      margin-bottom: 2.5rem;
-    }
-    
-    .logo-container img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
+    /* .logo-container CSS rule removed as it's not used in HTML */
     
     .logo-text {
       font-family: 'Playfair Display', serif; /* New serif font for logo/titles */
@@ -160,7 +152,7 @@
       align-items: flex-start;
       text-align: left;
     }
-
+    
     .discover-sipcard-section {
         background-color: var(--bg-white);
     }
@@ -276,14 +268,13 @@
       text-align: left;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       height: auto;
-      display: flex !important; /* Use !important for Slick to override its inline styles */
+      /* Removed !important on display and background-image, relying on Slick's default or specificity if needed */
+      display: flex; /* Kept display flex here */
       flex-direction: row;
       align-items: center;
       position: relative;
       overflow: hidden;
       border-left: 4px solid transparent; /* Side border for accent */
-      background-image: none !important; /* Remove background images */
-      background-blend-mode: normal;
     }
     
     .benefit-card:hover {
@@ -572,9 +563,7 @@
       font-weight: 500;
     }
     
-    .bottle-bg {
-      display: none; /* Bottle effect removed for a more abstract design */
-    }
+    /* Removed unused .bottle-bg CSS rule */
     
     .scroll-to-top {
       position: fixed;
@@ -641,7 +630,7 @@
         text-align: center;
       }
       
-      .floating-logo {
+      .site-header-logo { /* Renamed from .floating-logo */
         position: static; /* No longer fixed, adapts to flow */
         margin: 0 auto 2rem auto; /* Center logo */
         width: 90px;
@@ -752,176 +741,169 @@
 <body>
   <div class="abstract-background"></div>
   
-  <header class="floating-logo">
-    <img src="SipTagWhite.png" alt="SipTag Logo">
+  <header class="site-header-logo"> <img src="SipTagWhite.png" alt="SipTag Logo">
   </header>
   
-  <section class="hero">
-    <div class="container">
-      <h1>SipCard</h1>
-      <h2>Your Digital Wine Card: Effortless Sophistication for Every Bottle.</h2>
-      <p class="tagline">
-        <span class="highlight">SipCard</span> isn't just about selling; it's about unveiling the soul of your wines. With a mere touch, each bottle springs to life, revealing its tale, tasting notes, and perfect pairings. It's a grand tour of discovery, enriching the client's experience with an elegance only a few would dare to imagine.
-      </p>
-      <a href="#how-it-works-pilot" class="button">Discover Your Free Pilot</a>
-    </div>
-  </section>
+  <main> <section class="hero">
+      <div class="container">
+        <h1>SipCard</h1>
+        <h2>Your Digital Wine Card: Effortless Sophistication for Every Bottle.</h2>
+        <p class="tagline">
+          <span class="highlight">SipCard</span> isn't just about selling; it's about unveiling the soul of your wines. With a mere touch, each bottle springs to life, revealing its tale, tasting notes, and perfect pairings. It's a grand tour of discovery, enriching the client's experience with an elegance only a few would dare to imagine.
+        </p>
+        <a href="#how-it-works-pilot" class="button">Discover Your Free Pilot</a>
+      </div>
+    </section>
 
-  ---
-  <section class="discover-sipcard-section section">
-    <div class="container">
-      <h2>What's the Gist with SipCard?</h2>
-      <div class="sipcard-showcase">
-        <img src="SipCardMockup.png" alt="SipCard Digital Wine Card Mockup" class="sipcard-mockup-img">
-        <div class="sipcard-description">
-            <h3>Every Bottle, a Story to Unfold.</h3>
-            <p>Picture this: offering your discerning clientele immediate access to the very essence of your wine. From meticulous <span class="highlight">tasting notes</span> to <span class="highlight">impeccable pairings</span>, from the captivating <span class="highlight">history</span> of your esteemed winery to <span class="highlight">photo galleries</span> and <span class="highlight">videos</span> of the winemaking journey. All this, neatly encapsulated within an exquisitely designed, user-friendly Digital Wine Card. It's truly a thing of beauty.</p>
-            <p>The SipCard is the most <span class="highlight">intuitive and professional</span> way to share the spirit of each bottle, directly on your client's smartphone. No extraneous applications, no perplexing QR codes. It's as straightforward as a well-aged Barolo.</p>
-            <ul class="sipcard-features-list">
-                <li>Profound tasting notes</li>
-                <li>Pairing insights, tailored for the connoisseur</li>
-                <li>Intuitive charts</li>
-                <li>Clean design</li>
-            </ul>
+    <section class="discover-sipcard-section section">
+      <div class="container">
+        <h2>What's the Gist with SipCard?</h2>
+        <div class="sipcard-showcase">
+          <img src="SipCardMockup.png" alt="SipCard Digital Wine Card Mockup" class="sipcard-mockup-img">
+          <div class="sipcard-description">
+              <h3>Every Bottle, a Story to Unfold.</h3>
+              <p>Picture this: offering your discerning clientele immediate access to the very essence of your wine. From meticulous <span class="highlight">tasting notes</span> to <span class="highlight">impeccable pairings</span>, from the captivating <span class="highlight">history</span> of your esteemed winery to <span class="highlight">photo galleries</span> and <span class="highlight">videos</span> of the winemaking journey. All this, neatly encapsulated within an exquisitely designed, user-friendly Digital Wine Card. It's truly a thing of beauty.</p>
+              <p>The SipCard is the most <span class="highlight">intuitive and professional</span> way to share the spirit of each bottle, directly on your client's smartphone. No extraneous applications, no perplexing QR codes. It's as straightforward as a well-aged Barolo.</p>
+              <ul class="sipcard-features-list">
+                  <li>Profound tasting notes</li>
+                  <li>Pairing insights, tailored for the connoisseur</li>
+                  <li>Intuitive charts</li>
+                  <li>Clean design</li>
+              </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  ---
-  <section class="benefits-section section">
-    <div class="container benefits-header">
-      <h2>Why SipCard is About to Shake Up Your Domain</h2>
-    </div>
+    <section class="benefits-section section">
+      <div class="container benefits-header">
+        <h2>Why SipCard is About to Shake Up Your Domain</h2>
+      </div>
+      
+      <div class="benefits-carousel">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <img src="RedLogo.png" alt="Client Engagement Icon">
+          </div>
+          <div class="benefit-card-content">
+            <h3>Engagement, the likes of which you haven't seen!</h3>
+            <p>Transform every sip into an interactive spectacle. SipCard beckons your clients to delve deep, to learn, and to forge a profound connection with your wine. It's not just a drink; it's an enduring liaison.</p>
+          </div>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <img src="WhiteLogo.png" alt="Distinction Icon">
+          </div>
+          <div class="benefit-card-content">
+            <h3>Stand Tall Above the Fray</h3>
+            <p>Grant each bottle a singular digital identity. Your wine transcends mere product; it becomes a compelling narrative, commanding attention and etching an indelible mark. It's about being noticed, in all the right places.</p>
+          </div>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <img src="RoseLogo.png" alt="Sales Increase Icon">
+          </div>
+          <div class="benefit-card-content">
+            <h3>Elevate Your Esteem, and Your Bottom Line</h3>
+            <p>A presentation this sharp, this professional, naturally inspires confidence. SipCard furnishes details that subtly guide purchasing decisions, particularly for those labels of yours that truly command respect.</p>
+          </div>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <img src="SparklingLogo.png" alt="Local Valorization Icon">
+          </div>
+          <div class="benefit-card-content">
+            <h3>A Touch of Class for Your Establishment</h3>
+            <p>To offer SipCard is to signal innovation, to show a meticulous care for the client's experience. It's that distinctive flair that elevates your business, imbuing it with value and an unforgettable charm.</p>
+          </div>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <img src="All Simbles.jpg" alt="Smart Staff Training Icon">
+          </div>
+          <div class="benefit-card-content">
+            <h3>Smart Staff, Smoother Sailing</h3>
+            <p>Each SipCard acts as an agile training instrument. Your team gains instant access to every critical detail of the wine, sharpening their advice and enhancing service. No more fumbling for facts; just pure, informed elegance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
     
-    <div class="benefits-carousel">
-      <div class="benefit-card">
-        <div class="benefit-icon">
-          <img src="RedLogo.png" alt="Client Engagement Icon">
-        </div>
-        <div class="benefit-card-content">
-          <h3>Engagement, the likes of which you haven't seen!</h3>
-          <p>Transform every sip into an interactive spectacle. SipCard beckons your clients to delve deep, to learn, and to forge a profound connection with your wine. It's not just a drink; it's an enduring liaison.</p>
-        </div>
+    <section class="description-section section">
+      <div class="container">
+        <h2>Low Tech, High Impact. The Future is Now.</h2>
+        <p>
+          <span class="highlight">SipTag</span> is the shrewd tool conceived for wineries, restaurants, enotecas, and producers. It's <span class="highlight">elegant, intuitive, and, dare I say, revolutionary.</span>
+        </p>
+        <p>
+          The SipCard is not merely a Wine Card — it is the new benchmark for wine communication.
+          With but a single touch, your clients gain access to a rich tapestry of immersive content: tasting notes, aging specifics, pairings, and the very soul of your wine — all within moments.
+        </p>
+        <p>
+          It's elegant. It's instantaneous. It's simply unforgettable.
+          <span class="highlight">No apps. No fiddly QR codes. Zero friction.</span>
+        </p>
+        <p>
+          Forget complex systems — SipTag plays nice with what you already possess. A smartphone and a simple tap are all that's required to deliver clarity, style, and consistent information across your entire wine selection.
+          Don't be left behind. Step into the future with SipTag. It's time to make your mark.
+        </p>
       </div>
-      
-      <div class="benefit-card">
-        <div class="benefit-icon">
-          <img src="WhiteLogo.png" alt="Distinction Icon">
-        </div>
-        <div class="benefit-card-content">
-          <h3>Stand Tall Above the Fray</h3>
-          <p>Grant each bottle a singular digital identity. Your wine transcends mere product; it becomes a compelling narrative, commanding attention and etching an indelible mark. It's about being noticed, in all the right places.</p>
-        </div>
-      </div>
-      
-      <div class="benefit-card">
-        <div class="benefit-icon">
-          <img src="RoseLogo.png" alt="Sales Increase Icon">
-        </div>
-        <div class="benefit-card-content">
-          <h3>Elevate Your Esteem, and Your Bottom Line</h3>
-          <p>A presentation this sharp, this professional, naturally inspires confidence. SipCard furnishes details that subtly guide purchasing decisions, particularly for those labels of yours that truly command respect.</p>
-        </div>
-      </div>
-      
-      <div class="benefit-card">
-        <div class="benefit-icon">
-          <img src="SparklingLogo.png" alt="Local Valorization Icon">
-        </div>
-        <div class="benefit-card-content">
-          <h3>A Touch of Class for Your Establishment</h3>
-          <p>To offer SipCard is to signal innovation, to show a meticulous care for the client's experience. It's that distinctive flair that elevates your business, imbuing it with value and an unforgettable charm.</p>
-        </div>
-      </div>
+    </section>
 
-      <div class="benefit-card">
-        <div class="benefit-icon">
-          <img src="All Simbles.jpg" alt="Smart Staff Training Icon">
+    <section class="how-it-works-pilot-section section" id="how-it-works-pilot">
+      <div class="container">
+        <h2>Embark on Your Complimentary SipCard Pilot!</h2>
+        <p>We insist you discern the worth of SipCard firsthand. Thus, we extend the creation of your <strong>initial digital SipCards, entirely gratis</strong>. It's the most straightforward path to witness your wines truly come alive!</p>
+        <div class="pilot-steps-container">
+          <div class="pilot-step-card">
+            <div class="pilot-step-icon">
+              <img src="icon-step1.png" alt="Step 1 Icon"> </div>
+            <span class="step-number">01</span>
+            <h3>Tell Us About Your Wine</h3>
+            <p>Share details about your first wine, and we'll craft a bespoke digital profile.</p>
+          </div>
+          <div class="pilot-step-card">
+            <div class="pilot-step-icon">
+              <img src="icon-step2.png" alt="Step 2 Icon"> </div>
+            <span class="step-number">02</span>
+            <h3>Receive Your First SipCard</h3>
+            <p>We'll create and send you your first digital SipCard, ready for immediate use.</p>
+          </div>
+          <div class="pilot-step-card">
+            <div class="pilot-step-icon">
+              <img src="icon-step3.png" alt="Step 3 Icon"> </div>
+            <span class="step-number">03</span>
+            <h3>Experience the Magic!</h3>
+            <p>See how effortlessly your clients engage with your wine's story, just with a tap!</p>
+          </div>
         </div>
-        <div class="benefit-card-content">
-          <h3>Smart Staff, Smoother Sailing</h3>
-          <p>Each SipCard acts as an agile training instrument. Your team gains instant access to every critical detail of the wine, sharpening their advice and enhancing service. No more fumbling for facts; just pure, informed elegance.</p>
+        <br>
+        <p><span class="highlight">We are looking for feedback. Please do not hesitate to share your thoughts; send an email to <a href="mailto:asangalli01@gmail.com">asangalli01@gmail.com</a>. Your feedback is important!</span></p>
+        <div class="buttons-container">
+          <a href="mailto:asangalli01@gmail.com" class="button">Get Your Free SipCard Now!</a>
+          </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to Elevate Your Wine Experience?</h2>
+        <p>Join us in embracing the future of wine communication. SipCard offers an unparalleled way to connect with your customers, share your passion, and distinguish your brand.</p>
+        <div class="buttons-container">
+          <a href="mailto:asangalli01@gmail.com" class="button">Contact Us for a Full Demo</a>
+          <a href="#how-it-works-pilot" class="button secondary">Learn More About the Pilot</a>
         </div>
       </div>
-    </div>
-  </section>
-  
-  ---
-  <section class="description-section section">
-    <div class="container">
-      <h2>Low Tech, High Impact. The Future is Now.</h2>
-      <p>
-        <span class="highlight">SipTag</span> is the shrewd tool conceived for wineries, restaurants, enotecas, and producers. It's <span class="highlight">elegant, intuitive, and, dare I say, revolutionary.</span>
-      </p>
-      <p>
-        The SipCard is not merely a Wine Card — it is the new benchmark for wine communication.
-        With but a single touch, your clients gain access to a rich tapestry of immersive content: tasting notes, aging specifics, pairings, and the very soul of your wine — all within moments.
-      </p>
-      <p>
-        It's elegant. It's instantaneous. It's simply unforgettable.
-        <span class="highlight">No apps. No fiddly QR codes. Zero friction.</span>
-      </p>
-      <p>
-        Forget complex systems — SipTag plays nice with what you already possess. A smartphone and a simple tap are all that's required to deliver clarity, style, and consistent information across your entire wine selection.
-        Don't be left behind. Step into the future with SipTag. It's time to make your mark.
-      </p>
-    </div>
-  </section>
-
-  ---
-  <section class="how-it-works-pilot-section section" id="how-it-works-pilot">
-    <div class="container">
-      <h2>Embark on Your Complimentary SipCard Pilot!</h2>
-      <p>We insist you discern the worth of SipCard firsthand. Thus, we extend the creation of your <strong>initial digital SipCards, entirely gratis</strong>. It's the most straightforward path to witness your wines truly come alive!</p>
-      <div class="pilot-steps-container">
-        <div class="pilot-step-card">
-          <div class="pilot-step-icon">
-            <img src="icon-step1.png" alt="Step 1 Icon"> </div>
-          <span class="step-number">01</span>
-          <h3>Tell Us About Your Wine</h3>
-          <p>Share details about your first wine, and we'll craft a bespoke digital profile.</p>
-        </div>
-        <div class="pilot-step-card">
-          <div class="pilot-step-icon">
-            <img src="icon-step2.png" alt="Step 2 Icon"> </div>
-          <span class="step-number">02</span>
-          <h3>Receive Your First SipCard</h3>
-          <p>We'll create and send you your first digital SipCard, ready for immediate use.</p>
-        </div>
-        <div class="pilot-step-card">
-          <div class="pilot-step-icon">
-            <img src="icon-step3.png" alt="Step 3 Icon"> </div>
-          <span class="step-number">03</span>
-          <h3>Experience the Magic!</h3>
-          <p>See how effortlessly your clients engage with your wine's story, just with a tap!</p>
-        </div>
-      </div>
-      <br>
-      <p><span class="highlight">We are looking for feedback. Please do not hesitate to share your thoughts; send an email to <a href="mailto:asangalli01@gmail.com">asangalli01@gmail.com</a>. Your feedback is important!</span></p>
-      <div class="buttons-container">
-        <a href="mailto:asangalli01@gmail.com" class="button">Get Your Free SipCard Now!</a>
-        </div>
-    </div>
-  </section>
-
-  ---
-  <section class="cta-section">
-    <div class="container">
-      <h2>Ready to Elevate Your Wine Experience?</h2>
-      <p>Join us in embracing the future of wine communication. SipCard offers an unparalleled way to connect with your customers, share your passion, and distinguish your brand.</p>
-      <div class="buttons-container">
-        <a href="mailto:asangalli01@gmail.com" class="button">Contact Us for a Full Demo</a>
-        <a href="#how-it-works-pilot" class="button secondary">Learn More About the Pilot</a>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
+    </section>
+  </main> <footer class="footer">
     <div class="container">
       <div class="footer-links">
         <a href="mailto:asangalli01@gmail.com" aria-label="SipTag Contact Information">Contact</a>
-       </div>
+        </div>
       <p>&copy; 2025 SipTag. All rights reserved.</p>
       <div class="footer-note">
         For pilot inquiries, contact: <a href="mailto:asangalli01@gmail.com" class="interactive-element"><strong>asangalli01@gmail.com</strong></a>
@@ -975,19 +957,19 @@
 
       // Function to handle Google Sheet download (uncomment and use if you have a template)
       // function downloadGoogleSheet() {
-      //   const sheetId = "1N-3N3jmVooKD7wTYbc7TEsltxva3XUDM_15ImLDBMIw";
-      //   const exportUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=xlsx`;
-      //   
-      //   const downloadLink = document.createElement('a');
-      //   downloadLink.href = exportUrl;
-      //   downloadLink.setAttribute('download', 'SipCard_Template.xlsx'); // Suggests a filename
-      //   downloadLink.setAttribute('target', '_blank'); // Opens in a new tab/window for download
-      //   
-      //   document.body.appendChild(downloadLink);
-      //   downloadLink.click();
-      //   document.body.removeChild(downloadLink);
-      //   
-      //   console.log("Download of template initiated.");
+      //    const sheetId = "1N-3N3jmVooKD7wTYbc7TEsltxva3XUDM_15ImLDBMIw";
+      //    const exportUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=xlsx`;
+      //    
+      //    const downloadLink = document.createElement('a');
+      //    downloadLink.href = exportUrl;
+      //    downloadLink.setAttribute('download', 'SipCard_Template.xlsx'); // Suggests a filename
+      //    downloadLink.setAttribute('target', '_blank'); // Opens in a new tab/window for download
+      //    
+      //    document.body.appendChild(downloadLink);
+      //    downloadLink.click();
+      //    document.body.removeChild(downloadLink);
+      //    
+      //    console.log("Download of template initiated.");
       // }
 
       // Uncomment this line if you add a button with id="downloadTemplateButton" and want to enable the download functionality
