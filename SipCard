@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SipCard: Your Digital Wine Card | Discover the Free Pilot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+  <style>
+    :root {
+      --primary-gold: #C2A14E;
+      --primary-gold-light: #F0E2C2; /* Lighter shade for nuances */
+      --primary-wine: #7A172C;
+      --primary-wine-light: #AD4B5D; /* Lighter shade for nuances */
+      --accent-red: #D86B7C; /* Original accent red */
+      --accent-red-fluo: #FF0057; /* Neon red, same hue as original accent-red */
+      --text-dark: #3F3F3F;
+      --bg-white: #F8F8F8; /* Softer white */
+      --bg-light: #EFEFEF; /* Light grey for contrast */
+      --bg-dark-accent: #1A1A1A; /* New dark color for deep sections */
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      background-color: var(--bg-white);
+      color: var(--text-dark);
+      font-family: 'Montserrat', sans-serif; /* Modern font */
+      overflow-x: hidden;
+      line-height: 1.6;
+      background-attachment: fixed;
+    }
+    
+    /* ABSTRACT BACKGROUND / SUBTLE GRADIENT */
+    .abstract-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top left, var(--primary-gold-light) 0%, transparent 20%),
+                  radial-gradient(circle at bottom right, var(--primary-wine-light) 0%, transparent 20%);
+      opacity: 0.05; /* Very subtle */
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(50px); /* Blurry effect */
+    }
+
+    .container {
+      max-width: 1100px; /* Slightly narrower for a more controlled look */
+      margin: 0 auto;
+      padding: 0 25px;
+    }
+    
+    .hero {
+      position: relative;
+      min-height: 90vh; /* Taller for visual impact */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 5rem 25px;
+      text-align: left;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--bg-white) 0%, rgba(var(--bg-light), 0.8) 100%);
+    }
+    
+    .floating-logo {
+        position: absolute; /* Absolute for precise positioning */
+        top: 40px;
+        left: 40px;
+        width: 70px; /* Even smaller */
+        height: auto;
+        z-index: 10;
+        opacity: 0.8;
+        transition: opacity 0.3s ease-out;
+    }
+    
+    .logo-container {
+      margin-bottom: 2.5rem;
+    }
+    
+    .logo-container img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .logo-text {
+      font-family: 'Playfair Display', serif; /* New serif font for logo/titles */
+      font-size: 3.8rem;
+      color: var(--primary-wine);
+      text-align: left;
+      letter-spacing: 0.2rem;
+      font-weight: 700; /* Bolder */
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .logo-text::after {
+      content: '';
+      position: absolute;
+      bottom: -8px; /* Moved lower */
+      left: 0;
+      width: 30%; /* Shorter, thinner line */
+      height: 1.5px;
+      background: var(--primary-gold);
+    }
+    
+    h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary-gold);
+      font-size: clamp(3rem, 5.5vw, 3.8rem);
+      margin-bottom: 1.2rem;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+    }
+    
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4.5vw, 2.8rem);
+      color: var(--primary-wine);
+      margin-bottom: 2.5rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    
+    .tagline {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem; /* Slightly larger */
+      margin-bottom: 3rem;
+      max-width: 650px;
+      font-weight: 400;
+      line-height: 1.8;
+      color: var(--text-dark);
+    }
+    
+    p {
+      max-width: 650px;
+      text-align: left;
+      line-height: 1.7;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-dark);
+    }
+    
+    .section {
+      padding: 6rem 25px; /* Increased vertical padding */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .discover-sipcard-section {
+        background-color: var(--bg-white);
+    }
+
+    .discover-sipcard-section .container {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr; /* Image column narrower, text wider */
+        gap: 3rem; /* Increased gap */
+        align-items: center;
+    }
+
+    .sipcard-showcase {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .sipcard-mockup-img {
+        max-width: 90%; /* Slightly smaller */
+        height: auto;
+        border-radius: 15px; /* More rounded */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* More pronounced shadow */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sipcard-mockup-img:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+
+    .sipcard-description h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        color: var(--primary-wine);
+        margin-bottom: 1.2rem;
+    }
+
+    .sipcard-features-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 1.5rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .sipcard-features-list li {
+        font-size: 1rem;
+        color: var(--text-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: transform 0.2s ease;
+    }
+
+    .sipcard-features-list li:hover {
+        transform: translateX(8px);
+    }
+
+    .sipcard-features-list li::before {
+        content: '✓'; /* Checkmark for a modern look */
+        color: var(--primary-gold);
+        font-size: 1.1rem;
+        font-weight: 700;
+    }
+    
+    .benefits-section {
+      background-color: var(--bg-light);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .benefits-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(122, 23, 44, 0.03) 0%, rgba(194, 161, 78, 0.03) 100%);
+      z-index: 0; /* Abstract background behind cards */
+    }
+    
+    .benefits-header {
+      margin-bottom: 4rem;
+    }
+    
+    .benefits-carousel {
+      width: 100%;
+      margin: 0;
+      position: relative; /* For positioning arrows above */
+      z-index: 1; /* Ensure carousel is above pseudo-element */
+    }
+
+    .slick-prev:before, .slick-next:before {
+        color: var(--primary-wine) !important; /* Arrow color */
+        font-size: 30px !important;
+    }
+    .slick-dots li button:before {
+        font-size: 12px !important;
+        color: var(--primary-wine) !important;
+    }
+    .slick-dots li.slick-active button:before {
+        color: var(--primary-gold) !important;
+    }
+    
+    .benefit-card {
+      background: var(--bg-white);
+      border-radius: 20px; /* More rounded border */
+      padding: 2.5rem; /* Larger padding */
+      margin: 1.5rem 1rem; /* Larger margin for separation */
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* More defined shadow */
+      text-align: left;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: auto;
+      display: flex !important; /* Use !important for Slick to override its inline styles */
+      flex-direction: row;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      border-left: 4px solid transparent; /* Side border for accent */
+      background-image: none !important; /* Remove background images */
+      background-blend-mode: normal;
+    }
+    
+    .benefit-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2), 0 0 15px rgba(var(--primary-gold), 0.2);
+      border-left-color: var(--primary-gold); /* Gold color on hover */
+    }
+    
+    .benefit-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(var(--bg-white), 0.95); /* More opaque background */
+      z-index: 0;
+      backdrop-filter: blur(0); /* Removed background blur */
+    }
+    
+    .benefit-card-content {
+      position: relative;
+      z-index: 1;
+      padding-left: 2.5rem; /* More space on the left */
+    }
+    
+    .benefit-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--primary-wine);
+      margin-bottom: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+    }
+    
+    .benefit-card p {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      margin-bottom: 0; /* Removed bottom margin */
+      font-weight: 300;
+    }
+    
+    .benefit-icon {
+      width: 90px; /* Larger icons */
+      height: 90px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+      border-radius: 50%; /* Full circle */
+      background-color: var(--bg-light); /* Background for icon */
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .benefit-card:hover .benefit-icon {
+      transform: scale(1.1);
+      background-color: var(--primary-gold-light); /* Lighter color on hover */
+    }
+    
+    .benefit-icon img {
+      max-width: 60%; /* Smaller image inside icon */
+      max-height: 60%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.05));
+    }
+    
+    .how-it-works-pilot-section {
+        background-color: var(--bg-white);
+    }
+
+    .pilot-steps-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly larger cards */
+        gap: 2.5rem; /* Larger gap */
+        margin-top: 4rem;
+    }
+
+    .pilot-step-card {
+        padding: 2.5rem;
+        border-radius: 15px;
+        background-color: var(--bg-light);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 4px solid transparent;
+        text-align: center;
+    }
+
+    .pilot-step-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        border-bottom-color: var(--primary-gold);
+    }
+
+    .pilot-step-card .step-number {
+        font-family: 'Playfair Display', serif;
+        font-size: 3rem; /* Larger size */
+        color: var(--primary-gold);
+        margin-bottom: 0.8rem;
+        line-height: 1;
+        font-weight: 700;
+        opacity: 0.7; /* Slightly transparent */
+    }
+
+    .pilot-step-card h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        color: var(--primary-wine);
+        margin-bottom: 1rem;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+
+    .pilot-step-card p {
+        font-size: 0.95rem;
+        color: var(--text-dark);
+        margin-bottom: 0;
+    }
+
+    .pilot-step-icon {
+        width: 70px; /* Larger icons */
+        height: 70px;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        background-color: var(--primary-wine-light); /* Colored background for icons */
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .pilot-step-icon img {
+        max-width: 60%;
+        height: auto;
+        filter: invert(1); /* Makes icons white if monochromatic */
+    }
+    
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary-wine) 0%, #B04E63 100%); /* Strong gradient */
+      color: white; /* White text */
+      text-align: center; /* Centered text */
+      padding: 6rem 25px;
+      position: relative;
+      overflow: hidden;
+      background-attachment: scroll; /* Not fixed for CTAs */
+    }
+    
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C2A14E' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); /* Abstract pattern */
+      opacity: 0.1;
+      z-index: 0;
+    }
+    
+    .cta-section h2 {
+      color: var(--primary-gold-light); /* Light gold title */
+      margin-bottom: 2.5rem;
+    }
+
+    .cta-section p {
+        color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
+        max-width: 700px;
+        margin: 0 auto 3rem auto;
+        text-align: center;
+        font-size: 1.1rem;
+    }
+    
+    .buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Centered */
+      gap: 2rem;
+    }
+    
+    .button {
+      background-color: var(--primary-gold);
+      color: var(--primary-wine); /* Wine colored text */
+      font-family: 'Montserrat', sans-serif;
+      padding: 1rem 2.5rem; /* Larger padding */
+      border: none;
+      border-radius: 100px; /* Fully rounded */
+      cursor: pointer;
+      font-size: 1.1rem; /* Larger text */
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+      z-index: -1;
+    }
+    
+    .button:hover {
+      background-color: var(--primary-gold-light);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(var(--primary-gold), 0.5);
+      color: var(--primary-wine);
+    }
+    
+    .button:hover::before {
+      left: 100%;
+    }
+
+    .button.secondary {
+        background-color: transparent;
+        color: var(--primary-gold);
+        border: 2px solid var(--primary-gold);
+        box-shadow: none;
+    }
+
+    .button.secondary:hover {
+        background-color: rgba(var(--primary-gold), 0.1);
+        color: var(--primary-gold-light);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    .footer {
+      background-color: var(--bg-dark-accent); /* Dark background for footer */
+      padding: 3rem 25px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7); /* Light text */
+    }
+    
+    .footer-note {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .footer-note strong {
+      color: var(--primary-gold);
+    }
+
+    .footer-links {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      margin: 0 18px;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary-gold);
+    }
+    
+    .description-section {
+      background-color: var(--bg-white);
+    }
+    
+    .description-section p {
+      margin: 0 0 1.8rem 0;
+      font-size: 1.1rem;
+      max-width: 750px;
+    }
+    
+    .highlight {
+      color: var(--primary-wine);
+      font-weight: 500;
+    }
+    
+    .bottle-bg {
+      display: none; /* Bottle effect removed for a more abstract design */
+    }
+    
+    .scroll-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: var(--primary-wine);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.8rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 1000;
+    }
+
+    .scroll-to-top:hover {
+      background-color: var(--primary-gold);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    .scroll-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (max-width: 900px) {
+        .discover-sipcard-section .container {
+            grid-template-columns: 1fr;
+        }
+        .sipcard-mockup-img {
+            max-width: 80%;
+            margin: 0 auto; /* Center image */
+        }
+        .sipcard-description {
+            text-align: center;
+        }
+        .sipcard-description h3 {
+            text-align: center;
+        }
+        .sipcard-features-list {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+        .sipcard-features-list li {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        height: auto;
+        min-height: 500px;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .floating-logo {
+        position: static; /* No longer fixed, adapts to flow */
+        margin: 0 auto 2rem auto; /* Center logo */
+        width: 90px;
+        opacity: 1;
+      }
+      
+      .logo-text {
+        font-size: 2.8rem;
+        text-align: center;
+      }
+
+      .logo-text::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      h1 {
+        font-size: clamp(2.5rem, 8vw, 3.2rem);
+      }
+
+      h2 {
+        font-size: clamp(1.8rem, 6vw, 2.4rem);
+        letter-spacing: 0.5px;
+      }
+
+      .tagline {
+        font-size: 1rem;
+        text-align: center;
+      }
+      
+      .section {
+        padding: 4rem 1.5rem;
+      }
+      
+      .benefit-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+        margin: 1rem auto; /* Center cards on mobile */
+      }
+      .benefit-card-content {
+          padding-left: 0;
+      }
+      .benefit-icon {
+          margin-bottom: 1.5rem;
+      }
+
+      .pilot-steps-container {
+        grid-template-columns: 1fr;
+      }
+
+      .buttons-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      
+      .button {
+        width: 100%;
+        max-width: 300px;
+        padding: 1rem 2rem;
+        font-size: 1.05rem;
+      }
+
+      p {
+        text-align: center;
+      }
+
+      .footer {
+          padding: 2rem 1.5rem;
+      }
+      .footer-links a {
+        display: block;
+        margin: 8px 0;
+      }
+    }
+    
+    a:not(.button), .interactive-element {
+      position: relative;
+      transition: all 0.3s ease;
+      color: var(--primary-wine);
+      text-decoration: none;
+    }
+    
+    a:not(.button):hover, .interactive-element:hover {
+      color: var(--primary-gold);
+    }
+    
+    a:not(.button)::after, .interactive-element::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: var(--primary-gold);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+    
+    a:not(.button):hover::after, .interactive-element:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="abstract-background"></div>
+  
+  <header class="floating-logo">
+    <img src="SipTagWhite.png" alt="SipTag Logo">
+  </header>
+  
+  <section class="hero">
+    <div class="container">
+      <h1>SipCard</h1>
+      <h2>Your Digital Wine Card: Effortless Sophistication for Every Bottle.</h2>
+      <p class="tagline">
+        <span class="highlight">SipCard</span> isn't just about selling; it's about unveiling the soul of your wines. With a mere touch, each bottle springs to life, revealing its tale, tasting notes, and perfect pairings. It's a grand tour of discovery, enriching the client's experience with an elegance only a few would dare to imagine.
+      </p>
+      <a href="#how-it-works-pilot" class="button">Discover Your Free Pilot</a>
+    </div>
+  </section>
+
+  ---
+  <section class="discover-sipcard-section section">
+    <div class="container">
+      <h2>What's the Gist with SipCard?</h2>
+      <div class="sipcard-showcase">
+        <img src="SipCardMockup.png" alt="SipCard Digital Wine Card Mockup" class="sipcard-mockup-img">
+        <div class="sipcard-description">
+            <h3>Every Bottle, a Story to Unfold.</h3>
+            <p>Picture this: offering your discerning clientele immediate access to the very essence of your wine. From meticulous <span class="highlight">tasting notes</span> to <span class="highlight">impeccable pairings</span>, from the captivating <span class="highlight">history</span> of your esteemed winery to <span class="highlight">photo galleries</span> and <span class="highlight">videos</span> of the winemaking journey. All this, neatly encapsulated within an exquisitely designed, user-friendly Digital Wine Card. It's truly a thing of beauty.</p>
+            <p>The SipCard is the most <span class="highlight">intuitive and professional</span> way to share the spirit of each bottle, directly on your client's smartphone. No extraneous applications, no perplexing QR codes. It's as straightforward as a well-aged Barolo.</p>
+            <ul class="sipcard-features-list">
+                <li>Profound tasting notes</li>
+                <li>Pairing insights, tailored for the connoisseur</li>
+                <li>Intuitive charts</li>
+                <li>Clean design</li>
+            </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  ---
+  <section class="benefits-section section">
+    <div class="container benefits-header">
+      <h2>Why SipCard is About to Shake Up Your Domain</h2>
+    </div>
+    
+    <div class="benefits-carousel">
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <img src="RedLogo.png" alt="Client Engagement Icon">
+        </div>
+        <div class="benefit-card-content">
+          <h3>Engagement, the likes of which you haven't seen!</h3>
+          <p>Transform every sip into an interactive spectacle. SipCard beckons your clients to delve deep, to learn, and to forge a profound connection with your wine. It's not just a drink; it's an enduring liaison.</p>
+        </div>
+      </div>
+      
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <img src="WhiteLogo.png" alt="Distinction Icon">
+        </div>
+        <div class="benefit-card-content">
+          <h3>Stand Tall Above the Fray</h3>
+          <p>Grant each bottle a singular digital identity. Your wine transcends mere product; it becomes a compelling narrative, commanding attention and etching an indelible mark. It's about being noticed, in all the right places.</p>
+        </div>
+      </div>
+      
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <img src="RoseLogo.png" alt="Sales Increase Icon">
+        </div>
+        <div class="benefit-card-content">
+          <h3>Elevate Your Esteem, and Your Bottom Line</h3>
+          <p>A presentation this sharp, this professional, naturally inspires confidence. SipCard furnishes details that subtly guide purchasing decisions, particularly for those labels of yours that truly command respect.</p>
+        </div>
+      </div>
+      
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <img src="SparklingLogo.png" alt="Local Valorization Icon">
+        </div>
+        <div class="benefit-card-content">
+          <h3>A Touch of Class for Your Establishment</h3>
+          <p>To offer SipCard is to signal innovation, to show a meticulous care for the client's experience. It's that distinctive flair that elevates your business, imbuing it with value and an unforgettable charm.</p>
+        </div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <img src="All Simbles.jpg" alt="Smart Staff Training Icon">
+        </div>
+        <div class="benefit-card-content">
+          <h3>Smart Staff, Smoother Sailing</h3>
+          <p>Each SipCard acts as an agile training instrument. Your team gains instant access to every critical detail of the wine, sharpening their advice and enhancing service. No more fumbling for facts; just pure, informed elegance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  ---
+  <section class="description-section section">
+    <div class="container">
+      <h2>Low Tech, High Impact. The Future is Now.</h2>
+      <p>
+        <span class="highlight">SipTag</span> is the shrewd tool conceived for wineries, restaurants, enotecas, and producers. It's <span class="highlight">elegant, intuitive, and, dare I say, revolutionary.</span>
+      </p>
+      <p>
+        The SipCard is not merely a Wine Card — it is the new benchmark for wine communication.
+        With but a single touch, your clients gain access to a rich tapestry of immersive content: tasting notes, aging specifics, pairings, and the very soul of your wine — all within moments.
+      </p>
+      <p>
+        It's elegant. It's instantaneous. It's simply unforgettable.
+        <span class="highlight">No apps. No fiddly QR codes. Zero friction.</span>
+      </p>
+      <p>
+        Forget complex systems — SipTag plays nice with what you already possess. A smartphone and a simple tap are all that's required to deliver clarity, style, and consistent information across your entire wine selection.
+        Don't be left behind. Step into the future with SipTag. It's time to make your mark.
+      </p>
+    </div>
+  </section>
+
+  ---
+  <section class="how-it-works-pilot-section section" id="how-it-works-pilot">
+    <div class="container">
+      <h2>Embark on Your Complimentary SipCard Pilot!</h2>
+      <p>We insist you discern the worth of SipCard firsthand. Thus, we extend the creation of your <strong>initial digital SipCards, entirely gratis</strong>. It's the most straightforward path to witness your wines truly come alive!</p>
+      <div class="pilot-steps-container">
+        <div class="pilot-step-card">
+          <div class="pilot-step-icon">
+            <img src="icon-step1.png" alt="Step 1 Icon"> </div>
+          <span class="step-number">01</span>
+          <h3>Tell Us About Your Wine</h3>
+          <p>Share details about your first wine, and we'll craft a bespoke digital profile.</p>
+        </div>
+        <div class="pilot-step-card">
+          <div class="pilot-step-icon">
+            <img src="icon-step2.png" alt="Step 2 Icon"> </div>
+          <span class="step-number">02</span>
+          <h3>Receive Your First SipCard</h3>
+          <p>We'll create and send you your first digital SipCard, ready for immediate use.</p>
+        </div>
+        <div class="pilot-step-card">
+          <div class="pilot-step-icon">
+            <img src="icon-step3.png" alt="Step 3 Icon"> </div>
+          <span class="step-number">03</span>
+          <h3>Experience the Magic!</h3>
+          <p>See how effortlessly your clients engage with your wine's story, just with a tap!</p>
+        </div>
+      </div>
+      <br>
+      <p><span class="highlight">We are looking for feedback. Please do not hesitate to share your thoughts; send an email to <a href="mailto:asangalli01@gmail.com">asangalli01@gmail.com</a>. Your feedback is important!</span></p>
+      <div class="buttons-container">
+        <a href="mailto:asangalli01@gmail.com" class="button">Get Your Free SipCard Now!</a>
+        </div>
+    </div>
+  </section>
+
+  ---
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to Elevate Your Wine Experience?</h2>
+      <p>Join us in embracing the future of wine communication. SipCard offers an unparalleled way to connect with your customers, share your passion, and distinguish your brand.</p>
+      <div class="buttons-container">
+        <a href="mailto:asangalli01@gmail.com" class="button">Contact Us for a Full Demo</a>
+        <a href="#how-it-works-pilot" class="button secondary">Learn More About the Pilot</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="mailto:asangalli01@gmail.com" aria-label="SipTag Contact Information">Contact</a>
+       </div>
+      <p>&copy; 2025 SipTag. All rights reserved.</p>
+      <div class="footer-note">
+        For pilot inquiries, contact: <a href="mailto:asangalli01@gmail.com" class="interactive-element"><strong>asangalli01@gmail.com</strong></a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="scroll-to-top" id="scrollToTopBtn" role="button" aria-label="Back to top">&#9650;</div>
+
+  <script>
+    $(document).ready(function(){
+      $('.benefits-carousel').slick({
+        dots: true,
+        infinite: true,
+        speed: 400,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        pauseOnHover: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      });
+      
+      $(window).scroll(function() {
+        if ($(this).scrollTop() > 400) { // Increased value to make button appear later
+          $('#scrollToTopBtn').addClass('show');
+        } else {
+          $('#scrollToTopBtn').removeClass('show');
+        }
+      });
+
+      $('#scrollToTopBtn').on('click', function() {
+        $('html, body').animate({scrollTop: 0}, 800);
+        return false;
+      });
+
+      // Function to handle Google Sheet download (uncomment and use if you have a template)
+      // function downloadGoogleSheet() {
+      //   const sheetId = "1N-3N3jmVooKD7wTYbc7TEsltxva3XUDM_15ImLDBMIw";
+      //   const exportUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=xlsx`;
+      //   
+      //   const downloadLink = document.createElement('a');
+      //   downloadLink.href = exportUrl;
+      //   downloadLink.setAttribute('download', 'SipCard_Template.xlsx'); // Suggests a filename
+      //   downloadLink.setAttribute('target', '_blank'); // Opens in a new tab/window for download
+      //   
+      //   document.body.appendChild(downloadLink);
+      //   downloadLink.click();
+      //   document.body.removeChild(downloadLink);
+      //   
+      //   console.log("Download of template initiated.");
+      // }
+
+      // Uncomment this line if you add a button with id="downloadTemplateButton" and want to enable the download functionality
+      // $('#downloadTemplateButton').on('click', downloadGoogleSheet);
+    });
+  </script>
+</body>
+</html>
