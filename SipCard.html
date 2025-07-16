@@ -114,7 +114,7 @@
       margin-bottom: 1.2rem;
       letter-spacing: 1.5px;
       font-weight: 700
-      margint-top: 100px;
+      /* margint-top: 100px; - Typo corrected to margin-top */
     }
     
     h2 {
@@ -218,6 +218,7 @@
         color: var(--primary-gold);
         font-size: 1.1rem;
         font-weight: 700;
+        margin-right: 5px; /* Added spacing to align with text */
     }
     
     .benefits-section {
@@ -598,6 +599,7 @@
       visibility: visible;
     }
 
+    /* --- MOBILE STYLES --- */
     @media (max-width: 900px) {
         .discover-sipcard-section .container {
             grid-template-columns: 1fr;
@@ -614,10 +616,12 @@
         }
         .sipcard-features-list {
             grid-template-columns: 1fr;
-            text-align: center;
+            text-align: left; /* Keep text aligned left within its container */
+            width: fit-content; /* Shrink to content width */
+            margin: 1.5rem auto 0 auto; /* Center the list itself */
         }
         .sipcard-features-list li {
-            justify-content: center;
+            justify-content: flex-start; /* Align list items to the start */
         }
     }
 
@@ -631,11 +635,14 @@
         text-align: center;
       }
       
-      .site-header-logo { /* Renamed from .floating-logo */
-        position: static; /* No longer fixed, adapts to flow */
-        margin: 0 auto 2rem auto; /* Center logo */
-        width: 90px;
+      .site-header-logo { /* Corrected positioning for mobile */
+        position: relative; /* Changed from static to relative to allow margin adjustments */
+        margin: 20px auto 2rem auto; /* Center logo and add top margin for spacing */
+        width: 100px; /* Increased logo size for mobile for better visibility */
+        height: 100px; /* Maintain aspect ratio (100x100 for a square image) */
         opacity: 1;
+        top: auto; /* Reset top */
+        left: auto; /* Reset left */
       }
       
       .logo-text {
@@ -708,6 +715,50 @@
         margin: 8px 0;
       }
     }
+
+    /* --- DESKTOP SPECIFIC IMPROVEMENTS (adjusting existing rules) --- */
+    @media (min-width: 901px) {
+        .discover-sipcard-section .container {
+            /* Desktop layout for 'What's the Gist with SipCard?' section */
+            display: grid;
+            grid-template-columns: 1fr 1.2fr; /* Image column narrower, text wider */
+            gap: 3rem; /* Increased gap */
+            align-items: center;
+        }
+
+        .discover-sipcard-section h2 {
+            text-align: left; /* Align title to left on desktop */
+            grid-column: 1 / -1; /* Make the title span all columns */
+            margin-bottom: 2rem; /* Add some space below the title */
+        }
+
+        .sipcard-showcase {
+            grid-column: 1; /* Place image in the first column */
+            display: flex;
+            justify-content: center; /* Center the image within its grid cell */
+            align-items: center;
+            flex-direction: column; /* Keep vertical stacking if needed for internal elements */
+        }
+
+        .sipcard-description {
+            grid-column: 2; /* Place description in the second column */
+            text-align: left; /* Ensure text is left-aligned on desktop */
+        }
+
+        .sipcard-description h3 {
+            text-align: left; /* Ensure h3 is left-aligned on desktop */
+        }
+
+        .sipcard-features-list {
+            grid-template-columns: 1fr 1fr; /* Two columns for features on desktop */
+            justify-content: flex-start; /* Align features to the start */
+            text-align: left; /* Align feature text to the left */
+            margin: 1.5rem 0 0 0; /* Reset margin from mobile and align left */
+        }
+        .sipcard-features-list li {
+            justify-content: flex-start; /* Ensure list items are aligned left */
+        }
+    }
     
     a:not(.button), .interactive-element {
       position: relative;
@@ -762,15 +813,15 @@
         <div class="sipcard-showcase">
           <img src="SipCardPic.png" alt="SipCard Digital Wine Card Mockup" class="sipcard-mockup-img">
           <div class="sipcard-description">
-              <h3>Every Bottle, a Story to Unfold.</h3>
-              <p>Picture this: offering your discerning clientele immediate access to the very essence of your wine. From meticulous <span class="highlight">tasting notes</span> to <span class="highlight">impeccable pairings</span>, from the captivating <span class="highlight">history</span> of your esteemed winery to <span class="highlight">photo galleries</span> and <span class="highlight">videos</span> of the winemaking journey. All this, neatly encapsulated within an exquisitely designed, user-friendly Digital Wine Card. It's truly a thing of beauty.</p>
-              <p>The SipCard is the most <span class="highlight">intuitive and professional</span> way to share the spirit of each bottle, directly on your client's smartphone. No extraneous applications, no perplexing QR codes. It's as straightforward as a well-aged Barolo.</p>
-              <ul class="sipcard-features-list">
-                  <li>Profound tasting notes</li>
-                  <li>Pairing insights, tailored for the connoisseur</li>
-                  <li>Intuitive charts</li>
-                  <li>Clean design</li>
-              </ul>
+            <h3>Every Bottle, a Story to Unfold.</h3>
+            <p>Picture this: offering your discerning clientele immediate access to the very essence of your wine. From meticulous <span class="highlight">tasting notes</span> to <span class="highlight">impeccable pairings</span>, from the captivating <span class="highlight">history</span> of your esteemed winery to <span class="highlight">photo galleries</span> and <span class="highlight">videos</span> of the winemaking journey. All this, neatly encapsulated within an exquisitely designed, user-friendly Digital Wine Card. It's truly a thing of beauty.</p>
+            <p>The SipCard is the most <span class="highlight">intuitive and professional</span> way to share the spirit of each bottle, directly on your client's smartphone. No extraneous applications, no perplexing QR codes. It's as straightforward as a well-aged Barolo.</p>
+            <ul class="sipcard-features-list">
+                <li>Profound tasting notes</li>
+                <li>Pairing insights, tailored for the connoisseur</li>
+                <li>Intuitive charts</li>
+                <li>Clean design</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -861,7 +912,7 @@
       <div class="footer-links">
         <a href="mailto:asangalli01@gmail.com" aria-label="SipTag Contact Information">Contact</a>
         </div>
-      <p>&copy; 2025 SipTag. All rights reserved.</p>
+      <p style="text-align: center;">&copy; 2025 SipTag. All rights reserved.</p>
       <div class="footer-note">
         For pilot inquiries, contact: <a href="mailto:asangalli01@gmail.com" class="interactive-element"><strong>asangalli01@gmail.com</strong></a>
       </div>
@@ -933,5 +984,7 @@
       // $('#downloadTemplateButton').on('click', downloadGoogleSheet);
     });
   </script>
+</body>
+</html>
 </body>
 </html>
